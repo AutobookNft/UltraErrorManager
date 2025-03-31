@@ -163,6 +163,16 @@ return [
     |
     */
     'errors' => [
+        'UNDEFINED_ERROR_CODE' => [
+            'type' => 'critical',
+            'blocking' => 'blocking',
+            'dev_message_key' => 'error-manager::errors.dev.undefined_error_code',
+            'user_message_key' => 'error-manager::errors.user.undefined_error_code',
+            'http_status_code' => 500,
+            'devTeam_email_need' => true,
+            'msg_to' => 'sweet-alert',
+        ],
+        
         // Authentication and Authorization Errors (100-199)
         'AUTHENTICATION_ERROR' => [
             'type' => 'error',
@@ -458,5 +468,64 @@ return [
             'devTeam_email_need' => true, // Invia email al team di sviluppo
             'msg_to' => 'log-only', // Non mostrare all'utente
         ],
+
+        'INVALID_INPUT' => [
+            'type' => 'error',
+            'blocking' => 'semi-blocking',
+            'dev_message_key' => 'error-manager::errors.dev.invalid_input',
+            'user_message_key' => 'error-manager::errors.user.invalid_input',
+            'http_status_code' => 400,
+            'devTeam_email_need' => false,
+            'msg_to' => 'sweet-alert',
+        ],
+
+        // Errori specifici di UCM (aggiunti in precedenza)
+        'UCM_DUPLICATE_KEY' => [
+            'type' => 'error',
+            'blocking' => 'semi-blocking',
+            'dev_message_key' => 'error-manager::errors.dev.ucm_duplicate_key',
+            'user_message_key' => 'error-manager::errors.user.ucm_duplicate_key',
+            'http_status_code' => 422,
+            'devTeam_email_need' => false,
+            'msg_to' => 'sweet-alert',
+        ],
+        'UCM_CREATE_FAILED' => [
+            'type' => 'critical',
+            'blocking' => 'blocking',
+            'dev_message_key' => 'error-manager::errors.dev.ucm_create_failed',
+            'user_message_key' => 'error-manager::errors.user.ucm_create_failed',
+            'http_status_code' => 500,
+            'devTeam_email_need' => true,
+            'msg_to' => 'sweet-alert',
+        ],
+        'UCM_UPDATE_FAILED' => [
+            'type' => 'critical',
+            'blocking' => 'blocking',
+            'dev_message_key' => 'error-manager::errors.dev.ucm_update_failed',
+            'user_message_key' => 'error-manager::errors.user.ucm_update_failed',
+            'http_status_code' => 500,
+            'devTeam_email_need' => true,
+            'msg_to' => 'sweet-alert',
+        ],
+        'UCM_NOT_FOUND' => [
+            'type' => 'error',
+            'blocking' => 'semi-blocking',
+            'dev_message_key' => 'error-manager::errors.dev.ucm_not_found',
+            'user_message_key' => 'error-manager::errors.user.ucm_not_found',
+            'http_status_code' => 404,
+            'devTeam_email_need' => false,
+            'msg_to' => 'sweet-alert',
+        ],
+
+        'UCM_DELETE_FAILED' => [
+            'type' => 'critical',
+            'blocking' => 'blocking',
+            'dev_message_key' => 'error-manager::errors.dev.ucm_delete_failed',
+            'user_message_key' => 'error-manager::errors.user.ucm_delete_failed',
+            'http_status_code' => 500,
+            'devTeam_email_need' => true,
+            'msg_to' => 'sweet-alert',
+        ],
+
     ],
 ];

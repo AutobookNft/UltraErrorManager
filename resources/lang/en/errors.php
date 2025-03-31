@@ -16,7 +16,11 @@ return [
         // Authentication and Authorization
         'authentication_error' => 'Unauthenticated access attempt.',
 
+        'ucm_delete_failed' => 'Failed to delete configuration with key :key: :message',
+        'undefined_error_code' => 'Undefined error code: :errorCode',
+
         // File Validation
+        'invalid_input' => 'Invalid input provided for parameter :param.',
         'invalid_image_structure' => 'The structure of the image file is invalid.',
         'mime_type_not_allowed' => 'The MIME type of the file is not allowed.',
         'max_file_size' => 'The file exceeds the maximum allowed size.',
@@ -60,7 +64,11 @@ return [
         // Authentication and Authorization
         'authentication_error' => 'You are not authorized to perform this operation.',
 
+        'ucm_delete_failed' => 'An error occurred while deleting the configuration. Please try again later.',
+        'undefined_error_code' => 'An unexpected error occurred. Please contact support.',
+
         // File Validation
+        'invalid_input' => 'The provided value for :param is invalid. Please check your input and try again.',
         'invalid_image_structure' => 'The image you uploaded is invalid. Please try with another image.',
         'mime_type_not_allowed' => 'The file type you uploaded is not supported. Allowed types are: :allowed_types.',
         'max_file_size' => 'The file is too large. The maximum allowed size is :max_size MB.',

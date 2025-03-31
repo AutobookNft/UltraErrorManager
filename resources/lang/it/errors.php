@@ -16,7 +16,11 @@ return [
         // Authentication and Authorization
         'authentication_error' => 'Tentativo di accesso non autenticato.',
 
+        'ucm_delete_failed' => 'Impossibile eliminare la configurazione con chiave :key: :message',
+        'undefined_error_code' => 'Codice di errore non definito: :errorCode',
+
         // File Validation
+        'invalid_input' => 'Input non valido fornito per il parametro :param.',
         'invalid_image_structure' => 'La struttura del file immagine non è valida.',
         'mime_type_not_allowed' => 'Il tipo MIME del file non è consentito.',
         'max_file_size' => 'Il file supera la dimensione massima consentita.',
@@ -60,7 +64,11 @@ return [
         // Authentication and Authorization
         'authentication_error' => 'Non hai l\'autorizzazione per eseguire questa operazione.',
 
+        'ucm_delete_failed' => 'Si è verificato un errore durante l\'eliminazione della configurazione. Riprova più tardi.',
+        'undefined_error_code' => 'Si è verificato un errore imprevisto. Contatta il supporto.',
+
         // File Validation
+        'invalid_input' => 'Il valore fornito per :param non è valido. Controlla l\'input e riprova.',
         'invalid_image_structure' => 'L\'immagine che hai caricato non è valida. Prova con un\'altra immagine.',
         'mime_type_not_allowed' => 'Il tipo di file che hai caricato non è supportato. I tipi consentiti sono: :allowed_types.',
         'max_file_size' => 'Il file è troppo grande. La dimensione massima consentita è :max_size MB.',
