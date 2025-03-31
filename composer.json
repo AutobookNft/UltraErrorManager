@@ -1,6 +1,6 @@
 {
-    "name": "ultra/errormanager",
-    "description": "Sistema avanzato di gestione errori di livello Enterprise per applicazioni Laravel",
+    "name": "ultra/ultra-error-manager",
+    "description": "Advanced error management library for the Ultra ecosystem",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -17,7 +17,7 @@
         "illuminate/mail": "^11.0",
         "illuminate/view": "^11.0",
         "ultra/ultra-log-manager": "dev-main",
-        "ultra/ultra-config-manager": "dev-main"
+        "ultra/ultra-translation-manager": "dev-main"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.5.3",
@@ -56,7 +56,7 @@
         },
         {
             "type": "vcs",
-            "url": "https://github.com/AutobookNft/UltraConfigManager"
+            "url": "https://github.com/AutobookNft/UltraTranslationManager.git"
         }
         
     ],
