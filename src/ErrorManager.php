@@ -124,7 +124,7 @@ class ErrorManager
      * @return mixed Formatted response based on error type
      * @throws UltraErrorException If the error cannot be handled
      */
-    public function handle($errorCode, array $context = [], \Throwable $exception = null)
+    public function handle($errorCode, array $context = [], ?\Throwable $exception = null)
     {
         Log::info("Ultra Error Manager: Handling error [{$errorCode}]", ['context' => $context]);
 
@@ -172,7 +172,7 @@ class ErrorManager
      * @param \Throwable|null $exception Original exception (if available)
      * @return array Complete error information array
      */
-    protected function prepareErrorInfo($errorCode, array $errorConfig, array $context, \Throwable $exception = null)
+    protected function prepareErrorInfo($errorCode, array $errorConfig, array $context, ?\Throwable $exception = null)
     {
         $errorInfo = [
             'error_code' => $errorCode,
