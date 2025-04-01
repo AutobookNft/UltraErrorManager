@@ -43,7 +43,7 @@ class SlackNotificationHandler implements ErrorHandlerInterface
      * @param \Throwable|null $exception Original exception if available
      * @return void
      */
-    public function handle(string $errorCode, array $errorConfig, array $context = [], \Throwable $exception = null): void
+    public function handle(string $errorCode, array $errorConfig, array $context = [], ?\Throwable $exception = null): void
     {
         $webhookUrl = Config::get('error-manager.slack_notification.webhook_url');
 

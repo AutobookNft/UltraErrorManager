@@ -54,7 +54,7 @@ class ErrorSimulationHandler implements ErrorHandlerInterface
      * @param \Throwable|null $exception Original exception if available
      * @return void
      */
-    public function handle(string $errorCode, array $errorConfig, array $context = [], \Throwable $exception = null): void
+    public function handle(string $errorCode, array $errorConfig, array $context = [], ?\Throwable $exception = null): void
     {
         // Log error simulation for analysis or debugging
         Log::channel('testing')->info("Error simulation: {$errorCode}", [

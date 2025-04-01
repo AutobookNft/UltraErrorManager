@@ -36,7 +36,7 @@ class DatabaseLogHandler implements ErrorHandlerInterface
      * @param \Throwable|null $exception Original exception if available
      * @return void
      */
-    public function handle(string $errorCode, array $errorConfig, array $context = [], \Throwable $exception = null): void
+    public function handle(string $errorCode, array $errorConfig, array $context = [], ?\Throwable $exception = null): void
     {
         try {
             // Prepare data for database record

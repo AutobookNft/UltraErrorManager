@@ -38,7 +38,7 @@ class UserInterfaceHandler implements ErrorHandlerInterface
      * @param \Throwable|null $exception Original exception if available
      * @return void
      */
-    public function handle(string $errorCode, array $errorConfig, array $context = [], \Throwable $exception = null): void
+    public function handle(string $errorCode, array $errorConfig, array $context = [], ?\Throwable $exception = null): void
     {
         // Get display target (div, sweet-alert, etc.)
         $displayTarget = $errorConfig['msg_to'] ?? config('error-manager.ui.default_display_mode', 'div');
