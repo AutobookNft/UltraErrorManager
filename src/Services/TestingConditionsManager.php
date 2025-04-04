@@ -129,4 +129,45 @@ class TestingConditionsManager
         $this->conditions = [];
         return $this;
     }
+
+    /**
+     * Enable a specific testing condition.
+     *
+     * This is a static shortcut to set a condition to `true`.
+     * Useful in unit tests to simulate errors or custom flows.
+     *
+     * @param string $condition  The condition name (e.g. 'UCM_NOT_FOUND')
+     * @return void
+     */
+    public static function set(string $condition): void
+    {
+        self::getInstance()->setCondition($condition, true);
+    }
+
+    /**
+     * Disable a specific testing condition.
+     *
+     * This is a static shortcut to set a condition to `false`.
+     * Useful to clean up after tests or reset a simulated state.
+     *
+     * @param string $condition  The condition name
+     * @return void
+     */
+    public static function clear(string $condition): void
+    {
+        self::getInstance()->setCondition($condition, false);
+    }
+
+    /**
+     * Reset all active testing conditions.
+     *
+     * This method clears all simulated states and disables testing flags.
+     *
+     * @return void
+     */
+    public static function reset(): void
+    {
+        self::getInstance()->resetAllConditions();
+    }
+
 }
