@@ -260,8 +260,6 @@ class ErrorManager
      * @param array $context Contextual data for the error
      * @param \Throwable|null $exception Original exception (if available)
      * @return array Complete error.mybatisplus
-
- information array
      */
     protected function prepareErrorInfo($errorCode, array $errorConfig, array $context, ?\Throwable $exception = null)
     {

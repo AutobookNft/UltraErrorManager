@@ -547,5 +547,14 @@ return [
             'msg_to' => 'sweet-alert',
         ],
 
+        'UCM_AUDIT_NOT_FOUND' => [
+            'type' => 'info',
+            'blocking' => 'non-blocking',
+            'dev_message_key' => 'error-manager::errors.dev.ucm_audit_not_found',
+            'user_message_key' => 'error-manager::errors.user.ucm_audit_not_found',
+            'http_status_code' => 404,
+            'msg_to' => 'div',
+        ],
+
     ],
 ];

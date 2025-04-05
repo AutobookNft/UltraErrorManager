@@ -61,6 +61,7 @@ return [
         
         'fallback_error' => 'An error occurred but no specific error configuration was found.',
         'fatal_fallback_failure' => 'Fatal error: fallback configuration missing. System unable to respond properly.',
+        'ucm_audit_not_found' => 'No audit records found for the given configuration ID.',
     ],
 
     'user' => [
@@ -109,6 +110,7 @@ return [
 
         'fallback_error' => 'Unexpected system issue. Please try again later.',
         'fatal_fallback_failure' => 'Unexpected fatal error. Please contact support.',
+        'ucm_audit_not_found' => 'No audit information available.',
     ],
 
     // Generic messages

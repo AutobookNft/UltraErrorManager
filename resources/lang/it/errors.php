@@ -61,6 +61,7 @@ return [
 
         'fallback_error' => 'Si è verificato un errore, ma non è stata trovata alcuna configurazione specifica.',
         'fatal_fallback_failure' => 'Errore fatale: configurazione di fallback mancante. Il sistema non può rispondere correttamente.',
+        'ucm_audit_not_found' => 'Nessun record di audit trovato per l\'ID configurazione indicato.',
     ],
 
     'user' => [
@@ -109,6 +110,7 @@ return [
 
         'fallback_error' => 'Errore inatteso. Riprova più tardi.',
         'fatal_fallback_failure' => 'Errore grave inatteso. Contattare il supporto.',
+        'ucm_audit_not_found' => 'Non ci sono informazioni di audit disponibili.',
     ],
 
     // Generic messages
