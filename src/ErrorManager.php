@@ -141,68 +141,28 @@ class ErrorManager
     /**
      * Handle an Ultra error in a structured and context-aware way.
      *
-     * This method processes the error based on its code, executes registered handlers,
-     * logs the event through UltraLog, and either returns an appropriate error response
-     * or throws an UltraErrorException if requested.
+     * This method orchestrates the full error lifecycle:
+     * - Resolves configuration (including fallback layers)
+     * - Logs all stages with UltraLog
+     * - Executes registered error handlers
+     * - Returns or throws based on context and configuration
      *
      * @param string         $errorCode   The string code representing the error
      * @param array          $context     Optional contextual information for the error
      * @param \Throwable|null $exception  Optional original exception (if any)
      * @param bool           $throw       Whether to throw an UltraErrorException instead of returning a response
-     *
-     * @return mixed                     An UltraError response object, or throws UltraErrorException if $throw = true
-     *
-     * @throws UltraErrorException      If the error is undefined, or if $throw is set to true
+     * @return mixed                      A response object or exception
+     * @throws UltraErrorException        If configured to throw, or all resolution fails
      */
-    public function handle(string $errorCode, array $context = [], ?\Throwable $exception = null, bool $throw = false)
+    public function handle(string $errorCode, array $context = [], ?\Throwable $exception = null, bool $throw = false): mixed
     {
         UltraLog::info('UltraError', "Handling error [{$errorCode}]", ['context' => $context]);
 
-        // Retrieve error configuration
-        $errorConfig = $this->getErrorConfig($errorCode);
-
-        if (!$errorConfig) {
-            UltraLog::warning('UltraError', "Undefined error code: [{$errorCode}]. Attempting fallback.", $context);
-
-            // Fallback to static UNDEFINED_ERROR_CODE if defined
-            $context['_original_code'] = $errorCode;
-            $errorCode = 'UNDEFINED_ERROR_CODE';
-            $errorConfig = $this->getErrorConfig($errorCode);
-
-            if (!$errorConfig) {
-                UltraLog::critical('UltraError', 'Missing config for UNDEFINED_ERROR_CODE. Attempting ultimate fallback.', []);
-
-                $errorCode = 'FALLBACK_ERROR';
-                $errorConfig = Config::get('error-manager.fallback_error');
-
-                if (!$errorConfig || !is_array($errorConfig)) {
-                    UltraLog::emergency('UltraError', 'No fallback configuration available. Throwing hard.', []);
-                    throw new UltraErrorException(
-                        "Fallback failed: no configuration available.",
-                        500,
-                        $exception,
-                        'FATAL_FALLBACK_FAILURE'
-                    );
-                }
-            }
-        }
-
-        // Prepare the full error info structure
+        $errorConfig = $this->resolveErrorConfig($errorCode, $context, $exception);
         $errorInfo = $this->prepareErrorInfo($errorCode, $errorConfig, $context, $exception);
 
-        UltraLog::debug('UltraError', 'Prepared error info', ['errorInfo' => $errorInfo]);
-
-        // Execute all matching handlers
-        $handlerCount = 0;
-        foreach ($this->handlers as $handler) {
-            if ($handler->shouldHandle($errorConfig)) {
-                $handlerCount++;
-                UltraLog::debug('UltraError', 'Executing handler', ['handler' => get_class($handler)]);
-                $handler->handle($errorCode, $errorConfig, $context, $exception);
-            }
-        }
-
-        UltraLog::info('UltraError', "Processed with {$handlerCount} handlers", ['errorCode' => $errorCode]);
+        $this->dispatchHandlers($errorCode, $errorConfig, $context, $exception);
+        UltraLog::info('UltraError', "Processed error with handlers", ['code' => $errorCode]);
 
         if ($throw) {
             throw new UltraErrorException(
@@ -216,6 +176,80 @@ class ErrorManager
 
         return $this->buildResponse($errorInfo);
     }
+
+    /**
+     * Resolve error configuration with fallback strategy.
+     *
+     * Handles error fallback logic across three levels:
+     * - Primary error config
+     * - Static UNDEFINED_ERROR_CODE
+     * - Static fallback_error config
+     *
+     * @param string $errorCode
+     * @param array $context
+     * @param \Throwable|null $exception
+     * @return array
+     * @throws UltraErrorException
+     */
+    protected function resolveErrorConfig(string &$errorCode, array &$context, ?\Throwable $exception = null): array
+    {
+        $config = $this->getErrorConfig($errorCode);
+
+        if ($config) return $config;
+
+        UltraLog::warning('UltraError', "Undefined error code: [{$errorCode}]. Attempting fallback.", $context);
+
+        // Attempt fallback: UNDEFINED_ERROR_CODE
+        $context['_original_code'] = $errorCode;
+        $errorCode = 'UNDEFINED_ERROR_CODE';
+        $config = $this->getErrorConfig($errorCode);
+
+        if ($config) return $config;
+
+        // Final fallback: static fallback_error block
+        UltraLog::critical('UltraError', 'Missing config for UNDEFINED_ERROR_CODE. Trying fallback_error.', []);
+        $fallback = Config::get('error-manager.fallback_error');
+
+        if (!$fallback || !is_array($fallback)) {
+            UltraLog::emergency('UltraError', 'No fallback configuration available. Throwing hard.', []);
+            throw new UltraErrorException(
+                "Fallback failed: no configuration available.",
+                500,
+                $exception,
+                'FATAL_FALLBACK_FAILURE'
+            );
+        }
+
+        $errorCode = 'FALLBACK_ERROR';
+        return $fallback;
+    }
+
+    /**
+     * Execute all registered handlers for the current error.
+     *
+     * Each handler is tested against the configuration to decide whether to handle the error.
+     *
+     * @param string $errorCode
+     * @param array $errorConfig
+     * @param array $context
+     * @param \Throwable|null $exception
+     * @return void
+     */
+    protected function dispatchHandlers(string $errorCode, array $errorConfig, array $context, ?\Throwable $exception = null): void
+    {
+        $count = 0;
+
+        foreach ($this->handlers as $handler) {
+            if ($handler->shouldHandle($errorConfig)) {
+                $count++;
+                UltraLog::debug('UltraError', 'Executing handler', ['handler' => get_class($handler)]);
+                $handler->handle($errorCode, $errorConfig, $context, $exception);
+            }
+        }
+
+        UltraLog::info('UltraError', "Dispatched {$count} handlers", ['code' => $errorCode]);
+    }
+
 
 
     /**
