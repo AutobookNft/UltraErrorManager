@@ -58,6 +58,9 @@ return [
         'unexpected_error' => 'Unexpected error in the system.',
         'generic_server_error' => 'A generic server error occurred.',
         'json_error' => 'JSON error in the dispatcher.',
+        
+        'fallback_error' => 'An error occurred but no specific error configuration was found.',
+        'fatal_fallback_failure' => 'Fatal error: fallback configuration missing. System unable to respond properly.',
     ],
 
     'user' => [
@@ -103,6 +106,9 @@ return [
         'unexpected_error' => 'An unexpected error has occurred. The technical team has been notified.',
         'generic_server_error' => 'A server error has occurred. Please try again later or contact support.',
         'json_error' => 'A data processing error occurred. Please try again or contact support.',
+
+        'fallback_error' => 'Unexpected system issue. Please try again later.',
+        'fatal_fallback_failure' => 'Unexpected fatal error. Please contact support.',
     ],
 
     // Generic messages

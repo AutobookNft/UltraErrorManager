@@ -145,6 +145,16 @@ return [
         ],
     ],
 
+
+    'fallback_error' => [
+        'type' => 'error',
+        'blocking' => 'blocking',
+        'dev_message_key' => 'error-manager::errors.dev.fallback_error',
+        'user_message_key' => 'error-manager::errors.user.fallback_error',
+        'http_status_code' => 500,
+        'msg_to' => 'div',
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Error Definitions
@@ -522,6 +532,16 @@ return [
             'blocking' => 'blocking',
             'dev_message_key' => 'error-manager::errors.dev.ucm_delete_failed',
             'user_message_key' => 'error-manager::errors.user.ucm_delete_failed',
+            'http_status_code' => 500,
+            'devTeam_email_need' => true,
+            'msg_to' => 'sweet-alert',
+        ],
+
+        'FATAL_FALLBACK_FAILURE' => [
+            'type' => 'critical',
+            'blocking' => 'blocking',
+            'dev_message_key' => 'error-manager::errors.dev.fatal_fallback_failure',
+            'user_message_key' => 'error-manager::errors.user.fatal_fallback_failure',
             'http_status_code' => 500,
             'devTeam_email_need' => true,
             'msg_to' => 'sweet-alert',

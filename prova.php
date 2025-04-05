@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ultra\ErrorManager;
 
 use Illuminate\Support\Facades\Log;
@@ -23,27 +25,36 @@ class ErrorManager
     /**
      * Registry of error handlers
      *
-     * @var array
+     * This holds all registered error handlers that can be used to process
+     * different types of errors based on configuration or runtime definitions.
+     *
+     * @var array<ErrorHandlerInterface>
      */
-    protected $handlers = [];
+    protected array $handlers = [];
 
     /**
      * Custom errors defined at runtime
      *
-     * @var array
+     * These are errors defined dynamically during the application lifecycle,
+     * allowing new error types to be added without modifying the configuration files.
+     *
+     * @var array<string, array>
      */
-    protected $customErrors = [];
+    protected array $customErrors = [];
 
     /**
      * Initialize the UltraErrorManager.
      *
      * Loads and registers default error handlers defined in the configuration.
      * Logs initialization events through UltraLog with full class traceability.
+     * This process ensures that all standard error handling mechanisms are in place
+     * and ready to process errors as they occur.
      */
     public function __construct()
     {
         UltraLog::info('UltraError', 'Initializing UltraErrorManager');
 
+        // Load default handlers from configuration
         $defaultHandlers = Config::get('error-manager.default_handlers', []);
 
         foreach ($defaultHandlers as $handlerClass) {
@@ -60,16 +71,17 @@ class ErrorManager
         }
     }
 
-
     /**
      * Register a new error handler.
      *
-     * The handler must implement ErrorHandlerInterface.
+     * This method allows you to register a handler class that will be responsible for
+     * processing specific types of errors. The handler must implement the
+     * ErrorHandlerInterface and define the `handle()` method to perform custom actions.
      *
-     * @param ErrorHandlerInterface $handler  The handler instance to register
-     * @return $this                          For method chaining
+     * @param ErrorHandlerInterface $handler The handler instance to register
+     * @return $this For method chaining
      */
-    public function registerHandler(ErrorHandlerInterface $handler)
+    public function registerHandler(ErrorHandlerInterface $handler): self
     {
         $this->handlers[] = $handler;
 
@@ -83,7 +95,11 @@ class ErrorManager
     /**
      * Retrieve all currently registered error handlers.
      *
-     * @return array  An array of registered ErrorHandlerInterface instances
+     * This method returns an array of all the error handlers that have been registered
+     * with the ErrorManager. This is useful for debugging or inspecting which handlers
+     * are available at runtime.
+     *
+     * @return array<ErrorHandlerInterface> An array of registered ErrorHandlerInterface instances
      */
     public function getHandlers(): array
     {
@@ -94,13 +110,23 @@ class ErrorManager
      * Define a new error type dynamically at runtime.
      *
      * This allows extending the error manager without changing static config files.
+     * You can define new error codes and associate them with specific configurations
+     * like user messages, HTTP status codes, and more.
      *
-     * @param string $errorCode  Unique error code identifier
-     * @param array  $config     Error configuration array (user_message, http_status, etc.)
-     * @return $this             For method chaining
+     * @param string $errorCode Unique error code identifier
+     * @param array  $config Error configuration array (user_message, http_status, etc.)
+     * @return $this For method chaining
      */
-    public function defineError(string $errorCode, array $config)
+    public function defineError(string $errorCode, array $config): self
     {
+        if (empty($errorCode) || empty($config)) {
+            UltraLog::warning('UltraError', 'Attempted to define an invalid runtime error', [
+                'code' => $errorCode,
+                'config' => $config
+            ]);
+            return $this;
+        }
+
         $this->customErrors[$errorCode] = $config;
 
         UltraLog::debug('UltraError', 'Defined runtime error type', [
@@ -114,11 +140,12 @@ class ErrorManager
     /**
      * Get the configuration for a specific error code.
      *
-     * Searches first among runtime-defined errors, then falls back to static config.
-     * If the error is not found, logs a warning and returns null.
+     * This method first checks the custom errors defined at runtime. If the error code
+     * is not found, it falls back to the static configuration loaded from the config files.
+     * If no configuration is found, a warning is logged and `null` is returned.
      *
-     * @param string $errorCode  The error code to resolve
-     * @return array|null        The error configuration, or null if not found
+     * @param string $errorCode The error code to resolve
+     * @return array|null The error configuration, or null if not found
      */
     public function getErrorConfig(string $errorCode): ?array
     {
@@ -137,7 +164,6 @@ class ErrorManager
         return $config;
     }
 
-    
     /**
      * Handle an Ultra error in a structured and context-aware way.
      *
@@ -145,54 +171,34 @@ class ErrorManager
      * logs the event through UltraLog, and either returns an appropriate error response
      * or throws an UltraErrorException if requested.
      *
-     * @param string         $errorCode   The string code representing the error
-     * @param array          $context     Optional contextual information for the error
-     * @param \Throwable|null $exception  Optional original exception (if any)
-     * @param bool           $throw       Whether to throw an UltraErrorException instead of returning a response
-     *
-     * @return mixed                     An UltraError response object, or throws UltraErrorException if $throw = true
-     *
-     * @throws UltraErrorException      If the error is undefined, or if $throw is set to true
+     * @param string $errorCode The string code representing the error
+     * @param array $context Optional contextual information for the error
+     * @param \Throwable|null $exception Optional original exception (if any)
+     * @param bool $throw Whether to throw an UltraErrorException instead of returning a response
+     * @return mixed An UltraError response object, or throws UltraErrorException if $throw = true
+     * @throws UltraErrorException If the error is undefined, or if $throw is set to true
      */
-    public function handle(string $errorCode, array $context = [], ?\Throwable $exception = null, bool $throw = false)
+    public function handle(string $errorCode, array $context = [], ?\Throwable $exception = null, bool $throw = false): mixed
     {
         UltraLog::info('UltraError', "Handling error [{$errorCode}]", ['context' => $context]);
 
-        // Retrieve error configuration
         $errorConfig = $this->getErrorConfig($errorCode);
 
         if (!$errorConfig) {
-            UltraLog::warning('UltraError', "Undefined error code: [{$errorCode}]. Attempting fallback.", $context);
+            UltraLog::error('UltraError', "Undefined error code: [{$errorCode}]", $context);
 
-            // Fallback to static UNDEFINED_ERROR_CODE if defined
-            $context['_original_code'] = $errorCode;
-            $errorCode = 'UNDEFINED_ERROR_CODE';
-            $errorConfig = $this->getErrorConfig($errorCode);
-
-            if (!$errorConfig) {
-                UltraLog::critical('UltraError', 'Missing config for UNDEFINED_ERROR_CODE. Attempting ultimate fallback.', []);
-
-                $errorCode = 'FALLBACK_ERROR';
-                $errorConfig = Config::get('error-manager.fallback_error');
-
-                if (!$errorConfig || !is_array($errorConfig)) {
-                    UltraLog::emergency('UltraError', 'No fallback configuration available. Throwing hard.', []);
-                    throw new UltraErrorException(
-                        "Fallback failed: no configuration available.",
-                        500,
-                        $exception,
-                        'FATAL_FALLBACK_FAILURE'
-                    );
-                }
-            }
+            throw new UltraErrorException(
+                "Undefined error code: {$errorCode}",
+                500,
+                $exception,
+                'UNDEFINED_ERROR_CODE'
+            );
         }
 
-        // Prepare the full error info structure
         $errorInfo = $this->prepareErrorInfo($errorCode, $errorConfig, $context, $exception);
 
         UltraLog::debug('UltraError', 'Prepared error info', ['errorInfo' => $errorInfo]);
 
-        // Execute all matching handlers
         $handlerCount = 0;
         foreach ($this->handlers as $handler) {
             if ($handler->shouldHandle($errorConfig)) {
@@ -217,9 +223,12 @@ class ErrorManager
         return $this->buildResponse($errorInfo);
     }
 
-
     /**
      * Prepare complete error information
+     *
+     * This method combines the error code, configuration, context, and exception data
+     * into a single structured array that can be passed to handlers, formatted, or used
+     * in response generation.
      *
      * @param string $errorCode Error code identifier
      * @param array $errorConfig Error configuration
@@ -227,8 +236,9 @@ class ErrorManager
      * @param \Throwable|null $exception Original exception (if available)
      * @return array Complete error information array
      */
-    protected function prepareErrorInfo($errorCode, array $errorConfig, array $context, ?\Throwable $exception = null)
+    protected function prepareErrorInfo(string $errorCode, array $errorConfig, array $context, ?\Throwable $exception = null): array
     {
+        /** @var array<string, mixed> $errorInfo */
         $errorInfo = [
             'error_code' => $errorCode,
             'type' => $errorConfig['type'] ?? 'error',
@@ -241,7 +251,6 @@ class ErrorManager
             'timestamp' => now(),
         ];
 
-        // Add exception information if present
         if ($exception) {
             $errorInfo['exception'] = [
                 'class' => get_class($exception),
@@ -262,39 +271,33 @@ class ErrorManager
      * translation keys if available. It then replaces any `:placeholder` tokens
      * in the message using the provided context array.
      *
-     * @param array  $errorConfig     The error configuration array
-     * @param array  $context         Associative array of contextual replacements
-     * @param string $directKey       The config key that holds the direct message string
-     * @param string $translationKey  The config key that holds the translation key
-     * @return string                 A fully formatted message string
+     * @param array  $errorConfig The error configuration array
+     * @param array  $context Associative array of contextual replacements
+     * @param string $directKey The config key that holds the direct message string
+     * @param string $translationKey The config key that holds the translation key
+     * @return string A fully formatted message string
      */
-    protected function formatMessage(array $errorConfig, array $context, $directKey, $translationKey): string
+    protected function formatMessage(array $errorConfig, array $context, string $directKey, string $translationKey): string
     {
-        // Prefer using a translation key if provided
         if (isset($errorConfig[$translationKey])) {
-            $message = __($errorConfig[$translationKey], $context);
-            UltraLog::debug('UltraError', 'Using translated message', ['key' => $errorConfig[$translationKey]]);
-        }
-        // Fallback to direct message with manual placeholder replacement
-        elseif (isset($errorConfig[$directKey])) {
+            $message = (string) __($errorConfig[$translationKey], $context); 
+            UltraLog::debug('UltraError', 'Using translated message', ['key' => $errorConfig[$translationKey]]); 
+        } elseif (isset($errorConfig[$directKey])) {
             $message = $errorConfig[$directKey];
             UltraLog::debug('UltraError', 'Using direct message', ['source' => $directKey]);
-
             foreach ($context as $key => $value) {
                 if (is_string($value) || is_numeric($value)) {
-                    $message = str_replace(":{$key}", $value, $message);
+                    $message = str_replace(":{$key}", (string) $value, $message);
                 }
             }
-        }
-        // Final fallback if no message is available
-        else {
+        } else {
             $message = "An error has occurred";
             UltraLog::debug('UltraError', 'No message key found, using fallback');
         }
-
+    
         return $message;
     }
-
+    
     /**
      * Build the appropriate error response based on the request context and error severity.
      *
@@ -305,18 +308,17 @@ class ErrorManager
      * If blocking, it aborts with the appropriate HTTP status.
      * If non-blocking, it flashes the message and redirects back.
      *
-     * @param array $errorInfo  Complete error information as generated by prepareErrorInfo()
-     * @return mixed            A JSON response, HTTP redirect, or abort depending on context
+     * @param array<string, mixed> $errorInfo Complete error information as generated by prepareErrorInfo()
+     * @return mixed A JSON response, HTTP redirect, or abort depending on context
      */
-    protected function buildResponse(array $errorInfo)
+    protected function buildResponse(array $errorInfo): mixed
     {
-        // For AJAX or API requests, return JSON structure
         if (request()->expectsJson() || request()->is('api/*')) {
             UltraLog::info('UltraError', 'Returning JSON error response', [
                 'code' => $errorInfo['error_code'],
                 'status' => $errorInfo['http_status_code'],
             ]);
-
+    
             return response()->json([
                 'error' => $errorInfo['error_code'],
                 'message' => $errorInfo['user_message'],
@@ -324,27 +326,24 @@ class ErrorManager
                 'display_mode' => $errorInfo['display_mode']
             ], $errorInfo['http_status_code']);
         }
-
-        // For standard web requests — handle based on blocking level
+    
         if ($errorInfo['blocking'] === 'blocking') {
             UltraLog::info('UltraError', 'Aborting request due to blocking error', [
                 'code' => $errorInfo['error_code'],
                 'status' => $errorInfo['http_status_code']
             ]);
-
+    
             abort($errorInfo['http_status_code'], $errorInfo['user_message']);
         }
-
-        // Non-blocking: flash message and redirect back
+    
         UltraLog::info('UltraError', 'Flashing non-blocking error and returning back', [
             'code' => $errorInfo['error_code'],
             'mode' => $errorInfo['display_mode']
         ]);
-
+    
         session()->flash('error_' . $errorInfo['display_mode'], $errorInfo['user_message']);
         session()->flash('error_info', $errorInfo);
-
+    
         return back()->withInput();
     }
-
 }

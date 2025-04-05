@@ -58,6 +58,9 @@ return [
         'unexpected_error' => 'Errore imprevisto nel sistema.',
         'generic_server_error' => 'Si è verificato un errore generico del server.',
         'json_error' => 'Errore JSON nel dispatcher.',
+
+        'fallback_error' => 'Si è verificato un errore, ma non è stata trovata alcuna configurazione specifica.',
+        'fatal_fallback_failure' => 'Errore fatale: configurazione di fallback mancante. Il sistema non può rispondere correttamente.',
     ],
 
     'user' => [
@@ -103,6 +106,9 @@ return [
         'unexpected_error' => 'Si è verificato un errore imprevisto. Il team tecnico è stato informato.',
         'generic_server_error' => 'Si è verificato un errore del server. Riprova più tardi o contatta l\'assistenza.',
         'json_error' => 'Si è verificato un errore di elaborazione dati. Riprova o contatta l\'assistenza.',
+
+        'fallback_error' => 'Errore inatteso. Riprova più tardi.',
+        'fatal_fallback_failure' => 'Errore grave inatteso. Contattare il supporto.',
     ],
 
     // Generic messages
