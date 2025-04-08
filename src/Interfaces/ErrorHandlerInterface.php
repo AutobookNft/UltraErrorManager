@@ -2,34 +2,50 @@
 
 namespace Ultra\ErrorManager\Interfaces;
 
+use Throwable;
+
 /**
- * Interface for all error handlers
+ * ErrorHandlerInterface – Oracoded Contract for Reactive Error Logic
  *
- * This interface must be implemented by all error handlers that can be
- * registered with the ErrorManager.
+ * 🎯 Defines the structure of a runtime-pluggable error handler.
+ * 📡 Used by UltraErrorManager to determine whether and how
+ *     a registered handler should react to a given error.
+ * 🔐 Allows conditional injection of side-effects, alerts, metrics, etc.
  *
  * @package Ultra\ErrorManager\Interfaces
  */
 interface ErrorHandlerInterface
 {
     /**
-     * Determine if this handler should handle the error
+     * 🧠 Determine if this handler is applicable to the given error
      *
-     * @param array $errorConfig Error configuration
-     * @return bool True if this handler should process the error
+     * Evaluates the error configuration to decide whether this handler
+     * should process the event. Often based on type, code, blocking level, etc.
+     *
+     * 🧱 Filter logic for dispatch stage
+     * 🧪 Used inside dispatchHandlers()
+     *
+     * @param array $errorConfig Resolved error configuration
+     * @return bool Whether this handler should execute
      */
     public function shouldHandle(array $errorConfig): bool;
 
     /**
-     * Handle the error
+     * 🔁 Execute side-effects or transformations for this error
      *
-     * This method contains the actual error handling logic.
+     * Performs any operation associated with this error, such as:
+     * - Logging to external systems
+     * - Sending alerts
+     * - Triggering compensating actions
      *
-     * @param string $errorCode Error code identifier
-     * @param array $errorConfig Error configuration
-     * @param array $context Contextual data
-     * @param \Throwable|null $exception Original exception if available
+     * 🧱 Core behavior logic
+     * 🧪 Safe to call multiple times (idempotent recommended)
+     *
+     * @param string $errorCode The symbolic error code
+     * @param array $errorConfig The configuration metadata for the error
+     * @param array $context Contextual data available for substitution/logs
+     * @param Throwable|null $exception Optional original throwable
      * @return void
      */
-    public function handle(string $errorCode, array $errorConfig, array $context = [], ?\Throwable $exception = null): void;
+    public function handle(string $errorCode, array $errorConfig, array $context = [], ?Throwable $exception = null): void;
 }

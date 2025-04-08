@@ -3,92 +3,77 @@
 namespace Ultra\ErrorManager\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Ultra\ErrorManager\ErrorManager;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Ultra\ErrorManager\Interfaces\ErrorHandlerInterface;
+use Ultra\ErrorManager\Interfaces\ErrorManagerInterface;
 
 /**
- * Facade for UltraErrorManager
+ * UltraError – Facade per gestione errori Oracoded
  *
- * This facade provides a strongly-typed gateway to the internal ErrorManager,
- * exposing a safe and testable API to handle application errors.
- *
- * @method static ErrorManager registerHandler(ErrorHandlerInterface $handler)
- * @method static array getHandlers()
- * @method static ErrorManager defineError(string $errorCode, array $config)
- * @method static array|null getErrorConfig(string $errorCode)
+ * 🧷 Fallback a comportamento sicuro in ambienti di test
+ * 🧪 Nessuna eccezione se il Facade root non è definito
+ * 📡 Compatibile con orchestrazione Ultra e ambienti CLI
  */
 class UltraError extends Facade
 {
-    /**
-     * Get the registered name of the component.
-     *
-     * @return string
-     */
     protected static function getFacadeAccessor(): string
     {
         return 'ultra.error-manager';
     }
 
     /**
-     * Handle an error based on its code, context and optional exception.
+     * 🧪 @test
+     * 🧷 @fallback
+     * Safe fallback for root-less environments
      *
-     * Delegates the handling to the underlying ErrorManager.
-     * If $throw is true, an UltraErrorException will be thrown.
-     *
-     * @param string $errorCode   Unique code identifying the error
-     * @param array $context      Optional contextual information for logging / substitution
-     * @param \Throwable|null $exception  Optional original exception
-     * @param bool $throw         Whether to throw the exception or return a response
-     * @return mixed              Response object or throws UltraErrorException
-     *
-     * @throws \Ultra\ErrorManager\Exceptions\UltraErrorException
+     * @return ErrorManagerInterface
      */
-    public static function handle(string $errorCode, array $context = [], \Throwable $exception = null, bool $throw = false): mixed
+    protected static function safeHandler(): ErrorManagerInterface
     {
-        return static::getFacadeRoot()->handle($errorCode, $context, $exception, $throw);
+        $root = static::getFacadeRoot();
+
+        // fallback minimale inline
+        return $root instanceof ErrorManagerInterface
+            ? $root
+            : new class implements ErrorManagerInterface {
+                public function handle(string $errorCode, array $context = [], ?\Throwable $exception = null, bool $throw = false): JsonResponse|RedirectResponse
+                {
+                    if ($throw) throw $exception ?? new \RuntimeException("Simulated error: $errorCode");
+                    return new JsonResponse(['error' => $errorCode, 'context' => $context]);
+                }
+                public function registerHandler(ErrorHandlerInterface $handler): ErrorManagerInterface { return $this; }
+                public function getHandlers(): array { return []; }
+                public function defineError(string $errorCode, array $config): ErrorManagerInterface { return $this; }
+                public function getErrorConfig(string $errorCode): ?array { return null; }
+            };
     }
 
-    /**
-     * Register a custom error handler at runtime.
-     *
-     * @param ErrorHandlerInterface $handler
-     * @return ErrorManager
-     */
-    public static function registerHandler(ErrorHandlerInterface $handler): ErrorManager
+    public static function handle(string $errorCode, array $context = [], ?\Throwable $exception = null, bool $throw = false): JsonResponse|RedirectResponse
     {
-        return static::getFacadeRoot()->registerHandler($handler);
+        return static::safeHandler()->handle($errorCode, $context, $exception, $throw);
     }
 
-    /**
-     * Retrieve all registered error handlers.
-     *
-     * @return array
-     */
+    public static function registerHandler(ErrorHandlerInterface $handler): ErrorManagerInterface
+    {
+        return static::safeHandler()->registerHandler($handler);
+    }
+
     public static function getHandlers(): array
     {
-        return static::getFacadeRoot()->getHandlers();
+        return static::safeHandler()->getHandlers();
     }
 
-    /**
-     * Define a custom error configuration dynamically.
-     *
-     * @param string $errorCode
-     * @param array $config
-     * @return ErrorManager
-     */
-    public static function defineError(string $errorCode, array $config): ErrorManager
+    public static function defineError(string $errorCode, array $config): ErrorManagerInterface
     {
-        return static::getFacadeRoot()->defineError($errorCode, $config);
+        return static::safeHandler()->defineError($errorCode, $config);
     }
 
-    /**
-     * Retrieve the configuration for a given error code.
-     *
-     * @param string $errorCode
-     * @return array|null
-     */
     public static function getErrorConfig(string $errorCode): ?array
     {
-        return static::getFacadeRoot()->getErrorConfig($errorCode);
+        return static::safeHandler()->getErrorConfig($errorCode);
     }
 }
