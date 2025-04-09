@@ -13,6 +13,7 @@ use Ultra\ErrorManager\Interfaces\ErrorManagerInterface;
 use Ultra\UltraLogManager\Facades\UltraLog;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Ultra\UltraLogManager\UltraLogManager;
 
 /**
  * ErrorManager – Oracoded Core Error Handler
@@ -178,7 +179,7 @@ class ErrorManager implements ErrorManagerInterface
     }
 
 
-     /**
+    /**
      * 🧭 Primary Orchestration Entry Point
      *
      * Executes the full UltraError lifecycle for the given error code:
@@ -198,36 +199,29 @@ class ErrorManager implements ErrorManagerInterface
      * @param \Throwable|null $exception Original exception to link with UltraError
      * @param bool $throw Whether to throw or return a structured response
      *
-     * @return JsonResponse|RedirectResponse
+     * @return JsonResponse|RedirectResponse|null
      *
      * @throws UltraErrorException
      */
-
-    public function handle(string $errorCode, array $context = [], ?\Throwable $exception = null, bool $throw = false): JsonResponse|RedirectResponse
+    public function handle(string $errorCode, array $context = [], ?\Throwable $exception = null, bool $throw = false): JsonResponse|RedirectResponse|null
     {
-        // Ensure context is an array
-        if (!is_array($context)) {
-            $context = [];
+        $context = is_array($context) ? $context : [];
+
+        if (app()->bound('ultralogmanager')) {
+            app('ultralogmanager')->info('UltraError', 'Handling error', [
+                'code' => $errorCode,
+                'context' => $context
+            ]);
         }
-
-        // Log the error handling start
-        UltraLog::info('UltraError', 'Starting error handling', [
-            'code' => $errorCode,
-            'context' => $context
-        ]);
-
-        // Handle the error lifecycle
-        return $this->processError($errorCode, $context, $exception, $throw);
-    }
-    {
-        UltraLog::info('UltraError', "Handling error [{$errorCode}]", ['context' => $context]);
 
         $errorConfig = $this->resolveErrorConfig($errorCode, $context, $exception);
         $errorInfo = $this->prepareErrorInfo($errorCode, $errorConfig, $context, $exception);
 
         $this->dispatchHandlers($errorCode, $errorConfig, $context, $exception);
 
-        UltraLog::info('UltraError', "Processed error with handlers", ['code' => $errorCode]);
+        if (app()->bound('ultralogmanager')) {
+            app('ultralogmanager')->info('UltraError', 'Handlers dispatched', ['code' => $errorCode]);
+        }
 
         if ($throw) {
             throw new UltraErrorException(
@@ -239,8 +233,14 @@ class ErrorManager implements ErrorManagerInterface
             );
         }
 
+        // ✅ Response only if in HTTP context
+        if (app()->runningInConsole()) {
+            return null; // test/CLI safe fallback
+        }
+
         return $this->buildResponse($errorInfo);
     }
+
 
 
      /**

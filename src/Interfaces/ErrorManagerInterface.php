@@ -29,7 +29,7 @@ interface ErrorManagerInterface
      * @param bool $throw
      * @return JsonResponse|RedirectResponse
      */
-    public function handle(string $errorCode, array $context = [], ?\Throwable $exception = null, bool $throw = false): JsonResponse|RedirectResponse;
+    public function handle(string $errorCode, array $context = [], ?\Throwable $exception = null, bool $throw = false): JsonResponse|RedirectResponse|null;
 
     /**
      * 🧱 Register a custom error handler
