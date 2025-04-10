@@ -1,0 +1,30 @@
+// Esempio: tsconfig.json (da mettere nella root del progetto TS, es. /home/fabio/libraries/UltraErrorManager/)
+{
+    "compilerOptions": {
+      "target": "ES2016", // O una versione più recente come ES2020, ESNext
+      "module": "ESNext", // Standard moderno per moduli
+      "moduleResolution": "node", // O "bundler" a seconda del setup
+      "strict": true, // Abilita tutti i controlli strict (consigliato per Oracode!)
+      "esModuleInterop": true, // Per compatibilità tra moduli CommonJS e ES
+      "skipLibCheck": true, // Accelera la compilazione non controllando i file .d.ts delle librerie
+      "forceConsistentCasingInFileNames": true,
+      "outDir": "./dist", // Specifica dove mettere i file JS compilati (opzionale)
+      "rootDir": "./resources/ts", // Specifica la root dei file sorgente TS
+      "declaration": true, // Genera i file .d.ts per la libreria (utile se la pubblichi)
+      "sourceMap": true // Genera source map per il debug
+      // Aggiungi "baseUrl" e "paths" se usi alias per gli import
+      // "baseUrl": "./resources/ts",
+      // "paths": {
+      //   "@interfaces/*": ["interfaces/*"],
+      //   "@utils/*": ["utils/*"],
+      //   "@handlers/*": ["handlers/*"]
+      // }
+    },
+    "include": [
+      "./resources/ts/**/*.ts" // Includi tutti i file .ts nella directory specificata e sottodirectory
+    ],
+    "exclude": [
+      "node_modules", // Escludi node_modules
+      "./dist" // Escludi la directory di output
+    ]
+  }

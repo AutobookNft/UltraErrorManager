@@ -1,108 +1,127 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ultra\ErrorManager\Handlers;
 
-use Illuminate\Support\Facades\Log;
+use Illuminate\Contracts\Foundation\Application; // Dependency for environment check
 use Ultra\ErrorManager\Interfaces\ErrorHandlerInterface;
-use Ultra\ErrorManager\Services\TestingConditionsManager;
+use Ultra\ErrorManager\Services\TestingConditionsManager; // Dependency for checking conditions
+use Ultra\UltraLogManager\UltraLogManager; // Dependency for internal logging
+use Throwable; // Import Throwable
 
 /**
- * Error Simulation Handler
+ * 🎯 ErrorSimulationHandler – Oracoded Simulation State Logger
  *
- * This handler integrates with TestingConditionsManager to provide
- * error simulation capabilities for testing and development.
+ * Logs information about handled errors specifically when running in a non-production
+ * environment and error simulations might be active. It checks the TestingConditionsManager
+ * to record whether the currently handled error was actively being simulated.
+ * This handler DOES NOT activate/deactivate simulations; it only reports their state during error handling.
  *
- * @package Ultra\ErrorManager\Handlers
+ * 🧱 Structure:
+ * - Implements ErrorHandlerInterface.
+ * - Requires Application, TestingConditionsManager, and UltraLogManager injected via constructor.
+ * - `shouldHandle` only returns true in non-production environments.
+ * - `handle` logs the error code, config, context, and the simulation status for that code.
+ *
+ * 📡 Communicates:
+ * - With TestingConditionsManager to check simulation status.
+ * - With UltraLogManager to log simulation-related information.
+ * - With Application contract to check the environment.
+ *
+ * 🧪 Testable:
+ * - All dependencies (App, TestingConditionsManager, ULM Logger) are injectable.
+ * - Logic is straightforward logging based on dependencies' state.
+ *
+ * 🛡️ GDPR Considerations:
+ * - Operates only in non-production environments (guard in `shouldHandle`).
+ * - Logs `$context` data (`@data-input`) passed to it. While acceptable in dev/staging,
+ *   ensure sensitive production data is not inadvertently used in these environments
+ *   if context logging is enabled in ULM for the target channel. `@log` tag applies.
  */
-class ErrorSimulationHandler implements ErrorHandlerInterface
+final class ErrorSimulationHandler implements ErrorHandlerInterface
 {
     /**
-     * Testing conditions manager instance
-     *
-     * @var TestingConditionsManager
+     * 🧱 @dependency Application contract instance.
+     * Used to check the current environment.
+     * @var Application
      */
-    protected $testingManager;
+    protected readonly Application $app;
 
     /**
-     * Constructor
-     *
-     * @param TestingConditionsManager $testingManager
+     * 🧱 @dependency Testing conditions manager instance.
+     * Used to check if the current error code is being simulated.
+     * @var TestingConditionsManager
      */
-    public function __construct(TestingConditionsManager $testingManager)
-    {
+    protected readonly TestingConditionsManager $testingManager;
+
+    /**
+     * 🧱 @dependency UltraLogManager instance.
+     * Used for logging simulation information.
+     * @var UltraLogManager
+     */
+    protected readonly UltraLogManager $ulmLogger;
+
+    /**
+     * 🎯 Constructor: Injects required dependencies.
+     *
+     * @param Application $app Laravel Application instance.
+     * @param TestingConditionsManager $testingManager Singleton instance managing test conditions.
+     * @param UltraLogManager $ulmLogger Logger for internal handler operations.
+     */
+    public function __construct(
+        Application $app,
+        TestingConditionsManager $testingManager,
+        UltraLogManager $ulmLogger
+    ) {
+        $this->app = $app;
         $this->testingManager = $testingManager;
+        $this->ulmLogger = $ulmLogger;
     }
 
     /**
-     * Determine if this handler should handle the error
+     * 🧠 Determine if this handler should handle the error.
+     * Only active in non-production environments to avoid logging simulation
+     * data in production. Uses injected Application contract.
      *
-     * @param array $errorConfig Error configuration
-     * @return bool True if this handler should process the error
+     * @param array $errorConfig Resolved error configuration (not used directly here).
+     * @return bool True if the environment is not 'production'.
      */
     public function shouldHandle(array $errorConfig): bool
     {
-        // Only handle in non-production environments
-        return app()->environment() !== 'production';
+        // Use injected app instance to check environment
+        return $this->app->environment() !== 'production';
     }
 
     /**
-     * Handle the error by logging simulation info
+     * 🔬 Handle the error by logging simulation-specific information via ULM.
+     * 📥 @data-input (Via $context and $exception, logged)
+     * 🪵 @log (Logs simulation details)
      *
-     * @param string $errorCode Error code identifier
-     * @param array $errorConfig Error configuration
-     * @param array $context Contextual data
-     * @param \Throwable|null $exception Original exception if available
+     * @param string $errorCode The symbolic error code.
+     * @param array $errorConfig The configuration metadata for the error.
+     * @param array $context Contextual data.
+     * @param Throwable|null $exception Optional original throwable.
      * @return void
-     */
-    public function handle(string $errorCode, array $errorConfig, array $context = [], ?\Throwable $exception = null): void
+     */    public function handle(string $errorCode, array $errorConfig, array $context = [], ?Throwable $exception = null): void
     {
-        // Log error simulation for analysis or debugging
-        Log::channel('testing')->info("Error simulation: {$errorCode}", [
-            'config' => $errorConfig,
-            'context' => $context,
-            'simulated' => $this->testingManager->isTesting($errorCode)
+        // Check if this specific error code is currently being simulated
+        $isSimulated = $this->testingManager->isTesting($errorCode);
+
+        // Log relevant information using the injected ULM logger
+        // Consider using a specific log channel if ULM supports it and it's configured,
+        // otherwise, use a distinct message prefix or context key.
+        $this->ulmLogger->info("UEM SimulationHandler: Error handled.", [
+            'errorCode'    => $errorCode,
+            'isSimulated'  => $isSimulated, // Log whether the condition was active
+            'errorConfig'  => $errorConfig, // Log config for context
+            'context'      => $context,     // Log original context
+            'exception'    => $exception ? get_class($exception) : null, // Log exception type if present
         ]);
     }
 
-    /**
-     * Simulate a specific error
-     *
-     * @param string $errorCode Error code to simulate
-     * @param array $context Additional context for the error
-     * @return mixed Response from error handler
-     */
-    public function simulateError(string $errorCode, array $context = [])
-    {
-        // Set the testing condition to true for this error code
-        $this->testingManager->setCondition($errorCode, true);
-
-        // Log the simulation activation
-        Log::info("Activating error simulation for [{$errorCode}]", $context);
-
-        // Return the error code for potential checks in code
-        return $errorCode;
-    }
-
-    /**
-     * Stop simulating a specific error
-     *
-     * @param string $errorCode Error code to stop simulating
-     * @return void
-     */
-    public function stopSimulatingError(string $errorCode)
-    {
-        $this->testingManager->setCondition($errorCode, false);
-        Log::info("Deactivating error simulation for [{$errorCode}]");
-    }
-
-    /**
-     * Check if an error is currently being simulated
-     *
-     * @param string $errorCode Error code to check
-     * @return bool True if the error is being simulated
-     */
-    public function isSimulatingError(string $errorCode)
-    {
-        return $this->testingManager->isTesting($errorCode);
-    }
+    // Removed simulateError, stopSimulatingError, isSimulatingError methods.
+    // This handler's responsibility is to LOG simulation info during error handling,
+    // not to MANAGE the simulation state itself. State management is done via
+    // TestingConditionsManager directly or its Facade.
 }

@@ -5,114 +5,127 @@ return [
     |--------------------------------------------------------------------------
     | Error Messages - Italian
     |--------------------------------------------------------------------------
-    |
-    | The following language lines are used for error messages displayed to the user
-    | and to developers. You are free to modify these language lines according to your
-    | application's requirements.
-    |
     */
 
     'dev' => [
-        // Authentication and Authorization
+        // == Existing Entries ==
         'authentication_error' => 'Tentativo di accesso non autenticato.',
-
-        'ucm_delete_failed' => 'Impossibile eliminare la configurazione con chiave :key: :message',
-        'undefined_error_code' => 'Codice di errore non definito: :errorCode',
-
-        // File Validation
-        'invalid_input' => 'Input non valido fornito per il parametro :param.',
+        'scan_error' => 'Si è verificato un errore durante la scansione antivirus per il file: :filename.',
+        'virus_found' => 'È stato rilevato un virus nel file: :filename.',
+        'invalid_file_extension' => 'Il file ha un\'estensione non valida (:extension).',
+        'max_file_size' => 'Il file (:size) supera la dimensione massima consentita (:max_size).',
+        'invalid_file_pdf' => 'Il file PDF fornito non è valido o corrotto.',
+        'mime_type_not_allowed' => 'Il tipo MIME del file (:mime) non è consentito.',
         'invalid_image_structure' => 'La struttura del file immagine non è valida.',
-        'mime_type_not_allowed' => 'Il tipo MIME del file non è consentito.',
-        'max_file_size' => 'Il file supera la dimensione massima consentita.',
-        'invalid_file_extension' => 'Il file ha un\'estensione non valida.',
-        'invalid_file_name' => 'Nome file non valido ricevuto durante il processo di upload.',
-        'invalid_file_pdf' => 'Il file PDF non è valido.',
-
-        // Virus and Security
-        'virus_found' => 'È stato rilevato un virus nel file.',
-        'scan_error' => 'Si è verificato un errore durante la scansione antivirus.',
-
-        // File Storage and IO
-        'temp_file_not_found' => 'File temporaneo non trovato.',
-        'file_not_found' => 'Il file richiesto non è stato trovato.',
-        'error_getting_presigned_url' => 'Si è verificato un errore durante il recupero dell\'URL presigned.',
-        'error_during_file_upload' => 'Si è verificato un errore durante il processo di caricamento del file.',
-        'error_deleting_local_temp_file' => 'Impossibile eliminare il file temporaneo locale.',
-        'error_deleting_ext_temp_file' => 'Impossibile eliminare il file temporaneo esterno.',
-        'unable_to_save_bot_file' => 'Impossibile salvare il file per il bot.',
-        'unable_to_create_directory' => 'Impossibile creare la directory per il caricamento del file.',
-        'unable_to_change_permissions' => 'Impossibile modificare i permessi del file.',
-        'impossible_save_file' => 'È stato impossibile salvare il file.',
-
-        // Database and Record Management
+        'invalid_file_name' => 'Nome file non valido ricevuto durante il processo di upload: :filename.',
+        'error_getting_presigned_url' => 'Si è verificato un errore durante il recupero dell\'URL presigned per :object.',
+        'error_during_file_upload' => 'Si è verificato un errore durante il processo di caricamento del file per :filename.',
+        'unable_to_save_bot_file' => 'Impossibile salvare il file per il bot: :filename.',
+        'unable_to_create_directory' => 'Impossibile creare la directory per il caricamento del file: :directory.',
+        'unable_to_change_permissions' => 'Impossibile modificare i permessi per il file/directory: :path.',
+        'impossible_save_file' => 'È stato impossibile salvare il file: :filename sul disco :disk.',
         'error_during_create_egi_record' => 'Si è verificato un errore durante la creazione del record EGI nel database.',
-
-        // Security and Encryption
         'error_during_file_name_encryption' => 'Si è verificato un errore durante il processo di crittografia del nome del file.',
-        'acl_setting_error' => 'Si è verificato un errore durante l\'impostazione dell\'ACL.',
+        'imagick_not_available' => 'L\'estensione PHP Imagick non è disponibile o configurata correttamente.',
+        'json_error' => 'Errore di elaborazione JSON. Tipo: :type, Messaggio: :message',
+        'generic_server_error' => 'Si è verificato un errore generico del server. Dettagli: :details',
+        'file_not_found' => 'Il file richiesto non è stato trovato: :path.',
+        'unexpected_error' => 'Errore imprevisto nel sistema. Controllare i log per dettagli.',
+        'error_deleting_local_temp_file' => 'Impossibile eliminare il file temporaneo locale: :path.',
+        'acl_setting_error' => 'Si è verificato un errore durante l\'impostazione dell\'ACL (:acl) per l\'oggetto :object.',
+        'invalid_input' => 'Input non valido fornito per il parametro :param.',
+        'temp_file_not_found' => 'File temporaneo non trovato al percorso: :path.',
+        'error_deleting_ext_temp_file' => 'Impossibile eliminare il file temporaneo esterno: :path.',
+        'ucm_delete_failed' => 'Impossibile eliminare la configurazione con chiave :key: :message',
+        'undefined_error_code' => 'Codice di errore non definito incontrato: :errorCode. Codice originale era [:_original_code].',
+        'fallback_error' => 'Si è verificato un errore ma non è stata trovata alcuna configurazione specifica per il codice [:_original_code].',
+        'fatal_fallback_failure' => 'ERRORE FATALE: Configurazione di fallback mancante o non valida. Il sistema non può rispondere.',
+        'ucm_audit_not_found' => 'Nessun record di audit trovato per l\'ID di configurazione specificato: :id.',
+        'ucm_duplicate_key' => 'Tentativo di creare una configurazione con una chiave duplicata: :key.',
+        'ucm_create_failed' => 'Creazione voce di configurazione fallita: :key. Motivo: :reason',
+        'ucm_update_failed' => 'Aggiornamento voce di configurazione fallita: :key. Motivo: :reason',
+        'ucm_not_found' => 'Chiave di configurazione non trovata: :key.',
+        'invalid_file' => 'File fornito non valido: :reason',
+        'invalid_file_validation' => 'Validazione file fallita per il campo :field. Motivo: :reason',
+        'error_saving_file_metadata' => 'Salvataggio metadati fallito per file ID :file_id. Motivo: :reason',
+        'server_limits_restrictive' => 'I limiti del server potrebbero essere troppo restrittivi. Controllare :limit_name (:limit_value).',
 
-        // System and Environment
-        'imagick_not_available' => 'L\'estensione Imagick non è disponibile.',
-
-        // Generic Error Categories
-        'unexpected_error' => 'Errore imprevisto nel sistema.',
-        'generic_server_error' => 'Si è verificato un errore generico del server.',
-        'json_error' => 'Errore JSON nel dispatcher.',
-
-        'fallback_error' => 'Si è verificato un errore, ma non è stata trovata alcuna configurazione specifica.',
-        'fatal_fallback_failure' => 'Errore fatale: configurazione di fallback mancante. Il sistema non può rispondere correttamente.',
-        'ucm_audit_not_found' => 'Nessun record di audit trovato per l\'ID configurazione indicato.',
+        // == New Entries ==
+        'authorization_error' => 'Autorizzazione negata per l\'azione richiesta: :action.',
+        'csrf_token_mismatch' => 'Token CSRF non valido o scaduto.',
+        'route_not_found' => 'Il percorso o la risorsa richiesta non è stata trovata: :url.',
+        'method_not_allowed' => 'Metodo HTTP :method non consentito per questo percorso: :url.',
+        'too_many_requests' => 'Troppe richieste rilevate dal limitatore di frequenza.',
+        'database_error' => 'Si è verificato un errore di query o connessione al database. Dettagli: :details',
+        'record_not_found' => 'Il record richiesto dal database non è stato trovato (Modello: :model, ID: :id).',
+        'validation_error' => 'Validazione input fallita. Controllare il contesto per errori specifici.', // Messaggio dev generico
+        'utm_load_failed' => 'Caricamento file traduzioni fallito: :file per la lingua :locale.',
+        'utm_invalid_locale' => 'Tentativo di usare una lingua non valida o non supportata: :locale.',
+        'uem_email_send_failed' => 'EmailNotificationHandler: invio notifica fallito per :errorCode. Motivo: :reason',
+        'uem_slack_send_failed' => 'SlackNotificationHandler: invio notifica fallito per :errorCode. Motivo: :reason',
+        'uem_recovery_action_failed' => 'Azione di recupero :action fallita per errore :errorCode. Motivo: :reason',
     ],
 
     'user' => [
-        // Authentication and Authorization
+        // == Existing Entries ==
         'authentication_error' => 'Non hai l\'autorizzazione per eseguire questa operazione.',
-
-        'ucm_delete_failed' => 'Si è verificato un errore durante l\'eliminazione della configurazione. Riprova più tardi.',
-        'undefined_error_code' => 'Si è verificato un errore imprevisto. Contatta il supporto.',
-
-        // File Validation
-        'invalid_input' => 'Il valore fornito per :param non è valido. Controlla l\'input e riprova.',
-        'invalid_image_structure' => 'L\'immagine che hai caricato non è valida. Prova con un\'altra immagine.',
-        'mime_type_not_allowed' => 'Il tipo di file che hai caricato non è supportato. I tipi consentiti sono: :allowed_types.',
-        'max_file_size' => 'Il file è troppo grande. La dimensione massima consentita è :max_size MB.',
+        'scan_error' => 'Non è stato possibile verificare la sicurezza del file in questo momento. Riprova più tardi.',
+        'virus_found' => 'Il file ":fileName" contiene potenziali minacce ed è stato bloccato per la tua sicurezza.',
         'invalid_file_extension' => 'L\'estensione del file non è supportata. Le estensioni consentite sono: :allowed_extensions.',
+        'max_file_size' => 'Il file è troppo grande. La dimensione massima consentita è :max_size.',
+        'invalid_file_pdf' => 'Il PDF caricato non è valido o potrebbe essere danneggiato. Riprova.',
+        'mime_type_not_allowed' => 'Il tipo di file che hai caricato non è supportato. I tipi consentiti sono: :allowed_types.',
+        'invalid_image_structure' => 'L\'immagine che hai caricato non sembra valida. Prova con un\'altra immagine.',
         'invalid_file_name' => 'Il nome del file contiene caratteri non validi. Usa solo lettere, numeri, spazi, trattini e underscore.',
-        'invalid_file_pdf' => 'Il PDF caricato non è valido o potrebbe essere danneggiato.',
-
-        // Virus and Security
-        'virus_found' => 'Il file ":fileName" contiene minacce ed è stato bloccato per la tua sicurezza.',
-        'scan_error' => 'Non è stato possibile verificare la sicurezza del file. Riprova più tardi.',
-
-        // File Storage and IO
-        'temp_file_not_found' => 'Problema riscontrato con il file :file',
+        'error_getting_presigned_url' => 'Si è verificato un problema temporaneo durante la preparazione del caricamento. Riprova.',
+        'error_during_file_upload' => 'Si è verificato un errore durante il caricamento del file. Riprova o contatta l\'assistenza se il problema persiste.',
+        'unable_to_save_bot_file' => 'Non è stato possibile salvare il file generato in questo momento. Riprova più tardi.',
+        'unable_to_create_directory' => 'Errore interno del sistema durante la preparazione del salvataggio. Contatta l\'assistenza.',
+        'unable_to_change_permissions' => 'Errore interno del sistema durante il salvataggio del file. Contatta l\'assistenza.',
+        'impossible_save_file' => 'Non è stato possibile salvare il tuo file a causa di un errore di sistema. Riprova o contatta l\'assistenza.',
+        'error_during_create_egi_record' => 'Si è verificato un errore durante il salvataggio delle informazioni. Il nostro team tecnico è stato informato.',
+        'error_during_file_name_encryption' => 'Si è verificato un errore di sicurezza durante l\'elaborazione del file. Riprova.',
+        'imagick_not_available' => 'Il sistema non è momentaneamente in grado di elaborare le immagini. Contatta l\'amministratore se il problema persiste.',
+        'json_error' => 'Si è verificato un errore nell\'elaborazione dei dati. Controlla i dati inseriti o riprova più tardi. [Rif: JSON]',
+        'generic_server_error' => 'Si è verificato un errore del server. Riprova più tardi o contatta l\'assistenza se il problema continua. [Rif: SERVER]',
         'file_not_found' => 'Il file richiesto non è stato trovato.',
-        'error_getting_presigned_url' => 'Si è verificato un problema durante la preparazione dell\'upload. Riprova più tardi.',
-        'error_during_file_upload' => 'Si è verificato un errore durante il caricamento. Riprova o contatta l\'assistenza se il problema persiste.',
-        'generic_internal_error' => 'Si è verificato un errore interno. Il team tecnico è stato notificato.',
-        'unable_to_save_bot_file' => 'Non è stato possibile salvare il file. Riprova più tardi.',
-        'impossible_save_file' => 'Impossibile salvare il file. Riprova o contatta l\'assistenza.',
+        'unexpected_error' => 'Si è verificato un errore imprevisto. Il nostro team tecnico è stato informato. Riprova più tardi. [Rif: UNEXPECTED]',
+        'error_deleting_local_temp_file' => 'Errore interno durante la pulizia dei file temporanei. Contatta l\'assistenza.', // Messaggio più generico per l'utente
+        'acl_setting_error' => 'Non è stato possibile impostare i permessi corretti per il file. Riprova o contatta l\'assistenza.',
+        'invalid_input' => 'Il valore fornito per :param non è valido. Controlla l\'input e riprova.',
+        'temp_file_not_found' => 'Si è verificato un problema temporaneo con il file :file. Riprova.',
+        'error_deleting_ext_temp_file' => 'Errore interno durante la pulizia dei file temporanei esterni. Contatta l\'assistenza.',
+        'ucm_delete_failed' => 'Si è verificato un errore durante l\'eliminazione della configurazione. Riprova più tardi.',
+        'undefined_error_code' => 'Si è verificato un errore imprevisto. Contatta il supporto se il problema persiste. [Rif: UNDEFINED]',
+        'fallback_error' => 'Si è verificato un problema inatteso nel sistema. Riprova più tardi o contatta l\'assistenza. [Rif: FALLBACK]',
+        'fatal_fallback_failure' => 'Si è verificato un errore critico nel sistema. Contatta immediatamente l\'assistenza. [Rif: FATAL]',
+        'ucm_audit_not_found' => 'Non sono disponibili informazioni storiche per questo elemento.',
+        'ucm_duplicate_key' => 'Questa impostazione di configurazione esiste già.',
+        'ucm_create_failed' => 'Impossibile salvare la nuova impostazione di configurazione. Riprova.',
+        'ucm_update_failed' => 'Impossibile aggiornare l\'impostazione di configurazione. Riprova.',
+        'ucm_not_found' => 'L\'impostazione di configurazione richiesta non è stata trovata.',
+        'invalid_file' => 'Il file fornito non è valido. Controlla il file e riprova.',
+        'invalid_file_validation' => 'Controlla il file nel campo :field. La validazione non è riuscita.',
+        'error_saving_file_metadata' => 'Si è verificato un errore salvando i dettagli del file. Riprova il caricamento.',
+        'server_limits_restrictive' => 'La configurazione del server potrebbe impedire questa operazione. Contatta l\'assistenza se il problema persiste.',
+        'generic_internal_error' => 'Si è verificato un errore interno. Il nostro team tecnico è stato informato e sta lavorando per risolverlo.', // Messaggio generico riutilizzabile
 
-        // Database and Record Management
-        'error_during_create_egi_record' => 'Si è verificato un errore durante il salvataggio nel database. Il team tecnico è stato informato.',
-
-        // Security and Encryption
-        'error_during_file_name_encryption' => 'Si è verificato un errore di sicurezza. Riprova più tardi.',
-        'acl_setting_error' => 'Non è stato possibile impostare i permessi corretti sul file. Riprova o contatta l\'assistenza.',
-
-        // System and Environment
-        'imagick_not_available' => 'Il sistema non è configurato correttamente per elaborare le immagini. Contatta l\'amministratore.',
-
-        // Generic Error Categories
-        'unexpected_error' => 'Si è verificato un errore imprevisto. Il team tecnico è stato informato.',
-        'generic_server_error' => 'Si è verificato un errore del server. Riprova più tardi o contatta l\'assistenza.',
-        'json_error' => 'Si è verificato un errore di elaborazione dati. Riprova o contatta l\'assistenza.',
-
-        'fallback_error' => 'Errore inatteso. Riprova più tardi.',
-        'fatal_fallback_failure' => 'Errore grave inatteso. Contattare il supporto.',
-        'ucm_audit_not_found' => 'Non ci sono informazioni di audit disponibili.',
+        // == New Entries ==
+        'authorization_error' => 'Non disponi dei permessi necessari per eseguire questa azione.',
+        'csrf_token_mismatch' => 'La tua sessione è scaduta o non è valida. Per favore, ricarica la pagina e riprova.',
+        'route_not_found' => 'La pagina o la risorsa che hai richiesto non è stata trovata.',
+        'method_not_allowed' => 'L\'azione che hai tentato di eseguire non è permessa su questa risorsa.',
+        'too_many_requests' => 'Stai eseguendo azioni troppo rapidamente. Attendi qualche istante e riprova.',
+        'database_error' => 'Si è verificato un errore nel database. Riprova più tardi o contatta l\'assistenza. [Rif: DB]',
+        'record_not_found' => 'L\'elemento che hai richiesto non è stato trovato.',
+        'validation_error' => 'Per favore, correggi gli errori evidenziati nel modulo e riprova.', // Messaggio user generico
+        'utm_load_failed' => 'Il sistema ha riscontrato un problema nel caricamento delle impostazioni della lingua. Alcune funzionalità potrebbero essere limitate.',
+        'utm_invalid_locale' => 'L\'impostazione della lingua richiesta non è disponibile.',
+        // Messaggi user per errori interni UEM (usare generic_internal_error)
+        // 'uem_email_send_failed' => null,
+        // 'uem_slack_send_failed' => null,
+        // 'uem_recovery_action_failed' => null,
     ],
 
-    // Generic messages
-    'generic_error' => 'Si è verificato un errore. Riprova più tardi.',
+    'generic_error' => 'Si è verificato un errore. Riprova più tardi o contatta l\'assistenza.',
 ];

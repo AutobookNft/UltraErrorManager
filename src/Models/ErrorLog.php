@@ -1,104 +1,128 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ultra\ErrorManager\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory; // Se usi le factory
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo; // Per la relazione user
+use Illuminate\Support\Collection; // Per return type hint
+use Illuminate\Support\Facades\DB; // Per query Raw
+use Carbon\Carbon; // Per manipolazione date
 
 /**
- * ErrorLog Model
+ * 🎯 ErrorLog – Oracoded Eloquent Model for Error Persistence
  *
- * This model represents a logged error in the database.
- * It provides methods for querying, marking as resolved, and statistics.
+ * Represents a logged error event within the database. Stores detailed information
+ * about the error, its context, associated exception (if any), request details,
+ * and resolution status. Designed to be independent of HTTP/Auth context, receiving
+ * necessary data explicitly upon creation.
  *
- * @package Ultra\ErrorManager\Models
+ * 🧱 Structure:
+ * - Standard Eloquent Model (`$fillable`, `$casts`, `$timestamps`).
+ * - NO direct dependency on `request()` or `auth()` helpers in model events.
+ * - Provides query scopes for common filtering (resolved, type, code, date).
+ * - Includes methods for state management (`markAsResolved`, `markAsUnresolved`, `markAsNotified`).
+ * - Offers utility methods for data retrieval used by the dashboard (`getSimilarErrors`, etc.).
+ * - Defines `user()` relationship (optional, depends on app config).
+ *
+ * 📡 Communicates:
+ * - Primarily with the Database via Eloquent ORM.
+ * - Can be related to the User model via the `user()` relationship.
+ *
+ * 🧪 Testable:
+ * - Can be tested using standard Eloquent testing techniques (factories, database transactions/mocking).
+ * - Scopes and methods are testable units.
+ * - Independence from HTTP/Auth context simplifies testing.
+ *
+ * 🛡️ GDPR Considerations:
+ * - Stores potentially sensitive data (IP, User Agent, User ID, Context, Exception details).
+ * - Context data should be sanitized *before* being passed to `create()`.
+ * - Deletion/Anonymization must be handled externally (e.g., GDPR commands or policies).
  */
-class ErrorLog extends Model
+class ErrorLog extends Model // Non la rendiamo final di default, Eloquent a volte richiede estensione
 {
-    use HasFactory;
+    // Use HasFactory if you plan to create factories for testing this model
+    // use HasFactory;
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
+     * 🧱 Mass assignable attributes.
+     * @var array<int, string>
      */
     protected $fillable = [
         'error_code',
         'type',
         'blocking',
-        'message',
-        'user_message',
+        'message', // Dev message
+        'user_message', // User message (potentially localized key or direct)
         'http_status_code',
-        'context',
+        'context', // Should be JSON string or already sanitized array
         'display_mode',
         'exception_class',
         'exception_message',
         'exception_file',
         'exception_line',
-        'exception_trace',
+        'exception_trace', // Potentially truncated
         'request_method',
         'request_url',
         'user_agent',
         'ip_address',
-        'user_id',
+        'user_id', // Nullable foreign key
         'resolved',
         'resolved_at',
-        'resolved_by',
+        'resolved_by', // User name or identifier string
         'resolution_notes',
-        'notified',
+        'notified', // Flag indicating if primary notification (e.g., email) was sent
     ];
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array
+     * 🧱 Attribute casting.
+     * Ensures correct data types.
+     * @var array<string, string>
      */
     protected $casts = [
-        'context' => 'array',
+        'context' => 'array', // Automatically encode/decode JSON
         'resolved' => 'boolean',
         'resolved_at' => 'datetime',
         'notified' => 'boolean',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+        'created_at' => 'datetime', // Handled by Eloquent
+        'updated_at' => 'datetime', // Handled by Eloquent
+        'exception_line' => 'integer',
+        'http_status_code' => 'integer',
+        'user_id' => 'integer', // Cast user_id for consistency
     ];
 
     /**
-     * The "booted" method of the model.
+     * 🧱 The table associated with the model.
+     * Explicitly defining is slightly more performant than relying on convention.
+     *
+     * @var string
+     */
+    protected $table = 'error_logs';
+
+    /**
+     * 🧱 Model booted event.
+     * REMOVED automatic filling of request/auth data. This should be done
+     * by the calling code (e.g., DatabaseLogHandler) passing the data explicitly.
      *
      * @return void
      */
-    protected static function booted()
+    protected static function booted(): void
     {
-        static::creating(function ($errorLog) {
-            // Set default values if not provided
-            if (!isset($errorLog->ip_address)) {
-                $errorLog->ip_address = request()->ip();
-            }
-
-            if (!isset($errorLog->user_agent)) {
-                $errorLog->user_agent = request()->userAgent();
-            }
-
-            if (!isset($errorLog->request_method)) {
-                $errorLog->request_method = request()->method();
-            }
-
-            if (!isset($errorLog->request_url)) {
-                $errorLog->request_url = request()->fullUrl();
-            }
-
-            if (!isset($errorLog->user_id) && auth()->check()) {
-                $errorLog->user_id = auth()->id();
-            }
-        });
+        // No longer setting request/auth data automatically here.
+        // static::creating(function ($errorLog) {
+        //     // Logic removed
+        // });
     }
 
+    // --- Query Scopes ---
+
     /**
-     * Scope a query to only include unresolved errors.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * 🔎 Scope: Filter for unresolved errors.
+     * @param Builder $query
+     * @return Builder
      */
     public function scopeUnresolved(Builder $query): Builder
     {
@@ -106,10 +130,9 @@ class ErrorLog extends Model
     }
 
     /**
-     * Scope a query to only include resolved errors.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * 🔎 Scope: Filter for resolved errors.
+     * @param Builder $query
+     * @return Builder
      */
     public function scopeResolved(Builder $query): Builder
     {
@@ -117,10 +140,9 @@ class ErrorLog extends Model
     }
 
     /**
-     * Scope a query to only include critical errors.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * 🔎 Scope: Filter for critical errors.
+     * @param Builder $query
+     * @return Builder
      */
     public function scopeCritical(Builder $query): Builder
     {
@@ -128,11 +150,10 @@ class ErrorLog extends Model
     }
 
     /**
-     * Scope a query to only include errors of a specific type.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $type
-     * @return \Illuminate\Database\Eloquent\Builder
+     * 🔎 Scope: Filter by error type.
+     * @param Builder $query
+     * @param string $type Error type ('critical', 'error', etc.)
+     * @return Builder
      */
     public function scopeOfType(Builder $query, string $type): Builder
     {
@@ -140,11 +161,10 @@ class ErrorLog extends Model
     }
 
     /**
-     * Scope a query to only include errors with a specific code.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $code
-     * @return \Illuminate\Database\Eloquent\Builder
+     * 🔎 Scope: Filter by specific error code.
+     * @param Builder $query
+     * @param string $code Symbolic error code.
+     * @return Builder
      */
     public function scopeWithCode(Builder $query, string $code): Builder
     {
@@ -152,53 +172,52 @@ class ErrorLog extends Model
     }
 
     /**
-     * Scope a query to only include errors that occurred after a given date.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $date
-     * @return \Illuminate\Database\Eloquent\Builder
+     * 🔎 Scope: Filter errors created on or after a specific date.
+     * @param Builder $query
+     * @param string|Carbon $date Date string (Y-m-d) or Carbon instance.
+     * @return Builder
      */
-    public function scopeOccurredAfter(Builder $query, string $date): Builder
+    public function scopeOccurredAfter(Builder $query, string|Carbon $date): Builder
     {
-        return $query->where('created_at', '>=', $date);
+        return $query->where('created_at', '>=', Carbon::parse($date)->startOfDay());
     }
 
     /**
-     * Scope a query to only include errors that occurred before a given date.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $date
-     * @return \Illuminate\Database\Eloquent\Builder
+     * 🔎 Scope: Filter errors created on or before a specific date.
+     * @param Builder $query
+     * @param string|Carbon $date Date string (Y-m-d) or Carbon instance.
+     * @return Builder
      */
-    public function scopeOccurredBefore(Builder $query, string $date): Builder
+    public function scopeOccurredBefore(Builder $query, string|Carbon $date): Builder
     {
-        return $query->where('created_at', '<=', $date);
+        return $query->where('created_at', '<=', Carbon::parse($date)->endOfDay());
     }
 
+    // --- State Management Methods ---
+
     /**
-     * Mark this error as resolved.
+     * 🔧 Mark this error instance as resolved.
+     * Sets resolution details and saves the model.
      *
-     * @param  string|null  $resolvedBy
-     * @param  string|null  $notes
-     * @return bool
+     * @param string|null $resolvedBy Identifier of the resolver (e.g., user name, 'System').
+     * @param string|null $notes Optional resolution notes.
+     * @return bool True on success, false on failure.
      */
     public function markAsResolved(?string $resolvedBy = null, ?string $notes = null): bool
     {
         $this->resolved = true;
         $this->resolved_at = now();
         $this->resolved_by = $resolvedBy;
-
-        if ($notes) {
-            $this->resolution_notes = $notes;
-        }
+        $this->resolution_notes = $notes; // Update notes as well
 
         return $this->save();
     }
 
     /**
-     * Mark this error as unresolved.
+     * 🔧 Mark this error instance as unresolved.
+     * Clears resolution details and saves the model.
      *
-     * @return bool
+     * @return bool True on success, false on failure.
      */
     public function markAsUnresolved(): bool
     {
@@ -211,9 +230,9 @@ class ErrorLog extends Model
     }
 
     /**
-     * Mark this error as notified.
+     * 🔧 Mark this error instance as having been notified (e.g., email sent).
      *
-     * @return bool
+     * @return bool True on success, false on failure.
      */
     public function markAsNotified(): bool
     {
@@ -221,126 +240,176 @@ class ErrorLog extends Model
         return $this->save();
     }
 
-    /**
-     * Relationship to user.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
-    {
-        return $this->belongsTo(config('auth.providers.users.model'));
-    }
+    // --- Relationships ---
 
     /**
-     * Get similar errors based on error code.
+     * 🔗 Relationship: Get the user associated with this error log (if any).
+     * Assumes the user model is configured in `config/auth.php`.
      *
-     * @param  int  $limit
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return BelongsTo
      */
-    public function getSimilarErrors(int $limit = 10)
+    public function user(): BelongsTo
+    {
+        // Ensure the config key points to the correct user model provider
+        $userModel = config('auth.providers.users.model');
+        if (!$userModel) {
+            // Fallback or throw exception if user model isn't configured?
+            // For now, let Eloquent handle the potential null relationship.
+            return $this->belongsTo(User::class); // Default guess if config missing
+        }
+        return $this->belongsTo($userModel);
+    }
+
+    // --- Utility / Dashboard Methods ---
+
+    /**
+     * 📡 Get similar errors based on the same error code.
+     * Excludes the current instance.
+     *
+     * @param int $limit Maximum number of similar errors to retrieve.
+     * @return \Illuminate\Database\Eloquent\Collection<int, ErrorLog>
+     */
+    public function getSimilarErrors(int $limit = 10): Collection
     {
         return static::withCode($this->error_code)
-            ->where('id', '!=', $this->id)
-            ->latest()
+            ->where('id', '!=', $this->id) // Exclude self
+            ->latest() // Order by most recent
             ->limit($limit)
             ->get();
     }
 
     /**
-     * Get a summary of the error context.
+     * 📡 Get a potentially truncated summary of the error context.
+     * Useful for display in lists where full context is too large.
      *
-     * @param  int  $maxLength
-     * @return string
+     * @param int $maxLength Maximum length of the JSON string summary.
+     * @return string JSON summary or 'No context available'.
      */
     public function getContextSummary(int $maxLength = 100): string
     {
-        if (!$this->context) {
+        $context = $this->context; // Access the decoded array via casts
+        if (empty($context)) {
             return 'No context available';
         }
 
-        $json = json_encode($this->context);
+        // Encode back to JSON for summary
+        $json = json_encode($context);
+        if ($json === false || strlen($json) === 0) { // Handle encoding errors
+             return 'Context encoding error';
+        }
 
-        if (strlen($json) <= $maxLength) {
+        if (mb_strlen($json) <= $maxLength) {
             return $json;
         }
 
-        return substr($json, 0, $maxLength - 3) . '...';
+        // Truncate multibyte safe
+        return mb_substr($json, 0, $maxLength - 3) . '...';
     }
 
     /**
-     * Get error frequency over time.
+     * 📊 Static: Get error frequency count over time for a specific error code.
+     * Used by the statistics dashboard.
      *
-     * @param  string  $errorCode
-     * @param  string  $period  daily|weekly|monthly
-     * @param  int  $limit
-     * @return array
+     * @param string $errorCode The specific error code to analyze.
+     * @param string $period Grouping period ('daily', 'weekly', 'monthly').
+     * @param int $limit Number of periods to retrieve.
+     * @param Carbon|null $endDate Optional end date for the analysis period (defaults to now).
+     * @return array<int, array{'period': string, 'count': int}> Array of {period, count} maps.
      */
-    public static function getErrorFrequency(string $errorCode, string $period = 'daily', int $limit = 30): array
+    public static function getErrorFrequency(string $errorCode, string $period = 'daily', int $limit = 30, ?Carbon $endDate = null): array
     {
-        $query = static::withCode($errorCode);
+        $query = static::query()->withCode($errorCode); // Start query with code scope
+        $endDate = $endDate ?? now(); // Default to now
 
-        // Group by the appropriate time period
-        switch ($period) {
+        // Determine date format and truncation logic based on period
+        switch (strtolower($period)) {
             case 'monthly':
-                $format = 'Y-m';
-                $dateFormat = '%Y-%m';
+                $dateFormat = '%Y-%m'; // Group by year-month
+                $startDate = $endDate->copy()->subMonthsNoOverflow($limit - 1)->startOfMonth();
                 break;
             case 'weekly':
-                $format = 'Y-W';
-                $dateFormat = '%Y-%u';
-                break;
+                 // Use ISO 8601 week date format (%G-%V) for consistency
+                 // Note: %u gives week number (1-53), %Y year. %G-%V is ISO week year-week.
+                 $dateFormat = '%x-%v'; // ISO Year-Week (e.g., 2023-42)
+                 $startDate = $endDate->copy()->subWeeks($limit - 1)->startOfWeek();
+                 break;
             case 'daily':
             default:
-                $format = 'Y-m-d';
-                $dateFormat = '%Y-%m-%d';
+                $dateFormat = '%Y-%m-%d'; // Group by year-month-day
+                $startDate = $endDate->copy()->subDays($limit - 1)->startOfDay();
                 break;
         }
 
-        $rawSql = "DATE_FORMAT(created_at, '{$dateFormat}') as period";
+        // Ensure query considers the date range
+        $query->whereBetween('created_at', [$startDate, $endDate->endOfDay()]);
 
-        // Rimuovi la selezione di created_at
-        $results = $query->selectRaw($rawSql)
-            ->selectRaw('COUNT(*) as count')
-            ->groupBy('period')  // Mantieni solo il raggruppamento su period
-            ->orderBy('period', 'desc')
-            ->limit($limit)
-            ->get();
+        // Build the raw select expression for grouping
+        $rawSelect = DB::raw("DATE_FORMAT(created_at, '{$dateFormat}') as period, COUNT(*) as count");
 
-        $data = [];
-        foreach ($results as $result) {
-            $data[] = [
-                'period' => $result->period,
-                'count' => $result->count,
+        $results = $query->select($rawSelect)
+            ->groupBy('period')
+            ->orderBy('period', 'asc') // Order chronologically before returning
+            ->get()
+            ->keyBy('period'); // Key by period for easy lookup
+
+        // Generate all periods in the range to ensure zero counts are included
+        $periodData = [];
+        $currentPeriod = $startDate->copy();
+
+        for ($i = 0; $i < $limit; $i++) {
+            $periodKey = $currentPeriod->format(match (strtolower($period)) {
+                 'monthly' => 'Y-m',
+                 'weekly' => 'o-W', // Use 'o' for ISO Year, 'W' for ISO week number
+                 default => 'Y-m-d',
+            });
+
+            $periodData[$periodKey] = [
+                'period' => $periodKey,
+                'count' => $results->get($periodKey)?->count ?? 0, // Use lookup, default 0
             ];
+
+            // Increment period
+            match (strtolower($period)) {
+                'monthly' => $currentPeriod->addMonthNoOverflow(),
+                'weekly' => $currentPeriod->addWeek(),
+                default => $currentPeriod->addDay(),
+            };
+
+             // Stop if we go past the end date significantly (safety)
+             if ($currentPeriod->isAfter($endDate->copy()->addDay())) break;
         }
 
-        return array_reverse($data);
+        // Return only the values (array of maps)
+        return array_values($periodData);
     }
 
+
     /**
-     * Get top error codes by frequency.
+     * 📊 Static: Get top N most frequent error codes within a date range.
+     * Used by the dashboard.
      *
-     * @param  int  $limit
-     * @param  string|null  $fromDate
-     * @param  string|null  $toDate
-     * @return array
+     * @param int $limit Number of top codes to return.
+     * @param string|Carbon|null $fromDate Start date (inclusive).
+     * @param string|Carbon|null $toDate End date (inclusive).
+     * @return array<int, array{'error_code': string, 'count': int}>
      */
-    public static function getTopErrorCodes(int $limit = 10, ?string $fromDate = null, ?string $toDate = null): array
+    public static function getTopErrorCodes(int $limit = 10, string|Carbon|null $fromDate = null, string|Carbon|null $toDate = null): array
     {
-        $query = static::select('error_code')
-            ->selectRaw('COUNT(*) as count')
+        $query = static::select('error_code', DB::raw('COUNT(*) as count')) // Use DB::raw
             ->groupBy('error_code')
-            ->orderBy('count', 'desc')
+            ->orderByDesc('count') // Use orderByDesc for clarity
             ->limit($limit);
 
         if ($fromDate) {
-            $query->where('created_at', '>=', $fromDate);
+             // Use scope for consistency
+            $query->occurredAfter($fromDate);
         }
 
         if ($toDate) {
-            $query->where('created_at', '<=', $toDate);
+             // Use scope for consistency
+            $query->occurredBefore($toDate);
         }
 
-        return $query->get()->toArray();
+        return $query->get()->toArray(); // Return as array
     }
 }
