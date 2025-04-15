@@ -62,6 +62,7 @@ class ErrorLog extends Model // Non la rendiamo final di default, Eloquent a vol
         'display_mode',
         'exception_class',
         'exception_message',
+        'exception_code',
         'exception_file',
         'exception_line',
         'exception_trace', // Potentially truncated
@@ -83,6 +84,7 @@ class ErrorLog extends Model // Non la rendiamo final di default, Eloquent a vol
      * @var array<string, string>
      */
     protected $casts = [
+        'exception_code' => 'integer',
         'context' => 'array', // Automatically encode/decode JSON
         'resolved' => 'boolean',
         'resolved_at' => 'datetime',

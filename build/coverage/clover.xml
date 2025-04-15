@@ -1,0 +1,1343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1744706358">
+  <project timestamp="1744706358">
+    <package name="Ultra\ErrorManager">
+      <file name="/home/fabio/libraries/UltraErrorManager/src/ErrorManager.php">
+        <class name="Ultra\ErrorManager\ErrorManager" namespace="Ultra\ErrorManager">
+          <metrics complexity="34" methods="11" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="155" coveredstatements="0" elements="166" coveredelements="0"/>
+        </class>
+        <line num="84" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="90" type="stmt" count="0"/>
+        <line num="91" type="stmt" count="0"/>
+        <line num="92" type="stmt" count="0"/>
+        <line num="93" type="stmt" count="0"/>
+        <line num="96" type="stmt" count="0"/>
+        <line num="106" type="method" name="registerHandler" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="108" type="stmt" count="0"/>
+        <line num="109" type="stmt" count="0"/>
+        <line num="110" type="stmt" count="0"/>
+        <line num="111" type="stmt" count="0"/>
+        <line num="112" type="stmt" count="0"/>
+        <line num="113" type="stmt" count="0"/>
+        <line num="121" type="method" name="getHandlers" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="123" type="stmt" count="0"/>
+        <line num="132" type="method" name="defineError" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="134" type="stmt" count="0"/>
+        <line num="135" type="stmt" count="0"/>
+        <line num="136" type="stmt" count="0"/>
+        <line num="137" type="stmt" count="0"/>
+        <line num="138" type="stmt" count="0"/>
+        <line num="139" type="stmt" count="0"/>
+        <line num="149" type="method" name="getErrorConfig" visibility="public" complexity="3" crap="12" count="0"/>
+        <line num="151" type="stmt" count="0"/>
+        <line num="152" type="stmt" count="0"/>
+        <line num="156" type="stmt" count="0"/>
+        <line num="158" type="stmt" count="0"/>
+        <line num="160" type="stmt" count="0"/>
+        <line num="161" type="stmt" count="0"/>
+        <line num="162" type="stmt" count="0"/>
+        <line num="165" type="stmt" count="0"/>
+        <line num="180" type="method" name="handle" visibility="public" complexity="3" crap="12" count="0"/>
+        <line num="187" type="stmt" count="0"/>
+        <line num="188" type="stmt" count="0"/>
+        <line num="190" type="stmt" count="0"/>
+        <line num="191" type="stmt" count="0"/>
+        <line num="192" type="stmt" count="0"/>
+        <line num="193" type="stmt" count="0"/>
+        <line num="194" type="stmt" count="0"/>
+        <line num="197" type="stmt" count="0"/>
+        <line num="200" type="stmt" count="0"/>
+        <line num="203" type="stmt" count="0"/>
+        <line num="204" type="stmt" count="0"/>
+        <line num="207" type="stmt" count="0"/>
+        <line num="208" type="stmt" count="0"/>
+        <line num="209" type="stmt" count="0"/>
+        <line num="210" type="stmt" count="0"/>
+        <line num="211" type="stmt" count="0"/>
+        <line num="213" type="stmt" count="0"/>
+        <line num="214" type="stmt" count="0"/>
+        <line num="215" type="stmt" count="0"/>
+        <line num="216" type="stmt" count="0"/>
+        <line num="217" type="stmt" count="0"/>
+        <line num="218" type="stmt" count="0"/>
+        <line num="219" type="stmt" count="0"/>
+        <line num="223" type="stmt" count="0"/>
+        <line num="240" type="method" name="resolveErrorConfig" visibility="protected" complexity="5" crap="30" count="0"/>
+        <line num="243" type="stmt" count="0"/>
+        <line num="244" type="stmt" count="0"/>
+        <line num="245" type="stmt" count="0"/>
+        <line num="247" type="stmt" count="0"/>
+        <line num="248" type="stmt" count="0"/>
+        <line num="251" type="stmt" count="0"/>
+        <line num="252" type="stmt" count="0"/>
+        <line num="253" type="stmt" count="0"/>
+        <line num="254" type="stmt" count="0"/>
+        <line num="255" type="stmt" count="0"/>
+        <line num="257" type="stmt" count="0"/>
+        <line num="261" type="stmt" count="0"/>
+        <line num="262" type="stmt" count="0"/>
+        <line num="263" type="stmt" count="0"/>
+        <line num="264" type="stmt" count="0"/>
+        <line num="266" type="stmt" count="0"/>
+        <line num="270" type="stmt" count="0"/>
+        <line num="271" type="stmt" count="0"/>
+        <line num="272" type="stmt" count="0"/>
+        <line num="273" type="stmt" count="0"/>
+        <line num="274" type="stmt" count="0"/>
+        <line num="275" type="stmt" count="0"/>
+        <line num="276" type="stmt" count="0"/>
+        <line num="291" type="method" name="dispatchHandlers" visibility="protected" complexity="4" crap="20" count="0"/>
+        <line num="293" type="stmt" count="0"/>
+        <line num="294" type="stmt" count="0"/>
+        <line num="296" type="stmt" count="0"/>
+        <line num="297" type="stmt" count="0"/>
+        <line num="298" type="stmt" count="0"/>
+        <line num="299" type="stmt" count="0"/>
+        <line num="302" type="stmt" count="0"/>
+        <line num="303" type="stmt" count="0"/>
+        <line num="305" type="stmt" count="0"/>
+        <line num="306" type="stmt" count="0"/>
+        <line num="307" type="stmt" count="0"/>
+        <line num="308" type="stmt" count="0"/>
+        <line num="309" type="stmt" count="0"/>
+        <line num="314" type="stmt" count="0"/>
+        <line num="330" type="method" name="prepareErrorInfo" visibility="protected" complexity="2" crap="6" count="0"/>
+        <line num="332" type="stmt" count="0"/>
+        <line num="333" type="stmt" count="0"/>
+        <line num="334" type="stmt" count="0"/>
+        <line num="335" type="stmt" count="0"/>
+        <line num="337" type="stmt" count="0"/>
+        <line num="338" type="stmt" count="0"/>
+        <line num="339" type="stmt" count="0"/>
+        <line num="340" type="stmt" count="0"/>
+        <line num="341" type="stmt" count="0"/>
+        <line num="342" type="stmt" count="0"/>
+        <line num="343" type="stmt" count="0"/>
+        <line num="346" type="stmt" count="0"/>
+        <line num="347" type="stmt" count="0"/>
+        <line num="348" type="stmt" count="0"/>
+        <line num="349" type="stmt" count="0"/>
+        <line num="350" type="stmt" count="0"/>
+        <line num="351" type="stmt" count="0"/>
+        <line num="352" type="stmt" count="0"/>
+        <line num="353" type="stmt" count="0"/>
+        <line num="354" type="stmt" count="0"/>
+        <line num="357" type="stmt" count="0"/>
+        <line num="374" type="method" name="formatMessage" visibility="protected" complexity="9" crap="90" count="0"/>
+        <line num="376" type="stmt" count="0"/>
+        <line num="379" type="stmt" count="0"/>
+        <line num="380" type="stmt" count="0"/>
+        <line num="382" type="stmt" count="0"/>
+        <line num="383" type="stmt" count="0"/>
+        <line num="384" type="stmt" count="0"/>
+        <line num="386" type="stmt" count="0"/>
+        <line num="388" type="stmt" count="0"/>
+        <line num="389" type="stmt" count="0"/>
+        <line num="390" type="stmt" count="0"/>
+        <line num="392" type="stmt" count="0"/>
+        <line num="397" type="stmt" count="0"/>
+        <line num="398" type="stmt" count="0"/>
+        <line num="399" type="stmt" count="0"/>
+        <line num="405" type="stmt" count="0"/>
+        <line num="406" type="stmt" count="0"/>
+        <line num="407" type="stmt" count="0"/>
+        <line num="411" type="stmt" count="0"/>
+        <line num="426" type="method" name="buildResponse" visibility="protected" complexity="4" crap="20" count="0"/>
+        <line num="429" type="stmt" count="0"/>
+        <line num="430" type="stmt" count="0"/>
+        <line num="431" type="stmt" count="0"/>
+        <line num="432" type="stmt" count="0"/>
+        <line num="433" type="stmt" count="0"/>
+        <line num="435" type="stmt" count="0"/>
+        <line num="436" type="stmt" count="0"/>
+        <line num="437" type="stmt" count="0"/>
+        <line num="438" type="stmt" count="0"/>
+        <line num="439" type="stmt" count="0"/>
+        <line num="440" type="stmt" count="0"/>
+        <line num="441" type="stmt" count="0"/>
+        <line num="442" type="stmt" count="0"/>
+        <line num="446" type="stmt" count="0"/>
+        <line num="450" type="stmt" count="0"/>
+        <line num="451" type="stmt" count="0"/>
+        <line num="452" type="stmt" count="0"/>
+        <line num="453" type="stmt" count="0"/>
+        <line num="454" type="stmt" count="0"/>
+        <line num="455" type="stmt" count="0"/>
+        <line num="456" type="stmt" count="0"/>
+        <line num="457" type="stmt" count="0"/>
+        <line num="458" type="stmt" count="0"/>
+        <line num="459" type="stmt" count="0"/>
+        <line num="460" type="stmt" count="0"/>
+        <line num="467" type="stmt" count="0"/>
+        <line num="468" type="stmt" count="0"/>
+        <line num="469" type="stmt" count="0"/>
+        <line num="470" type="stmt" count="0"/>
+        <metrics loc="472" ncloc="252" classes="1" methods="11" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="155" coveredstatements="0" elements="166" coveredelements="0"/>
+      </file>
+    </package>
+    <package name="Ultra\ErrorManager\Exceptions">
+      <file name="/home/fabio/libraries/UltraErrorManager/src/Exceptions/UltraErrorException.php">
+        <class name="Ultra\ErrorManager\Exceptions\UltraErrorException" namespace="Ultra\ErrorManager\Exceptions">
+          <metrics complexity="4" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="7" coveredstatements="0" elements="11" coveredelements="0"/>
+        </class>
+        <line num="65" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="72" type="stmt" count="0"/>
+        <line num="73" type="stmt" count="0"/>
+        <line num="74" type="stmt" count="0"/>
+        <line num="82" type="method" name="getStringCode" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="84" type="stmt" count="0"/>
+        <line num="94" type="method" name="setStringCode" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="96" type="stmt" count="0"/>
+        <line num="97" type="stmt" count="0"/>
+        <line num="106" type="method" name="getContext" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="108" type="stmt" count="0"/>
+        <metrics loc="110" ncloc="35" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="7" coveredstatements="0" elements="11" coveredelements="0"/>
+      </file>
+    </package>
+    <package name="Ultra\ErrorManager\Facades">
+      <file name="/home/fabio/libraries/UltraErrorManager/src/Facades/TestingConditions.php">
+        <class name="Ultra\ErrorManager\Facades\TestingConditions" namespace="Ultra\ErrorManager\Facades">
+          <metrics complexity="10" methods="10" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="0" elements="20" coveredelements="0"/>
+        </class>
+        <line num="21" type="method" name="getFacadeAccessor" visibility="protected" complexity="1" crap="2" count="0"/>
+        <line num="23" type="stmt" count="0"/>
+        <line num="32" type="method" name="setTestingEnabled" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="34" type="stmt" count="0"/>
+        <line num="42" type="method" name="isTestingEnabled" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="44" type="stmt" count="0"/>
+        <line num="54" type="method" name="setCondition" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="56" type="stmt" count="0"/>
+        <line num="65" type="method" name="isTesting" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="67" type="stmt" count="0"/>
+        <line num="75" type="method" name="getActiveConditions" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="77" type="stmt" count="0"/>
+        <line num="85" type="method" name="resetAllConditions" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="87" type="stmt" count="0"/>
+        <line num="98" type="method" name="set" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="100" type="stmt" count="0"/>
+        <line num="111" type="method" name="clear" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="113" type="stmt" count="0"/>
+        <line num="123" type="method" name="reset" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="125" type="stmt" count="0"/>
+        <metrics loc="128" ncloc="60" classes="1" methods="10" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="0" elements="20" coveredelements="0"/>
+      </file>
+      <file name="/home/fabio/libraries/UltraErrorManager/src/Facades/UltraError.php">
+        <class name="Ultra\ErrorManager\Facades\UltraError" namespace="Ultra\ErrorManager\Facades">
+          <metrics complexity="9" methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="0" elements="24" coveredelements="0"/>
+        </class>
+        <line num="23" type="method" name="getFacadeAccessor" visibility="protected" complexity="1" crap="2" count="0"/>
+        <line num="25" type="stmt" count="0"/>
+        <line num="35" type="method" name="safeHandler" visibility="protected" complexity="3" crap="12" count="0"/>
+        <line num="37" type="stmt" count="0"/>
+        <line num="40" type="stmt" count="0"/>
+        <line num="41" type="stmt" count="0"/>
+        <line num="42" type="stmt" count="0"/>
+        <line num="45" type="stmt" count="0"/>
+        <line num="46" type="stmt" count="0"/>
+        <line num="48" type="stmt" count="0"/>
+        <line num="49" type="stmt" count="0"/>
+        <line num="50" type="stmt" count="0"/>
+        <line num="51" type="stmt" count="0"/>
+        <line num="52" type="stmt" count="0"/>
+        <line num="55" type="method" name="handle" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="57" type="stmt" count="0"/>
+        <line num="60" type="method" name="registerHandler" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="62" type="stmt" count="0"/>
+        <line num="65" type="method" name="getHandlers" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="67" type="stmt" count="0"/>
+        <line num="70" type="method" name="defineError" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="72" type="stmt" count="0"/>
+        <line num="75" type="method" name="getErrorConfig" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="77" type="stmt" count="0"/>
+        <metrics loc="80" ncloc="65" classes="1" methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="0" elements="24" coveredelements="0"/>
+      </file>
+    </package>
+    <package name="Ultra\ErrorManager\Handlers">
+      <file name="/home/fabio/libraries/UltraErrorManager/src/Handlers/DatabaseLogHandler.php">
+        <class name="Ultra\ErrorManager\Handlers\DatabaseLogHandler" namespace="Ultra\ErrorManager\Handlers">
+          <metrics complexity="25" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="75" coveredstatements="0" elements="81" coveredelements="0"/>
+        </class>
+        <line num="50" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="52" type="stmt" count="0"/>
+        <line num="53" type="stmt" count="0"/>
+        <line num="63" type="method" name="shouldHandle" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="65" type="stmt" count="0"/>
+        <line num="83" type="method" name="handle" visibility="public" complexity="5" crap="30" count="0"/>
+        <line num="88" type="stmt" count="0"/>
+        <line num="90" type="stmt" count="0"/>
+        <line num="91" type="stmt" count="0"/>
+        <line num="92" type="stmt" count="0"/>
+        <line num="93" type="stmt" count="0"/>
+        <line num="94" type="stmt" count="0"/>
+        <line num="95" type="stmt" count="0"/>
+        <line num="96" type="stmt" count="0"/>
+        <line num="97" type="stmt" count="0"/>
+        <line num="98" type="stmt" count="0"/>
+        <line num="99" type="stmt" count="0"/>
+        <line num="100" type="stmt" count="0"/>
+        <line num="101" type="stmt" count="0"/>
+        <line num="102" type="stmt" count="0"/>
+        <line num="103" type="stmt" count="0"/>
+        <line num="104" type="stmt" count="0"/>
+        <line num="105" type="stmt" count="0"/>
+        <line num="106" type="stmt" count="0"/>
+        <line num="108" type="stmt" count="0"/>
+        <line num="109" type="stmt" count="0"/>
+        <line num="111" type="stmt" count="0"/>
+        <line num="112" type="stmt" count="0"/>
+        <line num="113" type="stmt" count="0"/>
+        <line num="114" type="stmt" count="0"/>
+        <line num="115" type="stmt" count="0"/>
+        <line num="117" type="stmt" count="0"/>
+        <line num="119" type="stmt" count="0"/>
+        <line num="123" type="stmt" count="0"/>
+        <line num="125" type="stmt" count="0"/>
+        <line num="126" type="stmt" count="0"/>
+        <line num="127" type="stmt" count="0"/>
+        <line num="128" type="stmt" count="0"/>
+        <line num="130" type="stmt" count="0"/>
+        <line num="131" type="stmt" count="0"/>
+        <line num="132" type="stmt" count="0"/>
+        <line num="133" type="stmt" count="0"/>
+        <line num="134" type="stmt" count="0"/>
+        <line num="135" type="stmt" count="0"/>
+        <line num="136" type="stmt" count="0"/>
+        <line num="150" type="method" name="sanitizeContext" visibility="protected" complexity="14" crap="210" count="0"/>
+        <line num="153" type="stmt" count="0"/>
+        <line num="154" type="stmt" count="0"/>
+        <line num="156" type="stmt" count="0"/>
+        <line num="158" type="stmt" count="0"/>
+        <line num="159" type="stmt" count="0"/>
+        <line num="160" type="stmt" count="0"/>
+        <line num="163" type="stmt" count="0"/>
+        <line num="164" type="stmt" count="0"/>
+        <line num="165" type="stmt" count="0"/>
+        <line num="166" type="stmt" count="0"/>
+        <line num="170" type="stmt" count="0"/>
+        <line num="171" type="stmt" count="0"/>
+        <line num="172" type="stmt" count="0"/>
+        <line num="175" type="stmt" count="0"/>
+        <line num="176" type="stmt" count="0"/>
+        <line num="177" type="stmt" count="0"/>
+        <line num="179" type="stmt" count="0"/>
+        <line num="180" type="stmt" count="0"/>
+        <line num="181" type="stmt" count="0"/>
+        <line num="182" type="stmt" count="0"/>
+        <line num="183" type="stmt" count="0"/>
+        <line num="184" type="stmt" count="0"/>
+        <line num="185" type="stmt" count="0"/>
+        <line num="187" type="stmt" count="0"/>
+        <line num="190" type="stmt" count="0"/>
+        <line num="204" type="method" name="sanitizeStringValue" visibility="protected" complexity="2" crap="6" count="0"/>
+        <line num="207" type="stmt" count="0"/>
+        <line num="208" type="stmt" count="0"/>
+        <line num="211" type="stmt" count="0"/>
+        <line num="213" type="stmt" count="0"/>
+        <line num="223" type="method" name="truncateTrace" visibility="protected" complexity="2" crap="6" count="0"/>
+        <line num="225" type="stmt" count="0"/>
+        <line num="226" type="stmt" count="0"/>
+        <line num="227" type="stmt" count="0"/>
+        <line num="229" type="stmt" count="0"/>
+        <metrics loc="231" ncloc="127" classes="1" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="75" coveredstatements="0" elements="81" coveredelements="0"/>
+      </file>
+      <file name="/home/fabio/libraries/UltraErrorManager/src/Handlers/EmailNotificationHandler.php">
+        <class name="Ultra\ErrorManager\Handlers\EmailNotificationHandler" namespace="Ultra\ErrorManager\Handlers">
+          <metrics complexity="28" methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="101" coveredstatements="0" elements="108" coveredelements="0"/>
+        </class>
+        <line num="66" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="75" type="stmt" count="0"/>
+        <line num="76" type="stmt" count="0"/>
+        <line num="77" type="stmt" count="0"/>
+        <line num="78" type="stmt" count="0"/>
+        <line num="79" type="stmt" count="0"/>
+        <line num="80" type="stmt" count="0"/>
+        <line num="81" type="stmt" count="0"/>
+        <line num="89" type="method" name="shouldHandle" visibility="public" complexity="3" crap="12" count="0"/>
+        <line num="91" type="stmt" count="0"/>
+        <line num="92" type="stmt" count="0"/>
+        <line num="93" type="stmt" count="0"/>
+        <line num="100" type="stmt" count="0"/>
+        <line num="115" type="method" name="handle" visibility="public" complexity="3" crap="12" count="0"/>
+        <line num="117" type="stmt" count="0"/>
+        <line num="120" type="stmt" count="0"/>
+        <line num="122" type="stmt" count="0"/>
+        <line num="123" type="stmt" count="0"/>
+        <line num="125" type="stmt" count="0"/>
+        <line num="126" type="stmt" count="0"/>
+        <line num="127" type="stmt" count="0"/>
+        <line num="128" type="stmt" count="0"/>
+        <line num="130" type="stmt" count="0"/>
+        <line num="132" type="stmt" count="0"/>
+        <line num="133" type="stmt" count="0"/>
+        <line num="134" type="stmt" count="0"/>
+        <line num="136" type="stmt" count="0"/>
+        <line num="137" type="stmt" count="0"/>
+        <line num="138" type="stmt" count="0"/>
+        <line num="139" type="stmt" count="0"/>
+        <line num="140" type="stmt" count="0"/>
+        <line num="141" type="stmt" count="0"/>
+        <line num="142" type="stmt" count="0"/>
+        <line num="153" type="method" name="prepareSubject" visibility="protected" complexity="1" crap="2" count="0"/>
+        <line num="155" type="stmt" count="0"/>
+        <line num="156" type="stmt" count="0"/>
+        <line num="169" type="method" name="prepareEmailData" visibility="protected" complexity="10" crap="110" count="0"/>
+        <line num="171" type="stmt" count="0"/>
+        <line num="172" type="stmt" count="0"/>
+        <line num="174" type="stmt" count="0"/>
+        <line num="175" type="stmt" count="0"/>
+        <line num="176" type="stmt" count="0"/>
+        <line num="177" type="stmt" count="0"/>
+        <line num="178" type="stmt" count="0"/>
+        <line num="179" type="stmt" count="0"/>
+        <line num="180" type="stmt" count="0"/>
+        <line num="182" type="stmt" count="0"/>
+        <line num="183" type="stmt" count="0"/>
+        <line num="184" type="stmt" count="0"/>
+        <line num="187" type="stmt" count="0"/>
+        <line num="188" type="stmt" count="0"/>
+        <line num="190" type="stmt" count="0"/>
+        <line num="194" type="stmt" count="0"/>
+        <line num="195" type="stmt" count="0"/>
+        <line num="197" type="stmt" count="0"/>
+        <line num="201" type="stmt" count="0"/>
+        <line num="202" type="stmt" count="0"/>
+        <line num="203" type="stmt" count="0"/>
+        <line num="204" type="stmt" count="0"/>
+        <line num="205" type="stmt" count="0"/>
+        <line num="206" type="stmt" count="0"/>
+        <line num="207" type="stmt" count="0"/>
+        <line num="208" type="stmt" count="0"/>
+        <line num="211" type="stmt" count="0"/>
+        <line num="216" type="stmt" count="0"/>
+        <line num="217" type="stmt" count="0"/>
+        <line num="219" type="stmt" count="0"/>
+        <line num="223" type="stmt" count="0"/>
+        <line num="224" type="stmt" count="0"/>
+        <line num="225" type="stmt" count="0"/>
+        <line num="226" type="stmt" count="0"/>
+        <line num="227" type="stmt" count="0"/>
+        <line num="228" type="stmt" count="0"/>
+        <line num="229" type="stmt" count="0"/>
+        <line num="230" type="stmt" count="0"/>
+        <line num="231" type="stmt" count="0"/>
+        <line num="232" type="stmt" count="0"/>
+        <line num="233" type="stmt" count="0"/>
+        <line num="234" type="stmt" count="0"/>
+        <line num="235" type="stmt" count="0"/>
+        <line num="236" type="stmt" count="0"/>
+        <line num="237" type="stmt" count="0"/>
+        <line num="239" type="stmt" count="0"/>
+        <line num="241" type="stmt" count="0"/>
+        <line num="244" type="stmt" count="0"/>
+        <line num="257" type="method" name="sanitizeContextForEmail" visibility="protected" complexity="8" crap="72" count="0"/>
+        <line num="259" type="stmt" count="0"/>
+        <line num="261" type="stmt" count="0"/>
+        <line num="262" type="stmt" count="0"/>
+        <line num="264" type="stmt" count="0"/>
+        <line num="265" type="stmt" count="0"/>
+        <line num="266" type="stmt" count="0"/>
+        <line num="271" type="stmt" count="0"/>
+        <line num="272" type="stmt" count="0"/>
+        <line num="273" type="stmt" count="0"/>
+        <line num="274" type="stmt" count="0"/>
+        <line num="275" type="stmt" count="0"/>
+        <line num="276" type="stmt" count="0"/>
+        <line num="277" type="stmt" count="0"/>
+        <line num="278" type="stmt" count="0"/>
+        <line num="279" type="stmt" count="0"/>
+        <line num="280" type="stmt" count="0"/>
+        <line num="282" type="stmt" count="0"/>
+        <line num="285" type="stmt" count="0"/>
+        <line num="294" type="method" name="sanitizeStringValue" visibility="protected" complexity="2" crap="6" count="0"/>
+        <line num="296" type="stmt" count="0"/>
+        <line num="297" type="stmt" count="0"/>
+        <line num="299" type="stmt" count="0"/>
+        <metrics loc="301" ncloc="182" classes="1" methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="101" coveredstatements="0" elements="108" coveredelements="0"/>
+      </file>
+      <file name="/home/fabio/libraries/UltraErrorManager/src/Handlers/ErrorSimulationHandler.php">
+        <class name="Ultra\ErrorManager\Handlers\ErrorSimulationHandler" namespace="Ultra\ErrorManager\Handlers">
+          <metrics complexity="4" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="0" elements="15" coveredelements="0"/>
+        </class>
+        <line num="72" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="77" type="stmt" count="0"/>
+        <line num="78" type="stmt" count="0"/>
+        <line num="79" type="stmt" count="0"/>
+        <line num="90" type="method" name="shouldHandle" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="93" type="stmt" count="0"/>
+        <line num="106" type="method" name="handle" visibility="public" complexity="2" crap="6" count="0"/>
+        <line num="109" type="stmt" count="0"/>
+        <line num="114" type="stmt" count="0"/>
+        <line num="115" type="stmt" count="0"/>
+        <line num="116" type="stmt" count="0"/>
+        <line num="117" type="stmt" count="0"/>
+        <line num="118" type="stmt" count="0"/>
+        <line num="119" type="stmt" count="0"/>
+        <line num="120" type="stmt" count="0"/>
+        <metrics loc="127" ncloc="41" classes="1" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="0" elements="15" coveredelements="0"/>
+      </file>
+      <file name="/home/fabio/libraries/UltraErrorManager/src/Handlers/LogHandler.php">
+        <class name="Ultra\ErrorManager\Handlers\LogHandler" namespace="Ultra\ErrorManager\Handlers">
+          <metrics complexity="7" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="35" coveredstatements="0" elements="41" coveredelements="0"/>
+        </class>
+        <line num="53" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="55" type="stmt" count="0"/>
+        <line num="67" type="method" name="shouldHandle" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="72" type="stmt" count="0"/>
+        <line num="85" type="method" name="handle" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="88" type="stmt" count="0"/>
+        <line num="91" type="stmt" count="0"/>
+        <line num="94" type="stmt" count="0"/>
+        <line num="98" type="stmt" count="0"/>
+        <line num="108" type="method" name="getLogLevelMethod" visibility="protected" complexity="1" crap="2" count="0"/>
+        <line num="111" type="stmt" count="0"/>
+        <line num="112" type="stmt" count="0"/>
+        <line num="113" type="stmt" count="0"/>
+        <line num="114" type="stmt" count="0"/>
+        <line num="115" type="stmt" count="0"/>
+        <line num="116" type="stmt" count="0"/>
+        <line num="117" type="stmt" count="0"/>
+        <line num="120" type="stmt" count="0"/>
+        <line num="131" type="method" name="getLogMessage" visibility="protected" complexity="1" crap="2" count="0"/>
+        <line num="136" type="stmt" count="0"/>
+        <line num="137" type="stmt" count="0"/>
+        <line num="138" type="stmt" count="0"/>
+        <line num="140" type="stmt" count="0"/>
+        <line num="153" type="method" name="prepareLogContext" visibility="protected" complexity="2" crap="6" count="0"/>
+        <line num="155" type="stmt" count="0"/>
+        <line num="156" type="stmt" count="0"/>
+        <line num="157" type="stmt" count="0"/>
+        <line num="158" type="stmt" count="0"/>
+        <line num="159" type="stmt" count="0"/>
+        <line num="160" type="stmt" count="0"/>
+        <line num="161" type="stmt" count="0"/>
+        <line num="165" type="stmt" count="0"/>
+        <line num="166" type="stmt" count="0"/>
+        <line num="167" type="stmt" count="0"/>
+        <line num="168" type="stmt" count="0"/>
+        <line num="169" type="stmt" count="0"/>
+        <line num="170" type="stmt" count="0"/>
+        <line num="171" type="stmt" count="0"/>
+        <line num="173" type="stmt" count="0"/>
+        <line num="174" type="stmt" count="0"/>
+        <line num="177" type="stmt" count="0"/>
+        <metrics loc="179" ncloc="76" classes="1" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="35" coveredstatements="0" elements="41" coveredelements="0"/>
+      </file>
+      <file name="/home/fabio/libraries/UltraErrorManager/src/Handlers/RecoveryActionHandler.php">
+        <class name="Ultra\ErrorManager\Handlers\RecoveryActionHandler" namespace="Ultra\ErrorManager\Handlers">
+          <metrics complexity="21" methods="9" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="66" coveredstatements="0" elements="75" coveredelements="0"/>
+        </class>
+        <line num="70" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="76" type="stmt" count="0"/>
+        <line num="89" type="method" name="shouldHandle" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="92" type="stmt" count="0"/>
+        <line num="110" type="method" name="handle" visibility="public" complexity="13" crap="182" count="0"/>
+        <line num="112" type="stmt" count="0"/>
+        <line num="115" type="stmt" count="0"/>
+        <line num="116" type="stmt" count="0"/>
+        <line num="117" type="stmt" count="0"/>
+        <line num="118" type="stmt" count="0"/>
+        <line num="120" type="stmt" count="0"/>
+        <line num="125" type="stmt" count="0"/>
+        <line num="126" type="stmt" count="0"/>
+        <line num="127" type="stmt" count="0"/>
+        <line num="128" type="stmt" count="0"/>
+        <line num="129" type="stmt" count="0"/>
+        <line num="130" type="stmt" count="0"/>
+        <line num="131" type="stmt" count="0"/>
+        <line num="132" type="stmt" count="0"/>
+        <line num="133" type="stmt" count="0"/>
+        <line num="134" type="stmt" count="0"/>
+        <line num="135" type="stmt" count="0"/>
+        <line num="136" type="stmt" count="0"/>
+        <line num="137" type="stmt" count="0"/>
+        <line num="138" type="stmt" count="0"/>
+        <line num="139" type="stmt" count="0"/>
+        <line num="140" type="stmt" count="0"/>
+        <line num="141" type="stmt" count="0"/>
+        <line num="142" type="stmt" count="0"/>
+        <line num="147" type="stmt" count="0"/>
+        <line num="148" type="stmt" count="0"/>
+        <line num="150" type="stmt" count="0"/>
+        <line num="153" type="stmt" count="0"/>
+        <line num="154" type="stmt" count="0"/>
+        <line num="155" type="stmt" count="0"/>
+        <line num="156" type="stmt" count="0"/>
+        <line num="161" type="stmt" count="0"/>
+        <line num="162" type="stmt" count="0"/>
+        <line num="163" type="stmt" count="0"/>
+        <line num="164" type="stmt" count="0"/>
+        <line num="165" type="stmt" count="0"/>
+        <line num="168" type="stmt" count="0"/>
+        <line num="171" type="stmt" count="0"/>
+        <line num="172" type="stmt" count="0"/>
+        <line num="173" type="stmt" count="0"/>
+        <line num="174" type="stmt" count="0"/>
+        <line num="177" type="stmt" count="0"/>
+        <line num="179" type="stmt" count="0"/>
+        <line num="180" type="stmt" count="0"/>
+        <line num="181" type="stmt" count="0"/>
+        <line num="182" type="stmt" count="0"/>
+        <line num="183" type="stmt" count="0"/>
+        <line num="184" type="stmt" count="0"/>
+        <line num="185" type="stmt" count="0"/>
+        <line num="186" type="stmt" count="0"/>
+        <line num="187" type="stmt" count="0"/>
+        <line num="188" type="stmt" count="0"/>
+        <line num="203" type="method" name="retryUpload" visibility="protected" complexity="1" crap="2" count="0"/>
+        <line num="205" type="stmt" count="0"/>
+        <line num="208" type="stmt" count="0"/>
+        <line num="219" type="method" name="retryScan" visibility="protected" complexity="1" crap="2" count="0"/>
+        <line num="221" type="stmt" count="0"/>
+        <line num="222" type="stmt" count="0"/>
+        <line num="233" type="method" name="retryPresignedUrl" visibility="protected" complexity="1" crap="2" count="0"/>
+        <line num="235" type="stmt" count="0"/>
+        <line num="236" type="stmt" count="0"/>
+        <line num="247" type="method" name="createTempDirectory" visibility="protected" complexity="1" crap="2" count="0"/>
+        <line num="249" type="stmt" count="0"/>
+        <line num="256" type="stmt" count="0"/>
+        <line num="267" type="method" name="scheduleCleanup" visibility="protected" complexity="1" crap="2" count="0"/>
+        <line num="269" type="stmt" count="0"/>
+        <line num="274" type="stmt" count="0"/>
+        <line num="285" type="method" name="retryMetadataSave" visibility="protected" complexity="1" crap="2" count="0"/>
+        <line num="287" type="stmt" count="0"/>
+        <line num="289" type="stmt" count="0"/>
+        <metrics loc="292" ncloc="127" classes="1" methods="9" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="66" coveredstatements="0" elements="75" coveredelements="0"/>
+      </file>
+      <file name="/home/fabio/libraries/UltraErrorManager/src/Handlers/SlackNotificationHandler.php">
+        <class name="Ultra\ErrorManager\Handlers\SlackNotificationHandler" namespace="Ultra\ErrorManager\Handlers">
+          <metrics complexity="35" methods="8" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="116" coveredstatements="0" elements="124" coveredelements="0"/>
+        </class>
+        <line num="64" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="72" type="stmt" count="0"/>
+        <line num="73" type="stmt" count="0"/>
+        <line num="74" type="stmt" count="0"/>
+        <line num="75" type="stmt" count="0"/>
+        <line num="76" type="stmt" count="0"/>
+        <line num="77" type="stmt" count="0"/>
+        <line num="85" type="method" name="shouldHandle" visibility="public" complexity="5" crap="30" count="0"/>
+        <line num="88" type="stmt" count="0"/>
+        <line num="89" type="stmt" count="0"/>
+        <line num="91" type="stmt" count="0"/>
+        <line num="92" type="stmt" count="0"/>
+        <line num="94" type="stmt" count="0"/>
+        <line num="109" type="method" name="handle" visibility="public" complexity="2" crap="6" count="0"/>
+        <line num="111" type="stmt" count="0"/>
+        <line num="114" type="stmt" count="0"/>
+        <line num="116" type="stmt" count="0"/>
+        <line num="117" type="stmt" count="0"/>
+        <line num="119" type="stmt" count="0"/>
+        <line num="121" type="stmt" count="0"/>
+        <line num="122" type="stmt" count="0"/>
+        <line num="123" type="stmt" count="0"/>
+        <line num="124" type="stmt" count="0"/>
+        <line num="125" type="stmt" count="0"/>
+        <line num="140" type="method" name="prepareSlackMessage" visibility="protected" complexity="14" crap="210" count="0"/>
+        <line num="142" type="stmt" count="0"/>
+        <line num="143" type="stmt" count="0"/>
+        <line num="146" type="stmt" count="0"/>
+        <line num="147" type="stmt" count="0"/>
+        <line num="148" type="stmt" count="0"/>
+        <line num="149" type="stmt" count="0"/>
+        <line num="150" type="stmt" count="0"/>
+        <line num="151" type="stmt" count="0"/>
+        <line num="152" type="stmt" count="0"/>
+        <line num="153" type="stmt" count="0"/>
+        <line num="155" type="stmt" count="0"/>
+        <line num="156" type="stmt" count="0"/>
+        <line num="160" type="stmt" count="0"/>
+        <line num="161" type="stmt" count="0"/>
+        <line num="164" type="stmt" count="0"/>
+        <line num="165" type="stmt" count="0"/>
+        <line num="166" type="stmt" count="0"/>
+        <line num="167" type="stmt" count="0"/>
+        <line num="169" type="stmt" count="0"/>
+        <line num="170" type="stmt" count="0"/>
+        <line num="171" type="stmt" count="0"/>
+        <line num="172" type="stmt" count="0"/>
+        <line num="173" type="stmt" count="0"/>
+        <line num="174" type="stmt" count="0"/>
+        <line num="175" type="stmt" count="0"/>
+        <line num="180" type="stmt" count="0"/>
+        <line num="181" type="stmt" count="0"/>
+        <line num="182" type="stmt" count="0"/>
+        <line num="183" type="stmt" count="0"/>
+        <line num="184" type="stmt" count="0"/>
+        <line num="185" type="stmt" count="0"/>
+        <line num="186" type="stmt" count="0"/>
+        <line num="187" type="stmt" count="0"/>
+        <line num="188" type="stmt" count="0"/>
+        <line num="190" type="stmt" count="0"/>
+        <line num="191" type="stmt" count="0"/>
+        <line num="195" type="stmt" count="0"/>
+        <line num="196" type="stmt" count="0"/>
+        <line num="197" type="stmt" count="0"/>
+        <line num="198" type="stmt" count="0"/>
+        <line num="199" type="stmt" count="0"/>
+        <line num="200" type="stmt" count="0"/>
+        <line num="204" type="stmt" count="0"/>
+        <line num="205" type="stmt" count="0"/>
+        <line num="206" type="stmt" count="0"/>
+        <line num="207" type="stmt" count="0"/>
+        <line num="208" type="stmt" count="0"/>
+        <line num="209" type="stmt" count="0"/>
+        <line num="210" type="stmt" count="0"/>
+        <line num="211" type="stmt" count="0"/>
+        <line num="212" type="stmt" count="0"/>
+        <line num="213" type="stmt" count="0"/>
+        <line num="214" type="stmt" count="0"/>
+        <line num="215" type="stmt" count="0"/>
+        <line num="216" type="stmt" count="0"/>
+        <line num="217" type="stmt" count="0"/>
+        <line num="218" type="stmt" count="0"/>
+        <line num="219" type="stmt" count="0"/>
+        <line num="220" type="stmt" count="0"/>
+        <line num="221" type="stmt" count="0"/>
+        <line num="224" type="stmt" count="0"/>
+        <line num="233" type="method" name="sanitizeContextForSlack" visibility="protected" complexity="8" crap="72" count="0"/>
+        <line num="235" type="stmt" count="0"/>
+        <line num="236" type="stmt" count="0"/>
+        <line num="237" type="stmt" count="0"/>
+        <line num="238" type="stmt" count="0"/>
+        <line num="240" type="stmt" count="0"/>
+        <line num="241" type="stmt" count="0"/>
+        <line num="242" type="stmt" count="0"/>
+        <line num="244" type="stmt" count="0"/>
+        <line num="245" type="stmt" count="0"/>
+        <line num="246" type="stmt" count="0"/>
+        <line num="247" type="stmt" count="0"/>
+        <line num="248" type="stmt" count="0"/>
+        <line num="249" type="stmt" count="0"/>
+        <line num="250" type="stmt" count="0"/>
+        <line num="251" type="stmt" count="0"/>
+        <line num="252" type="stmt" count="0"/>
+        <line num="253" type="stmt" count="0"/>
+        <line num="255" type="stmt" count="0"/>
+        <line num="258" type="stmt" count="0"/>
+        <line num="266" type="method" name="getColorForErrorType" visibility="protected" complexity="1" crap="2" count="0"/>
+        <line num="268" type="stmt" count="0"/>
+        <line num="269" type="stmt" count="0"/>
+        <line num="270" type="stmt" count="0"/>
+        <line num="271" type="stmt" count="0"/>
+        <line num="272" type="stmt" count="0"/>
+        <line num="282" type="method" name="sanitizeStringValue" visibility="protected" complexity="2" crap="6" count="0"/>
+        <line num="285" type="stmt" count="0"/>
+        <line num="287" type="stmt" count="0"/>
+        <line num="290" type="stmt" count="0"/>
+        <line num="299" type="method" name="logSlackResponse" visibility="private" complexity="2" crap="6" count="0"/>
+        <line num="301" type="stmt" count="0"/>
+        <line num="302" type="stmt" count="0"/>
+        <line num="303" type="stmt" count="0"/>
+        <line num="304" type="stmt" count="0"/>
+        <line num="305" type="stmt" count="0"/>
+        <line num="306" type="stmt" count="0"/>
+        <line num="309" type="stmt" count="0"/>
+        <metrics loc="312" ncloc="205" classes="1" methods="8" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="116" coveredstatements="0" elements="124" coveredelements="0"/>
+      </file>
+      <file name="/home/fabio/libraries/UltraErrorManager/src/Handlers/UserInterfaceHandler.php">
+        <class name="Ultra\ErrorManager\Handlers\UserInterfaceHandler" namespace="Ultra\ErrorManager\Handlers">
+          <metrics complexity="9" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="25" coveredstatements="0" elements="29" coveredelements="0"/>
+        </class>
+        <line num="86" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="88" type="stmt" count="0"/>
+        <line num="89" type="stmt" count="0"/>
+        <line num="104" type="method" name="shouldHandle" visibility="public" complexity="4" crap="20" count="0"/>
+        <line num="107" type="stmt" count="0"/>
+        <line num="110" type="stmt" count="0"/>
+        <line num="111" type="stmt" count="0"/>
+        <line num="115" type="stmt" count="0"/>
+        <line num="118" type="stmt" count="0"/>
+        <line num="119" type="stmt" count="0"/>
+        <line num="122" type="stmt" count="0"/>
+        <line num="144" type="method" name="handle" visibility="public" complexity="3" crap="12" count="0"/>
+        <line num="147" type="stmt" count="0"/>
+        <line num="150" type="stmt" count="0"/>
+        <line num="151" type="stmt" count="0"/>
+        <line num="156" type="stmt" count="0"/>
+        <line num="159" type="stmt" count="0"/>
+        <line num="162" type="stmt" count="0"/>
+        <line num="163" type="stmt" count="0"/>
+        <line num="167" type="stmt" count="0"/>
+        <line num="168" type="stmt" count="0"/>
+        <line num="169" type="stmt" count="0"/>
+        <line num="170" type="stmt" count="0"/>
+        <line num="171" type="stmt" count="0"/>
+        <line num="172" type="stmt" count="0"/>
+        <line num="173" type="stmt" count="0"/>
+        <line num="186" type="method" name="getGenericErrorMessage" visibility="protected" complexity="1" crap="2" count="0"/>
+        <line num="189" type="stmt" count="0"/>
+        <line num="191" type="stmt" count="0"/>
+        <metrics loc="193" ncloc="66" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="25" coveredstatements="0" elements="29" coveredelements="0"/>
+      </file>
+    </package>
+    <file name="/home/fabio/libraries/UltraErrorManager/src/Helpers/helpers.php">
+      <line num="11" type="stmt" count="0"/>
+      <line num="33" type="stmt" count="0"/>
+      <line num="36" type="stmt" count="0"/>
+      <line num="40" type="stmt" count="0"/>
+      <line num="55" type="stmt" count="0"/>
+      <line num="58" type="stmt" count="0"/>
+      <line num="62" type="stmt" count="0"/>
+      <line num="77" type="stmt" count="0"/>
+      <line num="80" type="stmt" count="0"/>
+      <line num="84" type="stmt" count="0"/>
+      <line num="97" type="stmt" count="0"/>
+      <line num="100" type="stmt" count="0"/>
+      <line num="104" type="stmt" count="0"/>
+      <line num="118" type="stmt" count="0"/>
+      <line num="121" type="stmt" count="0"/>
+      <metrics loc="123" ncloc="54" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="15" coveredstatements="0" elements="15" coveredelements="0"/>
+    </file>
+    <package name="Ultra\ErrorManager\Http\Controllers">
+      <file name="/home/fabio/libraries/UltraErrorManager/src/Http/Controllers/ErrorDashboardController.php">
+        <class name="Ultra\ErrorManager\Http\Controllers\ErrorDashboardController" namespace="Ultra\ErrorManager\Http\Controllers">
+          <metrics complexity="33" methods="12" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="117" coveredstatements="0" elements="129" coveredelements="0"/>
+        </class>
+        <line num="65" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="70" type="stmt" count="0"/>
+        <line num="71" type="stmt" count="0"/>
+        <line num="72" type="stmt" count="0"/>
+        <line num="84" type="method" name="index" visibility="public" complexity="7" crap="56" count="0"/>
+        <line num="87" type="stmt" count="0"/>
+        <line num="88" type="stmt" count="0"/>
+        <line num="89" type="stmt" count="0"/>
+        <line num="90" type="stmt" count="0"/>
+        <line num="91" type="stmt" count="0"/>
+        <line num="94" type="stmt" count="0"/>
+        <line num="95" type="stmt" count="0"/>
+        <line num="96" type="stmt" count="0"/>
+        <line num="97" type="stmt" count="0"/>
+        <line num="98" type="stmt" count="0"/>
+        <line num="99" type="stmt" count="0"/>
+        <line num="100" type="stmt" count="0"/>
+        <line num="102" type="stmt" count="0"/>
+        <line num="105" type="stmt" count="0"/>
+        <line num="106" type="stmt" count="0"/>
+        <line num="107" type="stmt" count="0"/>
+        <line num="108" type="stmt" count="0"/>
+        <line num="109" type="stmt" count="0"/>
+        <line num="110" type="stmt" count="0"/>
+        <line num="114" type="stmt" count="0"/>
+        <line num="116" type="stmt" count="0"/>
+        <line num="118" type="stmt" count="0"/>
+        <line num="119" type="stmt" count="0"/>
+        <line num="120" type="stmt" count="0"/>
+        <line num="121" type="stmt" count="0"/>
+        <line num="130" type="method" name="show" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="132" type="stmt" count="0"/>
+        <line num="133" type="stmt" count="0"/>
+        <line num="134" type="stmt" count="0"/>
+        <line num="136" type="stmt" count="0"/>
+        <line num="146" type="method" name="resolve" visibility="public" complexity="2" crap="6" count="0"/>
+        <line num="148" type="stmt" count="0"/>
+        <line num="149" type="stmt" count="0"/>
+        <line num="151" type="stmt" count="0"/>
+        <line num="153" type="stmt" count="0"/>
+        <line num="155" type="stmt" count="0"/>
+        <line num="156" type="stmt" count="0"/>
+        <line num="165" type="method" name="unresolve" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="167" type="stmt" count="0"/>
+        <line num="168" type="stmt" count="0"/>
+        <line num="170" type="stmt" count="0"/>
+        <line num="171" type="stmt" count="0"/>
+        <line num="180" type="method" name="destroy" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="182" type="stmt" count="0"/>
+        <line num="183" type="stmt" count="0"/>
+        <line num="185" type="stmt" count="0"/>
+        <line num="186" type="stmt" count="0"/>
+        <line num="196" type="method" name="statistics" visibility="public" complexity="2" crap="6" count="0"/>
+        <line num="198" type="stmt" count="0"/>
+        <line num="199" type="stmt" count="0"/>
+        <line num="200" type="stmt" count="0"/>
+        <line num="202" type="stmt" count="0"/>
+        <line num="203" type="stmt" count="0"/>
+        <line num="204" type="stmt" count="0"/>
+        <line num="205" type="stmt" count="0"/>
+        <line num="206" type="stmt" count="0"/>
+        <line num="208" type="stmt" count="0"/>
+        <line num="209" type="stmt" count="0"/>
+        <line num="210" type="stmt" count="0"/>
+        <line num="211" type="stmt" count="0"/>
+        <line num="212" type="stmt" count="0"/>
+        <line num="214" type="stmt" count="0"/>
+        <line num="215" type="stmt" count="0"/>
+        <line num="216" type="stmt" count="0"/>
+        <line num="225" type="method" name="bulkResolve" visibility="public" complexity="6" crap="42" count="0"/>
+        <line num="227" type="stmt" count="0"/>
+        <line num="228" type="stmt" count="0"/>
+        <line num="229" type="stmt" count="0"/>
+        <line num="232" type="stmt" count="0"/>
+        <line num="233" type="stmt" count="0"/>
+        <line num="236" type="stmt" count="0"/>
+        <line num="237" type="stmt" count="0"/>
+        <line num="238" type="stmt" count="0"/>
+        <line num="239" type="stmt" count="0"/>
+        <line num="240" type="stmt" count="0"/>
+        <line num="241" type="stmt" count="0"/>
+        <line num="242" type="stmt" count="0"/>
+        <line num="243" type="stmt" count="0"/>
+        <line num="246" type="stmt" count="0"/>
+        <line num="247" type="stmt" count="0"/>
+        <line num="249" type="stmt" count="0"/>
+        <line num="259" type="method" name="purgeResolved" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="261" type="stmt" count="0"/>
+        <line num="262" type="stmt" count="0"/>
+        <line num="264" type="stmt" count="0"/>
+        <line num="267" type="stmt" count="0"/>
+        <line num="269" type="stmt" count="0"/>
+        <line num="270" type="stmt" count="0"/>
+        <line num="279" type="method" name="simulations" visibility="public" complexity="5" crap="30" count="0"/>
+        <line num="282" type="stmt" count="0"/>
+        <line num="283" type="stmt" count="0"/>
+        <line num="286" type="stmt" count="0"/>
+        <line num="289" type="stmt" count="0"/>
+        <line num="290" type="stmt" count="0"/>
+        <line num="292" type="stmt" count="0"/>
+        <line num="293" type="stmt" count="0"/>
+        <line num="295" type="stmt" count="0"/>
+        <line num="297" type="stmt" count="0"/>
+        <line num="298" type="stmt" count="0"/>
+        <line num="300" type="stmt" count="0"/>
+        <line num="301" type="stmt" count="0"/>
+        <line num="302" type="stmt" count="0"/>
+        <line num="303" type="stmt" count="0"/>
+        <line num="304" type="stmt" count="0"/>
+        <line num="307" type="stmt" count="0"/>
+        <line num="309" type="stmt" count="0"/>
+        <line num="318" type="method" name="activateSimulation" visibility="public" complexity="3" crap="12" count="0"/>
+        <line num="320" type="stmt" count="0"/>
+        <line num="321" type="stmt" count="0"/>
+        <line num="322" type="stmt" count="0"/>
+        <line num="326" type="stmt" count="0"/>
+        <line num="327" type="stmt" count="0"/>
+        <line num="328" type="stmt" count="0"/>
+        <line num="332" type="stmt" count="0"/>
+        <line num="334" type="stmt" count="0"/>
+        <line num="343" type="method" name="deactivateSimulation" visibility="public" complexity="3" crap="12" count="0"/>
+        <line num="345" type="stmt" count="0"/>
+        <line num="347" type="stmt" count="0"/>
+        <line num="349" type="stmt" count="0"/>
+        <line num="350" type="stmt" count="0"/>
+        <line num="353" type="stmt" count="0"/>
+        <line num="354" type="stmt" count="0"/>
+        <line num="358" type="stmt" count="0"/>
+        <line num="360" type="stmt" count="0"/>
+        <metrics loc="362" ncloc="211" classes="1" methods="12" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="117" coveredstatements="0" elements="129" coveredelements="0"/>
+      </file>
+      <file name="/home/fabio/libraries/UltraErrorManager/src/Http/Controllers/ErrorSimulationController.php">
+        <class name="Ultra\ErrorManager\Http\Controllers\ErrorSimulationController" namespace="Ultra\ErrorManager\Http\Controllers">
+          <metrics complexity="12" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="48" coveredstatements="0" elements="54" coveredelements="0"/>
+        </class>
+        <line num="56" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="61" type="stmt" count="0"/>
+        <line num="62" type="stmt" count="0"/>
+        <line num="63" type="stmt" count="0"/>
+        <line num="73" type="method" name="activateSimulation" visibility="public" complexity="2" crap="6" count="0"/>
+        <line num="76" type="stmt" count="0"/>
+        <line num="78" type="stmt" count="0"/>
+        <line num="79" type="stmt" count="0"/>
+        <line num="80" type="stmt" count="0"/>
+        <line num="81" type="stmt" count="0"/>
+        <line num="82" type="stmt" count="0"/>
+        <line num="86" type="stmt" count="0"/>
+        <line num="88" type="stmt" count="0"/>
+        <line num="89" type="stmt" count="0"/>
+        <line num="90" type="stmt" count="0"/>
+        <line num="91" type="stmt" count="0"/>
+        <line num="92" type="stmt" count="0"/>
+        <line num="93" type="stmt" count="0"/>
+        <line num="94" type="stmt" count="0"/>
+        <line num="104" type="method" name="deactivateSimulation" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="107" type="stmt" count="0"/>
+        <line num="109" type="stmt" count="0"/>
+        <line num="110" type="stmt" count="0"/>
+        <line num="111" type="stmt" count="0"/>
+        <line num="112" type="stmt" count="0"/>
+        <line num="121" type="method" name="listActiveSimulations" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="124" type="stmt" count="0"/>
+        <line num="126" type="stmt" count="0"/>
+        <line num="127" type="stmt" count="0"/>
+        <line num="128" type="stmt" count="0"/>
+        <line num="129" type="stmt" count="0"/>
+        <line num="130" type="stmt" count="0"/>
+        <line num="139" type="method" name="resetAllSimulations" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="142" type="stmt" count="0"/>
+        <line num="144" type="stmt" count="0"/>
+        <line num="145" type="stmt" count="0"/>
+        <line num="146" type="stmt" count="0"/>
+        <line num="147" type="stmt" count="0"/>
+        <line num="157" type="method" name="listErrorCodes" visibility="public" complexity="6" crap="42" count="0"/>
+        <line num="161" type="stmt" count="0"/>
+        <line num="162" type="stmt" count="0"/>
+        <line num="165" type="stmt" count="0"/>
+        <line num="167" type="stmt" count="0"/>
+        <line num="168" type="stmt" count="0"/>
+        <line num="170" type="stmt" count="0"/>
+        <line num="171" type="stmt" count="0"/>
+        <line num="172" type="stmt" count="0"/>
+        <line num="177" type="stmt" count="0"/>
+        <line num="180" type="stmt" count="0"/>
+        <line num="181" type="stmt" count="0"/>
+        <line num="182" type="stmt" count="0"/>
+        <line num="183" type="stmt" count="0"/>
+        <line num="184" type="stmt" count="0"/>
+        <line num="185" type="stmt" count="0"/>
+        <metrics loc="187" ncloc="100" classes="1" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="48" coveredstatements="0" elements="54" coveredelements="0"/>
+      </file>
+    </package>
+    <package name="Ultra\ErrorManager\Http\Middleware">
+      <file name="/home/fabio/libraries/UltraErrorManager/src/Http/Middleware/EnvironmentMiddleware.php">
+        <class name="Ultra\ErrorManager\Http\Middleware\EnvironmentMiddleware" namespace="Ultra\ErrorManager\Http\Middleware">
+          <metrics complexity="4" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="9" coveredstatements="0" elements="11" coveredelements="0"/>
+        </class>
+        <line num="50" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="52" type="stmt" count="0"/>
+        <line num="65" type="method" name="handle" visibility="public" complexity="3" crap="12" count="0"/>
+        <line num="68" type="stmt" count="0"/>
+        <line num="71" type="stmt" count="0"/>
+        <line num="72" type="stmt" count="0"/>
+        <line num="73" type="stmt" count="0"/>
+        <line num="76" type="stmt" count="0"/>
+        <line num="80" type="stmt" count="0"/>
+        <line num="82" type="stmt" count="0"/>
+        <line num="86" type="stmt" count="0"/>
+        <metrics loc="88" ncloc="33" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="9" coveredstatements="0" elements="11" coveredelements="0"/>
+      </file>
+      <file name="/home/fabio/libraries/UltraErrorManager/src/Http/Middleware/ErrorHandlingMiddleware.php">
+        <class name="Ultra\ErrorManager\Http\Middleware\ErrorHandlingMiddleware" namespace="Ultra\ErrorManager\Http\Middleware">
+          <metrics complexity="19" methods="5" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="61" coveredstatements="57" elements="66" coveredelements="61"/>
+        </class>
+        <line num="63" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="11"/>
+        <line num="65" type="stmt" count="11"/>
+        <line num="75" type="method" name="handle" visibility="public" complexity="3" crap="3" count="11"/>
+        <line num="79" type="stmt" count="11"/>
+        <line num="81" type="stmt" count="10"/>
+        <line num="84" type="stmt" count="1"/>
+        <line num="85" type="stmt" count="1"/>
+        <line num="87" type="stmt" count="1"/>
+        <line num="88" type="stmt" count="1"/>
+        <line num="90" type="stmt" count="1"/>
+        <line num="94" type="stmt" count="1"/>
+        <line num="95" type="stmt" count="1"/>
+        <line num="96" type="stmt" count="1"/>
+        <line num="97" type="stmt" count="1"/>
+        <line num="98" type="stmt" count="1"/>
+        <line num="99" type="stmt" count="1"/>
+        <line num="101" type="stmt" count="9"/>
+        <line num="104" type="stmt" count="9"/>
+        <line num="107" type="stmt" count="9"/>
+        <line num="108" type="stmt" count="9"/>
+        <line num="114" type="stmt" count="9"/>
+        <line num="117" type="stmt" count="9"/>
+        <line num="118" type="stmt" count="9"/>
+        <line num="119" type="stmt" count="9"/>
+        <line num="120" type="stmt" count="9"/>
+        <line num="121" type="stmt" count="9"/>
+        <line num="122" type="stmt" count="9"/>
+        <line num="135" type="method" name="getRequestContext" visibility="private" complexity="3" crap="3.08" count="10"/>
+        <line num="137" type="stmt" count="10"/>
+        <line num="139" type="stmt" count="10"/>
+        <line num="140" type="stmt" count="10"/>
+        <line num="141" type="stmt" count="10"/>
+        <line num="142" type="stmt" count="10"/>
+        <line num="144" type="stmt" count="10"/>
+        <line num="145" type="stmt" count="10"/>
+        <line num="146" type="stmt" count="10"/>
+        <line num="147" type="stmt" count="10"/>
+        <line num="148" type="stmt" count="10"/>
+        <line num="151" type="stmt" count="10"/>
+        <line num="154" type="stmt" count="10"/>
+        <line num="155" type="stmt" count="10"/>
+        <line num="156" type="stmt" count="10"/>
+        <line num="161" type="stmt" count="0"/>
+        <line num="164" type="stmt" count="0"/>
+        <line num="165" type="stmt" count="0"/>
+        <line num="166" type="stmt" count="0"/>
+        <line num="169" type="stmt" count="10"/>
+        <line num="179" type="method" name="mapExceptionToErrorCode" visibility="protected" complexity="11" crap="11" count="9"/>
+        <line num="183" type="stmt" count="9"/>
+        <line num="184" type="stmt" count="9"/>
+        <line num="185" type="stmt" count="8"/>
+        <line num="186" type="stmt" count="7"/>
+        <line num="187" type="stmt" count="6"/>
+        <line num="188" type="stmt" count="5"/>
+        <line num="189" type="stmt" count="4"/>
+        <line num="190" type="stmt" count="3"/>
+        <line num="191" type="stmt" count="2"/>
+        <line num="194" type="stmt" count="9"/>
+        <line num="207" type="method" name="logCaughtExceptionInfo" visibility="private" complexity="1" crap="1" count="10"/>
+        <line num="210" type="stmt" count="10"/>
+        <line num="211" type="stmt" count="10"/>
+        <line num="212" type="stmt" count="10"/>
+        <line num="213" type="stmt" count="10"/>
+        <line num="214" type="stmt" count="10"/>
+        <line num="215" type="stmt" count="10"/>
+        <line num="216" type="stmt" count="10"/>
+        <metrics loc="218" ncloc="105" classes="1" methods="5" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="61" coveredstatements="57" elements="66" coveredelements="61"/>
+      </file>
+    </package>
+    <file name="/home/fabio/libraries/UltraErrorManager/src/Interfaces/ErrorHandlerInterface.php">
+      <metrics loc="52" ncloc="13" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+    </file>
+    <file name="/home/fabio/libraries/UltraErrorManager/src/Interfaces/ErrorManagerInterface.php">
+      <metrics loc="66" ncloc="22" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+    </file>
+    <package name="Ultra\ErrorManager\Models">
+      <file name="/home/fabio/libraries/UltraErrorManager/src/Models/ErrorLog.php">
+        <class name="Ultra\ErrorManager\Models\ErrorLog" namespace="Ultra\ErrorManager\Models">
+          <metrics complexity="35" methods="16" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="88" coveredstatements="0" elements="104" coveredelements="0"/>
+        </class>
+        <line num="114" type="method" name="booted" visibility="protected" complexity="1" crap="2" count="0"/>
+        <line num="120" type="stmt" count="0"/>
+        <line num="129" type="method" name="scopeUnresolved" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="131" type="stmt" count="0"/>
+        <line num="139" type="method" name="scopeResolved" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="141" type="stmt" count="0"/>
+        <line num="149" type="method" name="scopeCritical" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="151" type="stmt" count="0"/>
+        <line num="160" type="method" name="scopeOfType" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="162" type="stmt" count="0"/>
+        <line num="171" type="method" name="scopeWithCode" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="173" type="stmt" count="0"/>
+        <line num="182" type="method" name="scopeOccurredAfter" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="184" type="stmt" count="0"/>
+        <line num="193" type="method" name="scopeOccurredBefore" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="195" type="stmt" count="0"/>
+        <line num="208" type="method" name="markAsResolved" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="210" type="stmt" count="0"/>
+        <line num="211" type="stmt" count="0"/>
+        <line num="212" type="stmt" count="0"/>
+        <line num="213" type="stmt" count="0"/>
+        <line num="215" type="stmt" count="0"/>
+        <line num="224" type="method" name="markAsUnresolved" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="226" type="stmt" count="0"/>
+        <line num="227" type="stmt" count="0"/>
+        <line num="228" type="stmt" count="0"/>
+        <line num="229" type="stmt" count="0"/>
+        <line num="231" type="stmt" count="0"/>
+        <line num="239" type="method" name="markAsNotified" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="241" type="stmt" count="0"/>
+        <line num="242" type="stmt" count="0"/>
+        <line num="253" type="method" name="user" visibility="public" complexity="2" crap="6" count="0"/>
+        <line num="256" type="stmt" count="0"/>
+        <line num="257" type="stmt" count="0"/>
+        <line num="260" type="stmt" count="0"/>
+        <line num="262" type="stmt" count="0"/>
+        <line num="274" type="method" name="getSimilarErrors" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="276" type="stmt" count="0"/>
+        <line num="277" type="stmt" count="0"/>
+        <line num="278" type="stmt" count="0"/>
+        <line num="279" type="stmt" count="0"/>
+        <line num="280" type="stmt" count="0"/>
+        <line num="290" type="method" name="getContextSummary" visibility="public" complexity="5" crap="30" count="0"/>
+        <line num="292" type="stmt" count="0"/>
+        <line num="293" type="stmt" count="0"/>
+        <line num="294" type="stmt" count="0"/>
+        <line num="298" type="stmt" count="0"/>
+        <line num="299" type="stmt" count="0"/>
+        <line num="300" type="stmt" count="0"/>
+        <line num="303" type="stmt" count="0"/>
+        <line num="304" type="stmt" count="0"/>
+        <line num="308" type="stmt" count="0"/>
+        <line num="321" type="method" name="getErrorFrequency" visibility="public" complexity="13" crap="182" count="0"/>
+        <line num="323" type="stmt" count="0"/>
+        <line num="324" type="stmt" count="0"/>
+        <line num="327" type="stmt" count="0"/>
+        <line num="328" type="stmt" count="0"/>
+        <line num="329" type="stmt" count="0"/>
+        <line num="330" type="stmt" count="0"/>
+        <line num="331" type="stmt" count="0"/>
+        <line num="332" type="stmt" count="0"/>
+        <line num="335" type="stmt" count="0"/>
+        <line num="336" type="stmt" count="0"/>
+        <line num="337" type="stmt" count="0"/>
+        <line num="338" type="stmt" count="0"/>
+        <line num="340" type="stmt" count="0"/>
+        <line num="341" type="stmt" count="0"/>
+        <line num="342" type="stmt" count="0"/>
+        <line num="346" type="stmt" count="0"/>
+        <line num="349" type="stmt" count="0"/>
+        <line num="351" type="stmt" count="0"/>
+        <line num="352" type="stmt" count="0"/>
+        <line num="353" type="stmt" count="0"/>
+        <line num="354" type="stmt" count="0"/>
+        <line num="355" type="stmt" count="0"/>
+        <line num="358" type="stmt" count="0"/>
+        <line num="359" type="stmt" count="0"/>
+        <line num="361" type="stmt" count="0"/>
+        <line num="362" type="stmt" count="0"/>
+        <line num="363" type="stmt" count="0"/>
+        <line num="364" type="stmt" count="0"/>
+        <line num="365" type="stmt" count="0"/>
+        <line num="366" type="stmt" count="0"/>
+        <line num="368" type="stmt" count="0"/>
+        <line num="369" type="stmt" count="0"/>
+        <line num="370" type="stmt" count="0"/>
+        <line num="371" type="stmt" count="0"/>
+        <line num="374" type="stmt" count="0"/>
+        <line num="375" type="stmt" count="0"/>
+        <line num="376" type="stmt" count="0"/>
+        <line num="377" type="stmt" count="0"/>
+        <line num="378" type="stmt" count="0"/>
+        <line num="381" type="stmt" count="0"/>
+        <line num="385" type="stmt" count="0"/>
+        <line num="398" type="method" name="getTopErrorCodes" visibility="public" complexity="3" crap="12" count="0"/>
+        <line num="400" type="stmt" count="0"/>
+        <line num="401" type="stmt" count="0"/>
+        <line num="402" type="stmt" count="0"/>
+        <line num="403" type="stmt" count="0"/>
+        <line num="405" type="stmt" count="0"/>
+        <line num="407" type="stmt" count="0"/>
+        <line num="410" type="stmt" count="0"/>
+        <line num="412" type="stmt" count="0"/>
+        <line num="415" type="stmt" count="0"/>
+        <metrics loc="417" ncloc="216" classes="1" methods="16" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="88" coveredstatements="0" elements="104" coveredelements="0"/>
+      </file>
+    </package>
+    <package name="Ultra\ErrorManager\Providers">
+      <file name="/home/fabio/libraries/UltraErrorManager/src/Providers/UltraErrorManagerServiceProvider.php">
+        <class name="Ultra\ErrorManager\Providers\UltraErrorManagerServiceProvider" namespace="Ultra\ErrorManager\Providers">
+          <metrics complexity="11" methods="5" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="100" coveredstatements="0" elements="105" coveredelements="0"/>
+        </class>
+        <line num="73" type="method" name="register" visibility="public" complexity="5" crap="30" count="0"/>
+        <line num="75" type="stmt" count="0"/>
+        <line num="76" type="stmt" count="0"/>
+        <line num="78" type="stmt" count="0"/>
+        <line num="79" type="stmt" count="0"/>
+        <line num="80" type="stmt" count="0"/>
+        <line num="82" type="stmt" count="0"/>
+        <line num="85" type="stmt" count="0"/>
+        <line num="87" type="stmt" count="0"/>
+        <line num="88" type="stmt" count="0"/>
+        <line num="89" type="stmt" count="0"/>
+        <line num="90" type="stmt" count="0"/>
+        <line num="91" type="stmt" count="0"/>
+        <line num="93" type="stmt" count="0"/>
+        <line num="95" type="stmt" count="0"/>
+        <line num="97" type="stmt" count="0"/>
+        <line num="99" type="stmt" count="0"/>
+        <line num="100" type="stmt" count="0"/>
+        <line num="101" type="stmt" count="0"/>
+        <line num="102" type="stmt" count="0"/>
+        <line num="104" type="stmt" count="0"/>
+        <line num="107" type="stmt" count="0"/>
+        <line num="109" type="stmt" count="0"/>
+        <line num="110" type="stmt" count="0"/>
+        <line num="111" type="stmt" count="0"/>
+        <line num="113" type="stmt" count="0"/>
+        <line num="114" type="stmt" count="0"/>
+        <line num="118" type="stmt" count="0"/>
+        <line num="119" type="stmt" count="0"/>
+        <line num="121" type="stmt" count="0"/>
+        <line num="123" type="stmt" count="0"/>
+        <line num="124" type="stmt" count="0"/>
+        <line num="133" type="method" name="registerHandlers" visibility="protected" complexity="1" crap="2" count="0"/>
+        <line num="135" type="stmt" count="0"/>
+        <line num="136" type="stmt" count="0"/>
+        <line num="137" type="stmt" count="0"/>
+        <line num="139" type="stmt" count="0"/>
+        <line num="140" type="stmt" count="0"/>
+        <line num="141" type="stmt" count="0"/>
+        <line num="142" type="stmt" count="0"/>
+        <line num="143" type="stmt" count="0"/>
+        <line num="144" type="stmt" count="0"/>
+        <line num="145" type="stmt" count="0"/>
+        <line num="146" type="stmt" count="0"/>
+        <line num="147" type="stmt" count="0"/>
+        <line num="148" type="stmt" count="0"/>
+        <line num="149" type="stmt" count="0"/>
+        <line num="151" type="stmt" count="0"/>
+        <line num="152" type="stmt" count="0"/>
+        <line num="153" type="stmt" count="0"/>
+        <line num="154" type="stmt" count="0"/>
+        <line num="156" type="stmt" count="0"/>
+        <line num="157" type="stmt" count="0"/>
+        <line num="159" type="stmt" count="0"/>
+        <line num="160" type="stmt" count="0"/>
+        <line num="161" type="stmt" count="0"/>
+        <line num="162" type="stmt" count="0"/>
+        <line num="163" type="stmt" count="0"/>
+        <line num="165" type="stmt" count="0"/>
+        <line num="166" type="stmt" count="0"/>
+        <line num="168" type="stmt" count="0"/>
+        <line num="169" type="stmt" count="0"/>
+        <line num="171" type="stmt" count="0"/>
+        <line num="172" type="stmt" count="0"/>
+        <line num="173" type="stmt" count="0"/>
+        <line num="174" type="stmt" count="0"/>
+        <line num="175" type="stmt" count="0"/>
+        <line num="176" type="stmt" count="0"/>
+        <line num="177" type="stmt" count="0"/>
+        <line num="178" type="stmt" count="0"/>
+        <line num="179" type="stmt" count="0"/>
+        <line num="181" type="stmt" count="0"/>
+        <line num="182" type="stmt" count="0"/>
+        <line num="183" type="stmt" count="0"/>
+        <line num="184" type="stmt" count="0"/>
+        <line num="185" type="stmt" count="0"/>
+        <line num="193" type="method" name="getDefaultHandlerSet" visibility="protected" complexity="2" crap="6" count="0"/>
+        <line num="195" type="stmt" count="0"/>
+        <line num="196" type="stmt" count="0"/>
+        <line num="197" type="stmt" count="0"/>
+        <line num="198" type="stmt" count="0"/>
+        <line num="199" type="stmt" count="0"/>
+        <line num="200" type="stmt" count="0"/>
+        <line num="201" type="stmt" count="0"/>
+        <line num="202" type="stmt" count="0"/>
+        <line num="204" type="stmt" count="0"/>
+        <line num="205" type="stmt" count="0"/>
+        <line num="207" type="stmt" count="0"/>
+        <line num="216" type="method" name="boot" visibility="public" complexity="2" crap="6" count="0"/>
+        <line num="218" type="stmt" count="0"/>
+        <line num="219" type="stmt" count="0"/>
+        <line num="220" type="stmt" count="0"/>
+        <line num="221" type="stmt" count="0"/>
+        <line num="222" type="stmt" count="0"/>
+        <line num="224" type="stmt" count="0"/>
+        <line num="227" type="stmt" count="0"/>
+        <line num="228" type="stmt" count="0"/>
+        <line num="229" type="stmt" count="0"/>
+        <line num="231" type="stmt" count="0"/>
+        <line num="232" type="stmt" count="0"/>
+        <line num="240" type="method" name="bootForConsole" visibility="protected" complexity="1" crap="2" count="0"/>
+        <line num="242" type="stmt" count="0"/>
+        <line num="243" type="stmt" count="0"/>
+        <line num="244" type="stmt" count="0"/>
+        <line num="245" type="stmt" count="0"/>
+        <metrics loc="247" ncloc="168" classes="1" methods="5" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="100" coveredstatements="0" elements="105" coveredelements="0"/>
+      </file>
+    </package>
+    <package name="Ultra\ErrorManager\Services">
+      <file name="/home/fabio/libraries/UltraErrorManager/src/Services/TestingConditionsManager.php">
+        <class name="Ultra\ErrorManager\Services\TestingConditionsManager" namespace="Ultra\ErrorManager\Services">
+          <metrics complexity="11" methods="10" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="14" coveredstatements="0" elements="24" coveredelements="0"/>
+        </class>
+        <line num="66" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="68" type="stmt" count="0"/>
+        <line num="70" type="stmt" count="0"/>
+        <line num="80" type="method" name="setTestingEnabled" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="82" type="stmt" count="0"/>
+        <line num="83" type="stmt" count="0"/>
+        <line num="91" type="method" name="isTestingEnabled" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="93" type="stmt" count="0"/>
+        <line num="103" type="method" name="setCondition" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="105" type="stmt" count="0"/>
+        <line num="106" type="stmt" count="0"/>
+        <line num="116" type="method" name="isTesting" visibility="public" complexity="2" crap="6" count="0"/>
+        <line num="119" type="stmt" count="0"/>
+        <line num="128" type="method" name="getActiveConditions" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="131" type="stmt" count="0"/>
+        <line num="140" type="method" name="resetAllConditions" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="142" type="stmt" count="0"/>
+        <line num="143" type="stmt" count="0"/>
+        <line num="157" type="method" name="set" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="160" type="stmt" count="0"/>
+        <line num="170" type="method" name="clear" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="173" type="stmt" count="0"/>
+        <line num="182" type="method" name="reset" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="185" type="stmt" count="0"/>
+        <metrics loc="187" ncloc="69" classes="1" methods="10" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="14" coveredstatements="0" elements="24" coveredelements="0"/>
+      </file>
+    </package>
+    <metrics files="21" loc="4372" ncloc="2227" classes="18" methods="131" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="1071" coveredstatements="57" elements="1202" coveredelements="61"/>
+  </project>
+</coverage>

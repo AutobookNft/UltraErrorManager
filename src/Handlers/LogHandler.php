@@ -153,10 +153,11 @@ final class LogHandler implements ErrorHandlerInterface
     protected function prepareLogContext(string $errorCode, array $errorConfig, array $context, ?Throwable $exception): array
     {
         $logContext = [
-            'uem_error_code' => $errorCode, // Prefix to avoid collision with potential 'error_code' in original context
+            'uem_error_code' => $errorCode,
             'uem_error_type' => $errorConfig['type'] ?? 'error',
             'uem_blocking'   => $errorConfig['blocking'] ?? 'unknown',
-            'original_context' => $context, // Include the original context passed to handle()
+            'original_context' => $context,
+            'logged_at' => now()->toIso8601String(), 
         ];
 
         // Add exception information if present

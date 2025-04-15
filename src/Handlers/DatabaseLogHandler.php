@@ -94,7 +94,7 @@ final class DatabaseLogHandler implements ErrorHandlerInterface
                 'message'          => $errorConfig['message'] ?? $errorConfig['dev_message'] ?? ($errorConfig['dev_message_key'] ?? null),
                 'user_message'     => $errorConfig['user_message'] ?? ($errorConfig['user_message_key'] ?? null),
                 'http_status_code' => $errorConfig['http_status_code'] ?? 500,
-                'context'          => json_encode($sanitizedContext), // Use sanitized context
+                'context'          => $sanitizedContext, // Use sanitized context
                 'display_mode'     => $errorConfig['msg_to'] ?? 'div',
                 'resolved'         => false,
                 'notified'         => false,
@@ -111,10 +111,12 @@ final class DatabaseLogHandler implements ErrorHandlerInterface
                 $data['exception_message'] = $this->sanitizeStringValue($exception->getMessage()); // Apply basic sanitization
                 $data['exception_file']    = $exception->getFile(); // Path could be sensitive? Maybe just basename?
                 $data['exception_line']    = $exception->getLine();
-
-                if ($this->dbConfig['include_trace'] ?? true) {
+                $data['exception_code'] = $exception->getCode();
+                if ($exception && ($this->dbConfig['include_trace'] ?? true)) {
                     // Sanitize trace? Very verbose, maybe just truncate is enough.
                     $data['exception_trace'] = $this->truncateTrace($exception->getTraceAsString());
+                } else {
+                    $data['exception_trace'] = null;
                 }
             }
 
@@ -224,6 +226,6 @@ final class DatabaseLogHandler implements ErrorHandlerInterface
         if (mb_strlen($trace) <= $maxLength) {
             return $trace;
         }
-        return mb_substr($trace, 0, $maxLength - 16) . "\n[...TRUNCATED]";
+        return mb_substr($trace, 0, $maxLength - 13) . "[TRUNCATED]";  
     }
 }

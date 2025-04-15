@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/12.1/phpunit.xsd" bootstrap="vendor/autoload.php" colors="true" displayDetailsOnTestsThatTriggerDeprecations="true" displayDetailsOnTestsThatTriggerErrors="true" displayDetailsOnTestsThatTriggerNotices="true" displayDetailsOnTestsThatTriggerWarnings="true" failOnRisky="true" failOnWarning="true" cacheDirectory=".phpunit.cache" requireCoverageMetadata="true" beStrictAboutCoverageMetadata="true">
+  <testsuites>
+    <testsuite name="Unit">
+      <directory>tests</directory>
+      <!-- Tua suite unitaria -->
+    </testsuite>
+    <!-- Puoi aggiungere altre suite (es. Feature) qui in futuro -->
+    <!--
+        <testsuite name="Feature">
+            <directory>tests/Feature</directory>
+        </testsuite>
+        -->
+  </testsuites>
+  <coverage>
+    <!-- Sezione coverage aggiornata -->
+    <report>
+      <!-- Puoi configurare diversi tipi di report qui -->
+      <html outputDirectory="build/coverage/html"/>
+      <clover outputFile="build/coverage/clover.xml"/>
+    </report>
+  </coverage>
+  <source restrictNotices="true" restrictWarnings="true" ignoreIndirectDeprecations="true">
+    <!-- Sezione source per coverage -->
+    <include>
+      <directory suffix=".php">src</directory>
+      <!-- Il tuo codice sorgente -->
+    </include>
+    <!-- Puoi aggiungere esclusioni qui se necessario -->
+    <!--
+        <exclude>
+             <directory suffix=".php">src/Providers</directory>
+             <file>src/SomeFileToExclude.php</file>
+        </exclude>
+        -->
+  </source>
+</phpunit>
