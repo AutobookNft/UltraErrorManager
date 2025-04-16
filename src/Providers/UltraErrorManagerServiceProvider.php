@@ -148,12 +148,10 @@ final class UltraErrorManagerServiceProvider extends ServiceProvider
             );
         });
 
-        $this->app->singleton(UserInterfaceHandler::class, function (Application $app) use ($configKey) {
-            $session = $app->make('session.store'); // Or Session::class if bound
-            $translator = $app->make(TranslatorContract::class); // Resolve Translator
-            $config = $app['config'][$configKey]['ui'] ?? [];
-            // Pass translator as the second argument
-            return new UserInterfaceHandler($session, $translator, $config);
+        $this->app->singleton(UserInterfaceHandler::class, function ($app) { // $app è Application
+            $session = $app->make(\Illuminate\Contracts\Session\Session::class); // Usa l'interfaccia
+            $uiConfig = $app['config']->get('error-manager.ui', []); // Recupera l'array
+            return new UserInterfaceHandler($session, $uiConfig);
         });
 
          $this->app->singleton(DatabaseLogHandler::class, function (Application $app) use ($configKey) {
