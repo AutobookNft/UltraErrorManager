@@ -60,7 +60,6 @@
        </thead>
        <tbody>
        <tr><td><a href="ErrorDashboardController.php.html#51">Ultra\ErrorManager\Http\Controllers\ErrorDashboardController</a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="ErrorSimulationController.php.html#42">Ultra\ErrorManager\Http\Controllers\ErrorSimulationController</a></td><td class="text-right">0%</td></tr>
 
        </tbody>
       </table>
@@ -78,7 +77,6 @@
        </thead>
        <tbody>
        <tr><td><a href="ErrorDashboardController.php.html#51">Ultra\ErrorManager\Http\Controllers\ErrorDashboardController</a></td><td class="text-right">1122</td></tr>
-       <tr><td><a href="ErrorSimulationController.php.html#42">Ultra\ErrorManager\Http\Controllers\ErrorSimulationController</a></td><td class="text-right">156</td></tr>
 
        </tbody>
       </table>
@@ -128,12 +126,6 @@
        <tr><td><a href="ErrorDashboardController.php.html#279"><abbr title="Ultra\ErrorManager\Http\Controllers\ErrorDashboardController::simulations">simulations</abbr></a></td><td class="text-right">0%</td></tr>
        <tr><td><a href="ErrorDashboardController.php.html#318"><abbr title="Ultra\ErrorManager\Http\Controllers\ErrorDashboardController::activateSimulation">activateSimulation</abbr></a></td><td class="text-right">0%</td></tr>
        <tr><td><a href="ErrorDashboardController.php.html#343"><abbr title="Ultra\ErrorManager\Http\Controllers\ErrorDashboardController::deactivateSimulation">deactivateSimulation</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="ErrorSimulationController.php.html#56"><abbr title="Ultra\ErrorManager\Http\Controllers\ErrorSimulationController::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="ErrorSimulationController.php.html#73"><abbr title="Ultra\ErrorManager\Http\Controllers\ErrorSimulationController::activateSimulation">activateSimulation</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="ErrorSimulationController.php.html#104"><abbr title="Ultra\ErrorManager\Http\Controllers\ErrorSimulationController::deactivateSimulation">deactivateSimulation</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="ErrorSimulationController.php.html#121"><abbr title="Ultra\ErrorManager\Http\Controllers\ErrorSimulationController::listActiveSimulations">listActiveSimulations</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="ErrorSimulationController.php.html#139"><abbr title="Ultra\ErrorManager\Http\Controllers\ErrorSimulationController::resetAllSimulations">resetAllSimulations</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="ErrorSimulationController.php.html#157"><abbr title="Ultra\ErrorManager\Http\Controllers\ErrorSimulationController::listErrorCodes">listErrorCodes</abbr></a></td><td class="text-right">0%</td></tr>
 
        </tbody>
       </table>
@@ -152,13 +144,11 @@
        <tbody>
        <tr><td><a href="ErrorDashboardController.php.html#84"><abbr title="Ultra\ErrorManager\Http\Controllers\ErrorDashboardController::index">index</abbr></a></td><td class="text-right">56</td></tr>
        <tr><td><a href="ErrorDashboardController.php.html#225"><abbr title="Ultra\ErrorManager\Http\Controllers\ErrorDashboardController::bulkResolve">bulkResolve</abbr></a></td><td class="text-right">42</td></tr>
-       <tr><td><a href="ErrorSimulationController.php.html#157"><abbr title="Ultra\ErrorManager\Http\Controllers\ErrorSimulationController::listErrorCodes">listErrorCodes</abbr></a></td><td class="text-right">42</td></tr>
        <tr><td><a href="ErrorDashboardController.php.html#279"><abbr title="Ultra\ErrorManager\Http\Controllers\ErrorDashboardController::simulations">simulations</abbr></a></td><td class="text-right">30</td></tr>
        <tr><td><a href="ErrorDashboardController.php.html#318"><abbr title="Ultra\ErrorManager\Http\Controllers\ErrorDashboardController::activateSimulation">activateSimulation</abbr></a></td><td class="text-right">12</td></tr>
        <tr><td><a href="ErrorDashboardController.php.html#343"><abbr title="Ultra\ErrorManager\Http\Controllers\ErrorDashboardController::deactivateSimulation">deactivateSimulation</abbr></a></td><td class="text-right">12</td></tr>
        <tr><td><a href="ErrorDashboardController.php.html#146"><abbr title="Ultra\ErrorManager\Http\Controllers\ErrorDashboardController::resolve">resolve</abbr></a></td><td class="text-right">6</td></tr>
        <tr><td><a href="ErrorDashboardController.php.html#196"><abbr title="Ultra\ErrorManager\Http\Controllers\ErrorDashboardController::statistics">statistics</abbr></a></td><td class="text-right">6</td></tr>
-       <tr><td><a href="ErrorSimulationController.php.html#73"><abbr title="Ultra\ErrorManager\Http\Controllers\ErrorSimulationController::activateSimulation">activateSimulation</abbr></a></td><td class="text-right">6</td></tr>
 
        </tbody>
       </table>
@@ -168,7 +158,7 @@
    <footer>
     <hr/>
     <p>
-     <small>Generated by <a href="https://github.com/sebastianbergmann/php-code-coverage" target="_top">php-code-coverage 12.1.2</a> using <a href="https://www.php.net/" target="_top">PHP 8.3.15</a> and <a href="https://phpunit.de/">PHPUnit 12.1.2</a> at Wed Apr 16 14:12:15 UTC 2025.</small>
+     <small>Generated by <a href="https://github.com/sebastianbergmann/php-code-coverage" target="_top">php-code-coverage 12.1.2</a> using <a href="https://www.php.net/" target="_top">PHP 8.3.15</a> and <a href="https://phpunit.de/">PHPUnit 12.1.2</a> at Fri Apr 18 11:44:18 UTC 2025.</small>
     </p>
    </footer>
   </div>
@@ -187,7 +177,7 @@ $(document).ready(function() {
       .yAxis.tickFormat(d3.format('d'));
 
     d3.select('#classCoverageDistribution svg')
-      .datum(getCoverageDistributionData([2,0,0,0,0,0,0,0,0,0,0,0], "Class Coverage"))
+      .datum(getCoverageDistributionData([1,0,0,0,0,0,0,0,0,0,0,1], "Class Coverage"))
       .transition().duration(500).call(chart);
 
     nv.utils.windowResize(chart.update);
@@ -205,7 +195,7 @@ $(document).ready(function() {
       .yAxis.tickFormat(d3.format('d'));
 
     d3.select('#methodCoverageDistribution svg')
-      .datum(getCoverageDistributionData([18,0,0,0,0,0,0,0,0,0,0,0], "Method Coverage"))
+      .datum(getCoverageDistributionData([12,0,0,0,0,0,0,0,0,0,0,6], "Method Coverage"))
       .transition().duration(500).call(chart);
 
     nv.utils.windowResize(chart.update);
@@ -255,7 +245,7 @@ $(document).ready(function() {
     chart.yAxis.axisLabel('Cyclomatic Complexity');
 
     d3.select('#classComplexity svg')
-      .datum(getComplexityData([[0,33,"<a href=\"ErrorDashboardController.php.html#51\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorDashboardController<\/a>"],[0,12,"<a href=\"ErrorSimulationController.php.html#42\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorSimulationController<\/a>"]], 'Class Complexity'))
+      .datum(getComplexityData([[0,33,"<a href=\"ErrorDashboardController.php.html#51\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorDashboardController<\/a>"],[100,12,"<a href=\"ErrorSimulationController.php.html#42\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorSimulationController<\/a>"]], 'Class Complexity'))
       .transition()
       .duration(500)
       .call(chart);
@@ -279,7 +269,7 @@ $(document).ready(function() {
     chart.yAxis.axisLabel('Method Complexity');
 
     d3.select('#methodComplexity svg')
-      .datum(getComplexityData([[0,1,"<a href=\"ErrorDashboardController.php.html#65\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorDashboardController::__construct<\/a>"],[0,7,"<a href=\"ErrorDashboardController.php.html#84\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorDashboardController::index<\/a>"],[0,1,"<a href=\"ErrorDashboardController.php.html#130\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorDashboardController::show<\/a>"],[0,2,"<a href=\"ErrorDashboardController.php.html#146\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorDashboardController::resolve<\/a>"],[0,1,"<a href=\"ErrorDashboardController.php.html#165\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorDashboardController::unresolve<\/a>"],[0,1,"<a href=\"ErrorDashboardController.php.html#180\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorDashboardController::destroy<\/a>"],[0,2,"<a href=\"ErrorDashboardController.php.html#196\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorDashboardController::statistics<\/a>"],[0,6,"<a href=\"ErrorDashboardController.php.html#225\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorDashboardController::bulkResolve<\/a>"],[0,1,"<a href=\"ErrorDashboardController.php.html#259\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorDashboardController::purgeResolved<\/a>"],[0,5,"<a href=\"ErrorDashboardController.php.html#279\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorDashboardController::simulations<\/a>"],[0,3,"<a href=\"ErrorDashboardController.php.html#318\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorDashboardController::activateSimulation<\/a>"],[0,3,"<a href=\"ErrorDashboardController.php.html#343\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorDashboardController::deactivateSimulation<\/a>"],[0,1,"<a href=\"ErrorSimulationController.php.html#56\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorSimulationController::__construct<\/a>"],[0,2,"<a href=\"ErrorSimulationController.php.html#73\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorSimulationController::activateSimulation<\/a>"],[0,1,"<a href=\"ErrorSimulationController.php.html#104\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorSimulationController::deactivateSimulation<\/a>"],[0,1,"<a href=\"ErrorSimulationController.php.html#121\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorSimulationController::listActiveSimulations<\/a>"],[0,1,"<a href=\"ErrorSimulationController.php.html#139\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorSimulationController::resetAllSimulations<\/a>"],[0,6,"<a href=\"ErrorSimulationController.php.html#157\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorSimulationController::listErrorCodes<\/a>"]], 'Method Complexity'))
+      .datum(getComplexityData([[0,1,"<a href=\"ErrorDashboardController.php.html#65\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorDashboardController::__construct<\/a>"],[0,7,"<a href=\"ErrorDashboardController.php.html#84\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorDashboardController::index<\/a>"],[0,1,"<a href=\"ErrorDashboardController.php.html#130\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorDashboardController::show<\/a>"],[0,2,"<a href=\"ErrorDashboardController.php.html#146\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorDashboardController::resolve<\/a>"],[0,1,"<a href=\"ErrorDashboardController.php.html#165\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorDashboardController::unresolve<\/a>"],[0,1,"<a href=\"ErrorDashboardController.php.html#180\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorDashboardController::destroy<\/a>"],[0,2,"<a href=\"ErrorDashboardController.php.html#196\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorDashboardController::statistics<\/a>"],[0,6,"<a href=\"ErrorDashboardController.php.html#225\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorDashboardController::bulkResolve<\/a>"],[0,1,"<a href=\"ErrorDashboardController.php.html#259\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorDashboardController::purgeResolved<\/a>"],[0,5,"<a href=\"ErrorDashboardController.php.html#279\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorDashboardController::simulations<\/a>"],[0,3,"<a href=\"ErrorDashboardController.php.html#318\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorDashboardController::activateSimulation<\/a>"],[0,3,"<a href=\"ErrorDashboardController.php.html#343\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorDashboardController::deactivateSimulation<\/a>"],[100,1,"<a href=\"ErrorSimulationController.php.html#56\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorSimulationController::__construct<\/a>"],[100,2,"<a href=\"ErrorSimulationController.php.html#73\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorSimulationController::activateSimulation<\/a>"],[100,1,"<a href=\"ErrorSimulationController.php.html#104\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorSimulationController::deactivateSimulation<\/a>"],[100,1,"<a href=\"ErrorSimulationController.php.html#121\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorSimulationController::listActiveSimulations<\/a>"],[100,1,"<a href=\"ErrorSimulationController.php.html#139\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorSimulationController::resetAllSimulations<\/a>"],[100,6,"<a href=\"ErrorSimulationController.php.html#157\">Ultra\\ErrorManager\\Http\\Controllers\\ErrorSimulationController::listErrorCodes<\/a>"]], 'Method Complexity'))
       .transition()
       .duration(500)
       .call(chart);
