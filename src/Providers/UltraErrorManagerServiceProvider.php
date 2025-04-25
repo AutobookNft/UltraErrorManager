@@ -81,7 +81,6 @@ final class UltraErrorManagerServiceProvider extends ServiceProvider
         // Alias for facade/helper resolution
         $this->app->alias(TestingConditionsManager::class, 'ultra.testing-conditions');
 
-
         $this->registerHandlers($configKey);
 
         $this->app->singleton('ultra.error-manager', function (Application $app) use ($configKey) {

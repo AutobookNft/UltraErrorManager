@@ -103,7 +103,8 @@ final class ErrorSimulationHandler implements ErrorHandlerInterface
      * @param array $context Contextual data.
      * @param Throwable|null $exception Optional original throwable.
      * @return void
-     */    public function handle(string $errorCode, array $errorConfig, array $context = [], ?Throwable $exception = null): void
+     */    
+    public function handle(string $errorCode, array $errorConfig, array $context = [], ?Throwable $exception = null): void
     {
         // Check if this specific error code is currently being simulated
         $isSimulated = $this->testingManager->isTesting($errorCode);

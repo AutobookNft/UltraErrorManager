@@ -49,6 +49,15 @@ return [
         'invalid_file_validation' => 'Validazione file fallita per il campo :field. Motivo: :reason',
         'error_saving_file_metadata' => 'Salvataggio metadati fallito per file ID :file_id. Motivo: :reason',
         'server_limits_restrictive' => 'I limiti del server potrebbero essere troppo restrittivi. Controllare :limit_name (:limit_value).',
+        'egi_auth_required' => 'Autenticazione richiesta per l\'upload dell\'EGI.',
+        'egi_file_input_error' => "Input 'file' mancante o non valido. Codice errore upload: :code",
+        'egi_validation_failed' => 'Validazione metadati EGI fallita. Controllare errori di validazione nel contesto.',
+        'egi_collection_init_error' => 'Errore critico inizializzando la collection di default per l\'utente :user_id.',
+        'egi_crypto_error' => 'Fallita la cifratura del nome file: :filename',
+        'egi_db_error' => 'Errore database processando l\'EGI :egi_id per la collection :collection_id.',
+        'egi_storage_critical_failure' => 'Fallimento critico nel salvataggio del file EGI :egi_id sul/i disco/hi: :disks',
+        'egi_storage_config_error' => "Il disco di storage 'local' richiesto per il fallback non è configurato.",
+        'egi_unexpected_error' => 'Errore inaspettato durante l\'elaborazione dell\'EGI per il file :original_filename.',
 
         // == New Entries ==
         'authorization_error' => 'Autorizzazione negata per l\'azione richiesta: :action.',
@@ -109,6 +118,12 @@ return [
         'error_saving_file_metadata' => 'Si è verificato un errore salvando i dettagli del file. Riprova il caricamento.',
         'server_limits_restrictive' => 'La configurazione del server potrebbe impedire questa operazione. Contatta l\'assistenza se il problema persiste.',
         'generic_internal_error' => 'Si è verificato un errore interno. Il nostro team tecnico è stato informato e sta lavorando per risolverlo.', // Messaggio generico riutilizzabile
+        'egi_auth_required' => 'Effettua il login per caricare un EGI.',
+        'egi_file_input_error' => 'Seleziona un file valido da caricare.',
+        'egi_validation_failed' => 'Correggi i campi evidenziati nel modulo.',
+        'egi_collection_init_error' => 'Impossibile preparare la tua collection. Contatta il supporto se il problema persiste.',
+        'egi_storage_failure' => 'Fallito il salvataggio sicuro del file EGI. Riprova o contatta il supporto.',
+        'egi_unexpected_error' => 'Si è verificato un errore inaspettato durante l\'elaborazione del tuo EGI. Riprova più tardi.',
 
         // == New Entries ==
         'authorization_error' => 'Non disponi dei permessi necessari per eseguire questa azione.',
@@ -122,9 +137,9 @@ return [
         'utm_load_failed' => 'Il sistema ha riscontrato un problema nel caricamento delle impostazioni della lingua. Alcune funzionalità potrebbero essere limitate.',
         'utm_invalid_locale' => 'L\'impostazione della lingua richiesta non è disponibile.',
         // Messaggi user per errori interni UEM (usare generic_internal_error)
-        // 'uem_email_send_failed' => null,
-        // 'uem_slack_send_failed' => null,
-        // 'uem_recovery_action_failed' => null,
+        'uem_email_send_failed' => null,
+        'uem_slack_send_failed' => null,
+        'uem_recovery_action_failed' => null,
     ],
 
     'generic_error' => 'Si è verificato un errore. Riprova più tardi o contatta l\'assistenza.',

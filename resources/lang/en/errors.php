@@ -49,6 +49,15 @@ return [
         'invalid_file_validation' => 'File validation failed for field :field. Reason: :reason',
         'error_saving_file_metadata' => 'Failed to save metadata for file ID :file_id. Reason: :reason',
         'server_limits_restrictive' => 'Server limits might be too restrictive. Check :limit_name (:limit_value).',
+        'egi_auth_required' => 'Authentication required for EGI upload.',
+        'egi_file_input_error' => "Invalid or missing 'file' input. Upload error code: :code",
+        'egi_validation_failed' => 'EGI metadata validation failed. Check validation errors in context.',
+        'egi_collection_init_error' => 'Critical error initializing default collection for user :user_id.',
+        'egi_crypto_error' => 'Failed to encrypt filename: :filename',
+        'egi_db_error' => 'Database error processing EGI :egi_id for collection :collection_id.',
+        'egi_storage_critical_failure' => 'Critical failure saving EGI :egi_id file to disk(s): :disks',
+        'egi_storage_config_error' => "'local' storage disk required for fallback is not configured.",
+        'egi_unexpected_error' => 'Unexpected error during EGI processing for file :original_filename.',
 
         // == New Entries ==
         'authorization_error' => 'Authorization denied for the requested action: :action.',
@@ -105,6 +114,12 @@ return [
         'invalid_file_validation' => 'Please check the file in the :field field. It did not pass validation.',
         'error_saving_file_metadata' => 'An error occurred while saving file details. Please try the upload again.',
         'server_limits_restrictive' => 'The server configuration may prevent this operation. Please contact support if this persists.',
+        'egi_auth_required' => 'Please log in to upload an EGI.',
+        'egi_file_input_error' => 'Please select a valid file to upload.',
+        'egi_validation_failed' => 'Please correct the highlighted fields in the form.',
+        'egi_collection_init_error' => 'Could not prepare your collection. Please contact support if the problem persists.',
+        'egi_storage_failure' => 'Failed to securely store the EGI file. Please try again or contact support.',
+        'egi_unexpected_error' => 'An unexpected error occurred while processing your EGI. Please try again later.',
 
         // == New Entries ==
         'authorization_error' => 'You do not have permission to perform this action.',
@@ -118,9 +133,9 @@ return [
         'utm_load_failed' => 'The system encountered an issue loading language settings. Functionality may be limited.', // Generic internal error for user
         'utm_invalid_locale' => 'The requested language setting is not available.', // Slightly more specific internal issue
         // Internal UEM failures below generally shouldn't have specific user messages, map to generic ones if needed.
-        // 'uem_email_send_failed' => null, // Use generic_internal_error
-        // 'uem_slack_send_failed' => null, // Use generic_internal_error
-        // 'uem_recovery_action_failed' => null, // Use generic_internal_error
+        'uem_email_send_failed' => null, // Use generic_internal_error
+        'uem_slack_send_failed' => null, // Use generic_internal_error
+        'uem_recovery_action_failed' => null, // Use generic_internal_error
     ],
 
     // Generic message (used by UserInterfaceHandler if no specific message found)
