@@ -73,6 +73,19 @@ return [
         'uem_email_send_failed' => 'EmailNotificationHandler failed to send notification for :errorCode. Reason: :reason',
         'uem_slack_send_failed' => 'SlackNotificationHandler failed to send notification for :errorCode. Reason: :reason',
         'uem_recovery_action_failed' => 'Recovery action :action failed for error :errorCode. Reason: :reason',
+
+        'role_user_not_found' => 'User ID :user_id not found during role operation for role ":role"',
+        'role_assignment_failed' => 'Failed to assign role ":role" to user :user_id: :error_message',
+        'role_check_failed' => 'Error checking if user :user_id has role ":role": :error_message',
+        'role_users_retrieval_failed' => 'Error retrieving users with role ":role": :error_message',
+        'role_not_found' => 'Role ":role" not found during user permission operation',
+
+        'wallet_creation_failed' => 'Failed to create wallet for collection :collection_id, user :user_id: :error_message',
+        'wallet_quota_check_error' => 'Error checking wallet quota for user :user_id, collection :collection_id: :error_message',
+        'wallet_insufficient_quota' => 'User :user_id has insufficient quota for collection :collection_id. Required: mint=:required_mint_quota, rebind=:required_rebind_quota. Available: mint=:current_mint_quota, rebind=:current_rebind_quota.',
+        'wallet_address_invalid' => 'Invalid wallet address format provided for user :user_id: :wallet_address',
+        'wallet_not_found' => 'Wallet not found for user :user_id and collection :collection_id',
+        'wallet_already_exists' => 'Wallet already exists for user :user_id and collection :collection_id with ID :wallet_id',
     ],
 
     'user' => [
@@ -136,6 +149,17 @@ return [
         'uem_email_send_failed' => null, // Use generic_internal_error
         'uem_slack_send_failed' => null, // Use generic_internal_error
         'uem_recovery_action_failed' => null, // Use generic_internal_error
+        
+        'role_user_not_found' => 'The specified user could not be found.',
+        'role_assignment_failed' => 'There was a problem updating user permissions. Please try again or contact support.',
+        'role_users_retrieval_failed' => 'Unable to load user list. Please try again later.',
+        'role_not_found' => 'The requested permission level is not available in the system.',
+
+        'wallet_creation_failed' => 'We encountered a problem setting up the wallet for this collection. Our team has been notified and will resolve this issue.',
+        'wallet_insufficient_quota' => 'You do not have sufficient royalty quota available for this operation. Please adjust your royalty values and try again.',
+        'wallet_address_invalid' => 'The wallet address provided is not valid. Please check the format and try again.',
+        'wallet_not_found' => 'The requested wallet could not be found. Please verify your information and try again.',
+        'wallet_already_exists' => 'A wallet is already configured for this collection. Please use the existing wallet or contact support for assistance.',
     ],
 
     // Generic message (used by UserInterfaceHandler if no specific message found)

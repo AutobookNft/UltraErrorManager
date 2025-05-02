@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('display_mode')->nullable();
             $table->string('exception_class')->nullable();
             $table->text('exception_message')->nullable();
-            $table->integer('exception_code')->nullable();
+            $table->string('exception_code')->nullable();
             $table->string('exception_file')->nullable();
             $table->integer('exception_line')->nullable();
             $table->text('exception_trace')->nullable();

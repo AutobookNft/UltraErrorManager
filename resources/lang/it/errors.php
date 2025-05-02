@@ -59,6 +59,17 @@ return [
         'egi_storage_config_error' => "Il disco di storage 'local' richiesto per il fallback non è configurato.",
         'egi_unexpected_error' => 'Errore inaspettato durante l\'elaborazione dell\'EGI per il file :original_filename.',
 
+        // Errori relativi all'interfaccia utente (messaggi per sviluppatori)
+        'egi_unauthorized_access' => 'Tentativo di accesso non autenticato alla pagina di upload EGI.',
+        'egi_page_access_notice' => 'Pagina di upload EGI acceduta con successo dall\'amministratore con ID :user_id.',
+        'egi_page_rendering_error' => 'Eccezione durante il rendering della pagina di upload EGI: :exception_message',
+
+        // Errori di validazione (messaggi per sviluppatori)
+        'invalid_egi_file' => 'Validazione del file EGI fallita con errori: :validation_errors',
+
+        // Errori di elaborazione (messaggi per sviluppatori)
+        'error_during_egi_processing' => 'Errore durante l\'elaborazione del file EGI nella fase ":processing_stage": :exception_message',
+
         // == New Entries ==
         'authorization_error' => 'Autorizzazione negata per l\'azione richiesta: :action.',
         'csrf_token_mismatch' => 'Token CSRF non valido o scaduto.',
@@ -73,6 +84,19 @@ return [
         'uem_email_send_failed' => 'EmailNotificationHandler: invio notifica fallito per :errorCode. Motivo: :reason',
         'uem_slack_send_failed' => 'SlackNotificationHandler: invio notifica fallito per :errorCode. Motivo: :reason',
         'uem_recovery_action_failed' => 'Azione di recupero :action fallita per errore :errorCode. Motivo: :reason',
+        
+        'role_user_not_found' => 'Utente con ID :user_id non trovato durante l\'operazione sul ruolo ":role"',
+        'role_assignment_failed' => 'Impossibile assegnare il ruolo ":role" all\'utente :user_id: :error_message',
+        'role_check_failed' => 'Errore durante la verifica se l\'utente :user_id ha il ruolo ":role": :error_message',
+        'role_users_retrieval_failed' => 'Errore nel recupero degli utenti con ruolo ":role": :error_message',
+        'role_not_found' => 'Ruolo ":role" non trovato durante l\'operazione sui permessi utente',
+
+        'wallet_creation_failed' => 'Impossibile creare il wallet per la collezione :collection_id, utente :user_id: :error_message',
+        'wallet_quota_check_error' => 'Errore durante il controllo della quota del wallet per l\'utente :user_id, collezione :collection_id: :error_message',
+        'wallet_insufficient_quota' => 'L\'utente :user_id ha quota insufficiente per la collezione :collection_id. Richiesto: mint=:required_mint_quota, rebind=:required_rebind_quota. Disponibile: mint=:current_mint_quota, rebind=:current_rebind_quota.',
+        'wallet_address_invalid' => 'Formato dell\'indirizzo wallet non valido per l\'utente :user_id: :wallet_address',
+        'wallet_not_found' => 'Wallet non trovato per l\'utente :user_id e la collezione :collection_id',
+        'wallet_already_exists' => 'Il wallet esiste già per l\'utente :user_id e la collezione :collection_id con ID :wallet_id',
     ],
 
     'user' => [
@@ -125,6 +149,16 @@ return [
         'egi_storage_failure' => 'Fallito il salvataggio sicuro del file EGI. Riprova o contatta il supporto.',
         'egi_unexpected_error' => 'Si è verificato un errore inaspettato durante l\'elaborazione del tuo EGI. Riprova più tardi.',
 
+         // Errori relativi all'interfaccia utente (messaggi per utenti)
+         'egi_unauthorized_access' => 'È necessaria l\'autenticazione per accedere a questa pagina. Effettua il login.',
+         'egi_page_rendering_error' => 'Si è verificato un problema durante il caricamento della pagina. Riprova più tardi o contatta l\'assistenza.',
+ 
+         // Errori di validazione (messaggi per utenti)
+         'invalid_egi_file' => 'Il file EGI non può essere elaborato a causa di errori di validazione. Verifica il formato e il contenuto del file.',
+          
+         // Errori di elaborazione (messaggi per utenti)
+         'error_during_egi_processing' => 'Si è verificato un errore durante l\'elaborazione del file EGI. Il nostro team è stato avvisato e analizzerà il problema.',
+
         // == New Entries ==
         'authorization_error' => 'Non disponi dei permessi necessari per eseguire questa azione.',
         'csrf_token_mismatch' => 'La tua sessione è scaduta o non è valida. Per favore, ricarica la pagina e riprova.',
@@ -140,6 +174,17 @@ return [
         'uem_email_send_failed' => null,
         'uem_slack_send_failed' => null,
         'uem_recovery_action_failed' => null,
+        
+        'role_user_not_found' => 'L\'utente specificato non è stato trovato.',
+        'role_assignment_failed' => 'Si è verificato un problema durante l\'aggiornamento dei permessi utente. Riprova o contatta l\'assistenza.',
+        'role_users_retrieval_failed' => 'Impossibile caricare l\'elenco degli utenti. Riprova più tardi.',
+        'role_not_found' => 'Il livello di permesso richiesto non è disponibile nel sistema.',
+
+        'wallet_creation_failed' => 'Si è verificato un problema durante la configurazione del wallet per questa collezione. Il nostro team è stato avvisato e risolverà questo problema.',
+        'wallet_insufficient_quota' => 'Non hai quota royalty sufficiente per questa operazione. Modifica i valori di royalty e riprova.',
+        'wallet_address_invalid' => 'L\'indirizzo del wallet fornito non è valido. Controlla il formato e riprova.',
+        'wallet_not_found' => 'Il wallet richiesto non è stato trovato. Verifica le tue informazioni e riprova.',
+        'wallet_already_exists' => 'Un wallet è già configurato per questa collezione. Utilizza il wallet esistente o contatta l\'assistenza per aiuto.',
     ],
 
     'generic_error' => 'Si è verificato un errore. Riprova più tardi o contatta l\'assistenza.',
