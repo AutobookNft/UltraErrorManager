@@ -47,10 +47,8 @@ final class UltraErrorManagerServiceProvider extends ServiceProvider
         });
         $this->app->alias(TestingConditionsManager::class, 'ultra.testing-conditions');
 
-        // This method now handles ALL handler registrations, including the corrected LogHandler.
+        // This method now handles ALL handler registrations correctly.
         $this->registerHandlers($configKey);
-
-        // --- REMOVED incorrect LogHandler registration from here ---
 
         $this->app->singleton('ultra.error-manager', function (Application $app) use ($configKey) {
             $ulmLogger = $app->make(UltraLogManager::class);
@@ -63,6 +61,9 @@ final class UltraErrorManagerServiceProvider extends ServiceProvider
             $defaultHandlerClasses = $config['default_handlers'] ?? $this->getDefaultHandlerSet();
 
             foreach ($defaultHandlerClasses as $handlerClass) {
+                // Ignore null values that can result from the ternary operator
+                if (!$handlerClass) continue;
+                
                 try {
                     if (class_exists($handlerClass)) {
                         $handlerInstance = $app->make($handlerClass);
@@ -91,22 +92,15 @@ final class UltraErrorManagerServiceProvider extends ServiceProvider
         $this->app->singleton(EnvironmentMiddleware::class);
     }
 
-    /**
-     * 🧱 Helper method to register default handlers and their dependencies.
-     *
-     * @param string $configKey The key for the package's configuration.
-     * @return void
-     */
     protected function registerHandlers(string $configKey): void
     {
-        // --- CORRECTED REGISTRATION FOR THE AUTONOMOUS LOGHANDLER ---
+        // THIS IS THE ONLY, CORRECT REGISTRATION FOR LOGHANDLER
         $this->app->singleton(LogHandler::class, function (Application $app) use ($configKey) {
-            // Pass the 'log_handler' config section to the constructor.
             $handlerConfig = $app['config'][$configKey]['log_handler'] ?? [];
             return new LogHandler($handlerConfig);
         });
 
-        // --- Other handler registrations remain the same ---
+        // Other handler registrations...
         $this->app->singleton(EmailNotificationHandler::class, function (Application $app) use ($configKey) {
             return new EmailNotificationHandler(
                 $app->make(MailerContract::class),
@@ -155,15 +149,15 @@ final class UltraErrorManagerServiceProvider extends ServiceProvider
 
     protected function getDefaultHandlerSet(): array
     {
-        return [
+        return array_filter([ // Use array_filter to remove nulls
             LogHandler::class,
             DatabaseLogHandler::class,
             EmailNotificationHandler::class,
             SlackNotificationHandler::class,
             UserInterfaceHandler::class,
             RecoveryActionHandler::class,
-            ($this->app->environment() !== 'production' ? ErrorSimulationHandler::class : null)
-        ];
+            $this->app->environment() !== 'production' ? ErrorSimulationHandler::class : null,
+        ]);
     }
 
     public function boot(): void
