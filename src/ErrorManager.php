@@ -381,13 +381,13 @@ final class ErrorManager implements ErrorManagerInterface
             // Check if translation returned the key itself (meaning not found)
             if ($translation !== $errorConfig[$translationKey]) {
                 $message = $translation;
-                $this->logger->debug('UEM Using translated message', ['key' => $errorConfig[$translationKey]]);
+                // $this->logger->debug('UEM Using translated message', ['key' => $errorConfig[$translationKey]]);
             } else {
                  $this->logger->warning('UEM Translation key not found, trying direct message.', ['key' => $errorConfig[$translationKey]]);
                  // Fall through to check direct key if translation failed
                  if (!empty($errorConfig[$directKey])) {
                      $message = $errorConfig[$directKey];
-                     $this->logger->debug('UEM Using direct message as fallback from failed translation.', ['source' => $directKey]);
+                    //  $this->logger->debug('UEM Using direct message as fallback from failed translation.', ['source' => $directKey]);
                  } else {
                       $this->logger->warning('UEM Direct message key also not found, using fallback.', ['key' => $directKey, 'fallback' => $fallbackMessage]);
                  }
@@ -396,7 +396,7 @@ final class ErrorManager implements ErrorManagerInterface
         // Else, use direct message if available
         elseif (!empty($errorConfig[$directKey])) {
             $message = $errorConfig[$directKey];
-            $this->logger->debug('UEM Using direct message', ['source' => $directKey]);
+            // $this->logger->debug('UEM Using direct message', ['source' => $directKey]);
         }
         // Else, fallback is already set
 
