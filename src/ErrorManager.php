@@ -106,10 +106,10 @@ final class ErrorManager implements ErrorManagerInterface
     public function registerHandler(ErrorHandlerInterface $handler): self
     {
         $this->handlers[] = $handler;
-        $this->logger->debug('Registered error handler', [
-            'handler_class' => get_class($handler),
-            'total_handlers' => count($this->handlers)
-        ]);
+        // $this->logger->debug('Registered error handler', [
+        //     'handler_class' => get_class($handler),
+        //     'total_handlers' => count($this->handlers)
+        // ]);
         return $this;
     }
 
