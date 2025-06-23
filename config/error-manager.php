@@ -771,6 +771,46 @@ return [
             'msg_to' => 'log-only',
         ],
 
+        'UEM_USER_UNAUTHENTICATED' => [
+            'type' => 'auth', // O 'error' se preferisci
+            'blocking' => 'blocking',
+            'dev_message_key' => 'error-manager::errors.dev.user_unauthenticated_access', // Chiave per messaggio tecnico
+            'user_message_key' => 'error-manager::errors.user.user_unauthenticated_access', // Chiave per messaggio utente
+            'http_status_code' => 401, // Unauthorized
+            'devTeam_email_need' => false, // A meno che non sia un fallimento inaspettato del middleware
+            'notify_slack' => false,
+            'msg_to' => 'json', // Solitamente per API
+            // TODO: Implementare in UEM il whitelisting granulare del contesto per DB log
+            // 'sensitive_keys_from_context_for_db_log' => ['ip_address', 'target_collection_id'], // Se vuoi loggare contesto specifico
+        ],
+
+        'UEM_SET_CURRENT_COLLECTION_FORBIDDEN' => [
+            'type' => 'security', // O 'error'
+            'blocking' => 'blocking',
+            'dev_message_key' => 'error-manager::errors.dev.set_current_collection_forbidden',
+            'user_message_key' => 'error-manager::errors.user.set_current_collection_forbidden',
+            'http_status_code' => 403, // Forbidden
+            'devTeam_email_need' => true, // Potrebbe indicare un tentativo di accesso anomalo
+            'notify_slack' => true,
+            'msg_to' => 'json',
+            // TODO: Implementare in UEM il whitelisting granulare del contesto per DB log
+            // 'sensitive_keys_from_context_for_db_log' => ['user_id', 'collection_id', 'ip_address'],
+        ],
+
+        'UEM_SET_CURRENT_COLLECTION_FAILED' => [
+            'type' => 'critical', // Un fallimento nel salvare il DB è solitamente critico
+            'blocking' => 'blocking',
+            'dev_message_key' => 'error-manager::errors.dev.set_current_collection_failed',
+            'user_message_key' => 'error-manager::errors.user.set_current_collection_failed',
+            'http_status_code' => 500, // Internal Server Error
+            'devTeam_email_need' => true, // Notifica sempre per errori 500
+            'notify_slack' => true,
+            'msg_to' => 'json',
+            // TODO: Implementare in UEM il whitelisting granulare del contesto per DB log
+            //'sensitive_keys_from_context_for_db_log' => ['user_id', 'collection_id', 'exception_message'], // Passa 'exception_message' nel contesto da UEM
+            // 'log_exception_trace_in_db' => true, // Se vuoi che UEM loggi la traccia (potrebbe essere verboso)
+        ],
+
         // ====================================================
         // EGI Upload Specific Errors
         // ====================================================
@@ -784,6 +824,16 @@ return [
             'notify_slack' => false,
             'msg_to' => 'sweet-alert', // Or redirect to login
         ],
+        'EGI_UNAUTHORIZED_ACCESS' => [
+            'type' => 'error',
+            'blocking' => 'blocking',
+            'dev_message_key' => 'error-manager::errors.dev.egi_unauthorized_access',
+            'user_message_key' => 'error-manager::errors.user.egi_unauthorized_access',
+            'http_status_code' => 401,
+            'devTeam_email_need' => false,
+            'notify_slack' => false,
+            'msg_to' => 'log-only', // Redirect diretto senza SweetAlert
+        ],
         'EGI_FILE_INPUT_ERROR' => [ // Problem with the 'file' part of the request (missing, invalid upload)
             'type' => 'warning',
             'blocking' => 'blocking', // Stop the process
@@ -794,9 +844,62 @@ return [
             'notify_slack' => false,
             'msg_to' => 'div', // Show near the file input
         ],
+
+          'EGI_PAGE_ACCESS_NOTICE' => [
+            'type' => 'notice',
+            'blocking' => 'not',
+            'dev_message_key' => 'error-manager::errors.dev.egi_page_access_notice',
+            'user_message_key' => null, // No user message needed
+            'http_status_code' => 200,
+            'devTeam_email_need' => false,
+            'notify_slack' => false,
+            'msg_to' => 'log-only', // Solo log, nessuna visualizzazione all'utente
+        ],
+
+        'EGI_PAGE_RENDERING_ERROR' => [
+            'type' => 'critical',
+            'blocking' => 'blocking',
+            'dev_message_key' => 'error-manager::errors.dev.egi_page_rendering_error',
+            'user_message_key' => 'error-manager::errors.user.egi_page_rendering_error',
+            'http_status_code' => 500,
+            'devTeam_email_need' => true, // Notifica il team via email
+            'notify_slack' => true, // Notifica anche su Slack se configurato
+            'msg_to' => 'sweet-alert', // Mostra un alert all'utente
+        ],
         // Note: Core file validation errors like size, extension, mime type
         // might still use the generic codes like 'MAX_FILE_SIZE', 'INVALID_FILE_EXTENSION'
         // unless you want specific EGI versions like 'EGI_MAX_FILE_SIZE'. Keep it simple for now.
+
+        // ====================================================
+        // Errori specifici per la validazione EGI
+        // ====================================================
+
+        'INVALID_EGI_FILE' => [
+            'type' => 'warning',
+            'blocking' => 'semi-blocking',
+            'dev_message_key' => 'error-manager::errors.dev.invalid_egi_file',
+            'user_message_key' => 'error-manager::errors.user.invalid_egi_file',
+            'http_status_code' => 422, // Unprocessable Entity
+            'devTeam_email_need' => false,
+            'notify_slack' => false,
+            'msg_to' => 'div', // Mostra errori di validazione in un div
+        ],
+
+
+        // ====================================================
+        // Errori specifici per l'elaborazione EGI
+        // ====================================================
+
+        'ERROR_DURING_EGI_PROCESSING' => [
+            'type' => 'error',
+            'blocking' => 'blocking',
+            'dev_message_key' => 'error-manager::errors.dev.error_during_egi_processing',
+            'user_message_key' => 'error-manager::errors.user.error_during_egi_processing',
+            'http_status_code' => 500,
+            'devTeam_email_need' => true,
+            'notify_slack' => true,
+            'msg_to' => 'sweet-alert',
+        ],
 
         'EGI_VALIDATION_FAILED' => [ // Metadata validation failed ($request->validate())
             'type' => 'warning',
@@ -868,70 +971,6 @@ return [
             'notify_slack' => true,
             'msg_to' => 'sweet-alert',
         ],
-        'EGI_UNAUTHORIZED_ACCESS' => [
-            'type' => 'error',
-            'blocking' => 'blocking',
-            'dev_message_key' => 'error-manager::errors.dev.egi_unauthorized_access',
-            'user_message_key' => 'error-manager::errors.user.egi_unauthorized_access',
-            'http_status_code' => 401,
-            'devTeam_email_need' => false,
-            'notify_slack' => false,
-            'msg_to' => 'log-only', // Redirect diretto senza SweetAlert
-            ],
-
-        'EGI_PAGE_ACCESS_NOTICE' => [
-            'type' => 'notice',
-            'blocking' => 'not',
-            'dev_message_key' => 'error-manager::errors.dev.egi_page_access_notice',
-            'user_message_key' => null, // No user message needed
-            'http_status_code' => 200,
-            'devTeam_email_need' => false, 
-            'notify_slack' => false,
-            'msg_to' => 'log-only', // Solo log, nessuna visualizzazione all'utente
-        ],
-
-        'EGI_PAGE_RENDERING_ERROR' => [
-            'type' => 'critical',
-            'blocking' => 'blocking',
-            'dev_message_key' => 'error-manager::errors.dev.egi_page_rendering_error',
-            'user_message_key' => 'error-manager::errors.user.egi_page_rendering_error',
-            'http_status_code' => 500,
-            'devTeam_email_need' => true, // Notifica il team via email
-            'notify_slack' => true, // Notifica anche su Slack se configurato
-            'msg_to' => 'sweet-alert', // Mostra un alert all'utente
-        ],
-
-        // ====================================================
-        // Errori specifici per la validazione EGI
-        // ====================================================
-
-        'INVALID_EGI_FILE' => [
-            'type' => 'warning',
-            'blocking' => 'semi-blocking',
-            'dev_message_key' => 'error-manager::errors.dev.invalid_egi_file',
-            'user_message_key' => 'error-manager::errors.user.invalid_egi_file',
-            'http_status_code' => 422, // Unprocessable Entity
-            'devTeam_email_need' => false,
-            'notify_slack' => false,
-            'msg_to' => 'div', // Mostra errori di validazione in un div
-        ],
-    
-
-        // ====================================================
-        // Errori specifici per l'elaborazione EGI
-        // ====================================================
-
-        'ERROR_DURING_EGI_PROCESSING' => [
-            'type' => 'error',
-            'blocking' => 'blocking',
-            'dev_message_key' => 'error-manager::errors.dev.error_during_egi_processing',
-            'user_message_key' => 'error-manager::errors.user.error_during_egi_processing',
-            'http_status_code' => 500,
-            'devTeam_email_need' => true,
-            'notify_slack' => true,
-            'msg_to' => 'sweet-alert',
-        ],
-
 
         // ====================================================
         // System / Environment Errors (Esistenti - Verified/Adjusted)
@@ -956,7 +995,7 @@ return [
             'notify_slack' => true,
             'msg_to' => 'log-only',
         ],
-        
+
         // ====================================================
         // Errori specifici per la creazione e gestione Wallet
         // ====================================================
@@ -1025,6 +1064,68 @@ return [
             'devTeam_email_need' => false,
             'notify_slack' => false,
             'msg_to' => 'div',
+        ],
+        'WALLET_INVALID_SECRET' => [
+            'type' => 'warning',
+            'blocking' => 'blocking',
+            'dev_message_key' => 'error-manager::errors.dev.wallet_invalid_secret',
+            'user_message_key' => 'error-manager::errors.user.wallet_invalid_secret',
+            'http_status_code' => 401,
+            'msg_to' => 'sweet-alert',
+        ],
+
+        'WALLET_VALIDATION_FAILED' => [
+            'type' => 'error',
+            'blocking' => 'blocking',
+            'dev_message_key' => 'error-manager::errors.dev.wallet_validation_failed',
+            'user_message_key' => 'error-manager::errors.user.wallet_validation_failed',
+            'http_status_code' => 422,
+            'msg_to' => 'div',
+        ],
+
+        'WALLET_CONNECTION_FAILED' => [
+            'type' => 'critical',
+            'blocking' => 'blocking',
+            'dev_message_key' => 'error-manager::errors.dev.wallet_connection_failed',
+            'user_message_key' => 'error-manager::errors.user.wallet_connection_failed',
+            'http_status_code' => 500,
+            'devTeam_email_need' => true,
+            'msg_to' => 'sweet-alert',
+        ],
+
+        'WALLET_DISCONNECT_FAILED' => [
+            'type' => 'error',
+            'blocking' => 'not',
+            'dev_message_key' => 'error-manager::errors.dev.wallet_disconnect_failed',
+            'user_message_key' => 'error-manager::errors.user.wallet_disconnect_failed',
+            'http_status_code' => 500,
+            'msg_to' => 'toast',
+        ],
+
+        // ====================================================
+        // Errori specifici per la gestione delle collezioni
+        // ====================================================
+
+        'COLLECTION_CREATION_FAILED' => [
+            'type' => 'critical',
+            'blocking' => 'blocking',
+            'dev_message_key' => 'error-manager::errors.dev.collection_creation_failed',
+            'user_message_key' => 'error-manager::errors.user.collection_creation_failed',
+            'http_status_code' => 500,
+            'devTeam_email_need' => true,
+            'notify_slack' => true,
+            'msg_to' => 'sweet-alert',
+        ],
+
+        'COLLECTION_FIND_CREATE_FAILED' => [
+            'type' => 'critical',
+            'blocking' => 'blocking',
+            'dev_message_key' => 'error-manager::errors.dev.collection_find_create_failed',
+            'user_message_key' => 'error-manager::errors.user.collection_find_create_failed',
+            'http_status_code' => 500,
+            'devTeam_email_need' => true,
+            'notify_slack' => true,
+            'msg_to' => 'sweet-alert',
         ],
     ],
 ];

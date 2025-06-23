@@ -7,6 +7,7 @@ namespace Ultra\ErrorManager\Handlers;
 use Ultra\ErrorManager\Interfaces\ErrorHandlerInterface;
 use Ultra\UltraLogManager\UltraLogManager; // Dependency: ULM Core Logger
 use Throwable; // Import Throwable
+use Ultra\ErrorManager\Support\UemLogFormatter;
 
 /**
  * 🎯 LogHandler – Oracoded Error Logging Handler (GDPR Reviewed)
@@ -73,13 +74,18 @@ final class LogHandler implements ErrorHandlerInterface
     }
 
     /**
-     * 🪵 Handle the error by logging it via the injected UltraLogManager.
-     * 📥 @data-input (Via $context and $exception, passed to ULM)
+     * 🪵 Handle the error by logging it via UemLogFormatter and UltraLogManager.
+     * 📥 @data-input (Via $context and $exception, processed by UemLogFormatter)
+     * 🔄 @enhanced (Now passes full context to getLogMessage for formatting)
      *
-     * @param string $errorCode The symbolic error code.
-     * @param array $errorConfig The configuration metadata for the error.
-     * @param array $context Contextual data available for logging.
-     * @param Throwable|null $exception Optional original throwable.
+     * Enhanced to support improved log presentation through UemLogFormatter.
+     * Passes complete context and exception data to message formatting while
+     * maintaining minimal context for ULM metadata.
+     *
+     * @param string $errorCode The symbolic error code
+     * @param array $errorConfig The configuration metadata for the error
+     * @param array $context Contextual data available for logging
+     * @param Throwable|null $exception Optional original throwable
      * @return void
      */
     public function handle(string $errorCode, array $errorConfig, array $context = [], ?Throwable $exception = null): void
@@ -87,14 +93,13 @@ final class LogHandler implements ErrorHandlerInterface
         // Determine the appropriate ULM log level method name
         $logLevelMethod = $this->getLogLevelMethod($errorConfig['type'] ?? 'error');
 
-        // Prepare log message - use dev message as the primary source for logs
-        $message = $this->getLogMessage($errorCode, $errorConfig);
+        // Prepare enhanced log message using UemLogFormatter - NOW with full context
+        $message = $this->getLogMessage($errorCode, $errorConfig, $context, $exception);
 
-        // Prepare structured context for ULM
+        // Prepare minimal structured context for ULM
         $logContext = $this->prepareLogContext($errorCode, $errorConfig, $context, $exception);
 
-        // Log using the injected ULM instance and the determined level
-        // ULM's internal methods will handle adding caller context etc.
+        // Log using the injected ULM instance with enhanced formatting
         $this->ulmLogger->{$logLevelMethod}($message, $logContext);
     }
 
@@ -121,59 +126,65 @@ final class LogHandler implements ErrorHandlerInterface
     }
 
     /**
-     * 🧱 Prepare the primary log message string.
-     * Prioritizes the developer message key/string.
+     * 🎨 Prepare the primary log message string using UemLogFormatter.
+     * 📥 @data-input (Via $context and $exception for formatting)
+     * 📤 @data-output (Clean, formatted log message string)
+     * 🔄 @enhanced (Now uses UemLogFormatter for visual consistency)
      *
-     * @param string $errorCode
-     * @param array $errorConfig
-     * @return string
+     * Replaces previous developer message priority approach with structured,
+     * visual formatting optimized for log scanning and operational monitoring.
+     * Delegates formatting logic to UemLogFormatter for consistency across UEM.
+     *
+     * Output format provides:
+     * - Visual boundaries for log entry identification
+     * - Exception class and message prominence
+     * - File location for immediate developer navigation  
+     * - Context overview without sensitive data exposure
+     *
+     * @param string $errorCode UEM error code identifier
+     * @param array $errorConfig Error configuration metadata
+     * @param array $context Original contextual data passed to handle()
+     * @param Throwable|null $exception Optional original exception
+     * @return string Formatted log message ready for ULM consumption
      */
-    protected function getLogMessage(string $errorCode, array $errorConfig): string
+    protected function getLogMessage(string $errorCode, array $errorConfig, array $context = [], ?Throwable $exception = null): string
     {
-         // Note: Assumes ErrorManager::formatMessage (using injected Translator)
-         // has already prepared translated strings if keys were used.
-         // For LogHandler, we prioritize the dev message if available in the config.
-        $devMessage = $errorConfig['message'] ?? // Use 'message' if already formatted by ErrorManager
-                      $errorConfig['dev_message'] ?? // Or direct dev_message
-                      'Error occurred'; // Fallback
-
-        return "[{$errorCode}] " . $devMessage;
+        // Delegate to UemLogFormatter for consistent, clean presentation
+        return UemLogFormatter::format($errorCode, $exception, $context);
     }
 
     /**
-     * 🧱 Prepare the context array for logging via UltraLogManager.
-     * Includes standard UEM fields and optional exception details.
+     * 🧱 Prepare minimal context array for ULM logging with reduced verbosity.
+     * 📥 @data-input (Error metadata and context - minimal exposure)
+     * 📤 @data-output (Essential UEM metadata only)
+     * 🔄 @optimized (Reduced context volume - detailed info now in formatted message)
      *
-     * @param string $errorCode Error code identifier.
-     * @param array $errorConfig Error configuration.
-     * @param array $context Original contextual data passed to handle().
-     * @param Throwable|null $exception Optional original exception.
-     * @return array The structured log context data.
+     * Provides essential UEM metadata to ULM while avoiding duplication with
+     * the formatted message content. Since UemLogFormatter handles detailed
+     * presentation in the message string, context focuses on structured metadata
+     * useful for log aggregation and filtering.
+     *
+     * Key changes from previous implementation:
+     * - Removed 'original_context' to avoid duplication
+     * - Removed redundant exception details (now in formatted message)
+     * - Simplified to core UEM operational metadata
+     * - Maintains compatibility with ULM expectations
+     *
+     * @param string $errorCode Error code identifier
+     * @param array $errorConfig Error configuration
+     * @param array $context Original contextual data (used for message formatting only)
+     * @param Throwable|null $exception Optional original exception (used for message formatting only)
+     * @return array Minimal structured context for ULM processing
      */
     protected function prepareLogContext(string $errorCode, array $errorConfig, array $context, ?Throwable $exception): array
     {
-        $logContext = [
-            'uem_error_code' => $errorCode,
-            'uem_error_type' => $errorConfig['type'] ?? 'error',
-            'uem_blocking'   => $errorConfig['blocking'] ?? 'unknown',
-            'original_context' => $context,
-            'logged_at' => now()->toIso8601String(), 
+        // Essential UEM metadata for log aggregation and filtering
+        // Detailed information is now handled by UemLogFormatter in the message
+        return [
+            'uem_code' => $errorCode,
+            'uem_type' => $errorConfig['type'] ?? 'error',
+            'uem_blocking' => $errorConfig['blocking'] ?? 'unknown',
+            'uem_timestamp' => now()->toIso8601String(),
         ];
-
-        // Add exception information if present
-        // Note: ULM itself might also add exception details; check for redundancy if needed.
-        if ($exception) {
-            $logContext['exception'] = [
-                'class'   => get_class($exception),
-                'message' => $exception->getMessage(),
-                'code'    => $exception->getCode(),
-                'file'    => $exception->getFile(),
-                'line'    => $exception->getLine(),
-                // Decide whether to include trace here or rely on ULM's logger config
-                 'trace' => $exception->getTraceAsString(), // Example: including trace
-            ];
-        }
-
-        return $logContext;
     }
 }
