@@ -157,37 +157,52 @@ final class LogHandler implements ErrorHandlerInterface
     }
 
     /**
-     * 🧱 Prepare minimal context array for ULM logging with reduced verbosity.
-     * 📥 @data-input (Error metadata and context - minimal exposure)
-     * 📤 @data-output (Essential UEM metadata only)
-     * 🔄 @optimized (Reduced context volume - detailed info now in formatted message)
-     *
-     * Provides essential UEM metadata to ULM while avoiding duplication with
-     * the formatted message content. Since UemLogFormatter handles detailed
-     * presentation in the message string, context focuses on structured metadata
-     * useful for log aggregation and filtering.
-     *
-     * Key changes from previous implementation:
-     * - Removed 'original_context' to avoid duplication
-     * - Removed redundant exception details (now in formatted message)
-     * - Simplified to core UEM operational metadata
-     * - Maintains compatibility with ULM expectations
+     * 🧱 Prepare enhanced context array for ULM logging with additional debug info.
+     * 📥 @data-input (Error metadata and context)
+     * 📤 @data-output (Enhanced UEM metadata for debugging)
+     * 🔄 @enhanced (Includes more debugging information)
      *
      * @param string $errorCode Error code identifier
      * @param array $errorConfig Error configuration
-     * @param array $context Original contextual data (used for message formatting only)
-     * @param Throwable|null $exception Optional original exception (used for message formatting only)
-     * @return array Minimal structured context for ULM processing
+     * @param array $context Original contextual data
+     * @param Throwable|null $exception Optional original exception
+     * @return array Enhanced structured context for ULM processing
      */
     protected function prepareLogContext(string $errorCode, array $errorConfig, array $context, ?Throwable $exception): array
     {
-        // Essential UEM metadata for log aggregation and filtering
-        // Detailed information is now handled by UemLogFormatter in the message
-        return [
+        $logContext = [
             'uem_code' => $errorCode,
             'uem_type' => $errorConfig['type'] ?? 'error',
             'uem_blocking' => $errorConfig['blocking'] ?? 'unknown',
             'uem_timestamp' => now()->toIso8601String(),
         ];
+
+        // Add exception details if available
+        if ($exception) {
+            $logContext['Class'] = get_class($exception);
+            $logContext['Message'] = $exception->getMessage();
+            
+            // Extract calling method from stack trace
+            $trace = $exception->getTrace();
+            if (!empty($trace[0])) {
+                $caller = $trace[0];
+                $method = '';
+                
+                if (isset($caller['class'])) {
+                    $method = $caller['class'] . '::' . ($caller['function'] ?? 'unknown');
+                } elseif (isset($caller['function'])) {
+                    $method = $caller['function'];
+                }
+                
+                if ($method) {
+                    $logContext['Method'] = $method;
+                }
+            }
+        }
+
+        // Add the formatted message for reference
+        $logContext['FormattedMessage'] = $this->getLogMessage($errorCode, $errorConfig, $context, $exception);
+
+        return $logContext;
     }
 }

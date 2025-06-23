@@ -7,20 +7,20 @@ namespace Ultra\ErrorManager\Support;
 use Throwable;
 
 /**
- * 🎯 UemLogFormatter – Clean Single-Line Log Presentation Engine for UEM
+ * 🎯 UemLogFormatter – Multi-line Log Presentation Engine for UEM
  *
- * Transforms verbose UEM error data into concise, single-line scannable log entries
- * optimized for standard log viewers and operational monitoring tools.
+ * Transforms verbose UEM error data into readable, multi-line log entries
+ * optimized for debugging and operational monitoring.
  *
  * 🧱 Structure:
  * - Static utility class with single formatting responsibility.
- * - Produces single-line, emoji-enhanced log entries for visual scanning.
+ * - Produces multi-line, emoji-enhanced log entries for better readability.
  * - Extracts essential context (IP, keys) without overwhelming detail.
  * - Compatible with all log viewers and aggregation tools.
  *
  * 📡 Use Case:
  * - Primary formatting engine for LogHandler in UEM error processing.
- * - Transforms exception stack traces into concise file:line references.
+ * - Transforms exception stack traces into readable multi-line format.
  * - Optimizes log readability while preserving diagnostic information.
  *
  * 🧪 Testable:
@@ -36,23 +36,28 @@ use Throwable;
 final class UemLogFormatter
 {
     /**
-     * 🎨 Format UEM error data into clean, single-line scannable log entry.
+     * 🎨 Format UEM error data into readable, multi-line log entry.
      * 📥 @data-input (Via $context - IP address and contextual keys)
-     * 📤 @data-output (Single-line formatted log string)
+     * 📤 @data-output (Multi-line formatted log string)
      * 🔒 @privacy-aware (Shows context keys only, not values)
      *
-     * Produces structured single-line format:
+     * Produces structured multi-line format:
      * ```
-     * ✦ UEM [ERROR_CODE] ExceptionClass: Exception message | File: filename.php:123 | IP: 127.0.0.1 | Context: [key1, key2, key3]
+     * ✦ UEM [ERROR_CODE] ExceptionClass: Exception message
+     * File: filename.php:123
+     * IP: 127.0.0.1
+     * Context: [key1, key2, key3]
      * ```
      *
      * @param string $code UEM error code identifier
      * @param Throwable|null $exception Original exception if available
      * @param array $context Request/error context data
-     * @return string Single-line formatted log entry
+     * @return string Multi-line formatted log entry
      */
     public static function format(string $code, ?Throwable $exception, array $context = []): string
     {
+        $lines = [];
+        
         // Build core error summary with exception details
         $summary = "✦ UEM [{$code}]";
         if ($exception) {
@@ -60,22 +65,27 @@ final class UemLogFormatter
             $message = self::truncateMessage($exception->getMessage(), 120);
             $summary .= " {$exceptionClass}: {$message}";
         }
+        $lines[] = $summary;
         
         // Extract file location for quick navigation
-        $location = $exception 
-            ? " | File: " . basename($exception->getFile()) . ":" . $exception->getLine() 
-            : '';
+        if ($exception) {
+            $lines[] = "File: " . basename($exception->getFile()) . ":" . $exception->getLine();
+        }
         
         // Essential context summary (GDPR-safe: keys only, not values)
         $ip = $context['ip_address'] ?? 'N/A';
+        $lines[] = "IP: {$ip}";
+        
         $contextKeys = array_keys($context);
         $keysStr = $contextKeys ? implode(', ', $contextKeys) : 'none';
+        $lines[] = "Context: [{$keysStr}]";
 
-        return $summary . $location . " | IP: {$ip} | Context: [{$keysStr}]";
+        // Join with newlines for multi-line output
+        return implode("\n", $lines);
     }
 
     /**
-     * 🎨 Truncate long exception messages to keep log entries scannable.
+     * 🎨 Truncate long exception messages to keep log entries readable.
      * 
      * @param string $message Original exception message
      * @param int $maxLength Maximum length before truncation
