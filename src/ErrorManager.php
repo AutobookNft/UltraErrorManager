@@ -93,7 +93,7 @@ final class ErrorManager implements ErrorManagerInterface
         $this->config = $config; // Store injected Config
 
         // Log initialization using injected logger
-        $this->logger->info('UltraErrorManager Initialized (DI Mode)', ['handler_count' => count($this->handlers)]);
+        // $this->logger->info('UltraErrorManager Initialized (DI Mode)', ['handler_count' => count($this->handlers)]);
         // Note: Handlers are now registered by the Service Provider *after* construction.
     }
 
@@ -187,11 +187,11 @@ final class ErrorManager implements ErrorManagerInterface
         $context = is_array($context) ? $context : [];
         $initialErrorCode = $errorCode; // Store original code for logging
 
-        $this->logger->info("UEM Handling error: [{$initialErrorCode}]", [
-            'initial_context_keys' => array_keys($context), // Avoid logging full context here
-            'has_exception' => !is_null($exception),
-            'throw_mode' => $throw
-        ]);
+        // $this->logger->info("UEM Handling error: [{$initialErrorCode}]", [
+        //     'initial_context_keys' => array_keys($context), // Avoid logging full context here
+        //     'has_exception' => !is_null($exception),
+        //     'throw_mode' => $throw
+        // ]);
 
         // Resolve config, potentially modifying $errorCode and $context via fallback
         $errorConfig = $this->resolveErrorConfig($errorCode, $context, $exception);
@@ -296,7 +296,7 @@ final class ErrorManager implements ErrorManagerInterface
             if ($handler->shouldHandle($errorConfig)) {
                 $dispatchedCount++;
                 $handlerClass = get_class($handler);
-                $this->logger->debug("UEM Dispatching handler: {$handlerClass}", ['errorCode' => $errorCode]);
+                // $this->logger->debug("UEM Dispatching handler: {$handlerClass}", ['errorCode' => $errorCode]);
                 try {
                     // Execute the handler
                     $handler->handle($errorCode, $errorConfig, $context, $exception);
@@ -427,10 +427,10 @@ final class ErrorManager implements ErrorManagerInterface
     {
         // Use injected Request object
         if ($this->request->expectsJson() || $this->request->is('api/*')) {
-            $this->logger->info('UEM Returning JSON error response', [
-                'code' => $errorInfo['error_code'],
-                'status' => $errorInfo['http_status_code']
-            ]);
+            // $this->logger->info('UEM Returning JSON error response', [
+            //     'code' => $errorInfo['error_code'],
+            //     'status' => $errorInfo['http_status_code']
+            // ]);
             // Return only safe fields in JSON response
             return new JsonResponse([
                 'error'        => $errorInfo['error_code'],
@@ -464,9 +464,9 @@ final class ErrorManager implements ErrorManagerInterface
         // Assume UserInterfaceHandler has flashed data to the session.
         // Return null, allowing the request to continue. The view/middleware
         // responsible for reading session flash data will display the error.
-        $this->logger->info('UEM Handling non-blocking error for HTML request (flashed to session).', [
-            'code' => $errorInfo['error_code']
-        ]);
+        // $this->logger->info('UEM Handling non-blocking error for HTML request (flashed to session).', [
+        //     'code' => $errorInfo['error_code']
+        // ]);
         return null;
     }
 }
