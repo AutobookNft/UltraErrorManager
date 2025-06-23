@@ -447,10 +447,10 @@ final class ErrorManager implements ErrorManagerInterface
              // For blocking errors in HTML context, re-throwing the exception is often
              // the desired behavior, allowing Laravel's main exception handler
              // (which might render a specific error page) to take over.
-            $this->logger->warning('UEM Throwing exception for blocking error in HTML context.', [
-                'code' => $errorInfo['error_code'],
-                'status' => $errorInfo['http_status_code']
-            ]);
+            // $this->logger->warning('UEM Throwing exception for blocking error in HTML context.', [
+            //     'code' => $errorInfo['error_code'],
+            //     'status' => $errorInfo['http_status_code']
+            // ]);
             throw new UltraErrorException(
                 $errorInfo['user_message'],
                 $errorInfo['http_status_code'],
