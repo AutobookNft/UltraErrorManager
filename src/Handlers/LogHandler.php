@@ -149,8 +149,11 @@ final class LogHandler implements ErrorHandlerInterface
      */
     protected function getLogMessage(string $errorCode, array $errorConfig, array $context = [], ?Throwable $exception = null): string
     {
-        // Delegate to UemLogFormatter for consistent, clean presentation
-        return UemLogFormatter::format($errorCode, $exception, $context);
+        try {
+            return UemLogFormatter::format($errorCode, $exception, $context);
+        } catch (\Throwable $e) {
+            return "FORMATTER ERROR: " . $e->getMessage() . " | FALLBACK: [{$errorCode}]";
+        }
     }
 
     /**
