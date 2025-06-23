@@ -23,12 +23,12 @@ final class LogHandler implements ErrorHandlerInterface
 {
     /**
      * 🧱 @property A private, pre-configured Monolog logger instance.
-     * @var LoggerInterface
      */
-    private LoggerInterface $logger;
+    private Logger $logger;
 
     /**
      * 🎯 Constructor: Builds the self-contained logger.
+     *
      * This is where the magic happens. We instantiate and configure Monolog
      * without relying on Laravel's LogManager.
      *
@@ -51,7 +51,8 @@ final class LogHandler implements ErrorHandlerInterface
         // 5. Applica il nostro formatter all'handler.
         $streamHandler->setFormatter($formatter);
 
-        // 6. Collega l'handler configurato al nostro logger privato.
+        // 6. Push the configured handler to our private logger.
+        // This is now valid because $this->logger is a Monolog\Logger object.
         $this->logger->pushHandler($streamHandler);
     }
 
