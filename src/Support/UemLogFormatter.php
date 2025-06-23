@@ -16,42 +16,77 @@ use Throwable;
 final class UemLogFormatter
 {
     /**
-     * 🎨 Formatta i dati di errore UEM in una voce di log multi-linea e leggibile.
-     * 🧠 @enhanced (Trova la posizione a livello di applicazione)
-     * 💅 @enhanced (Formatta il contesto come JSON multi-linea)
+     * 🎨 Formatta i dati di errore in una voce di log multi-linea completa.
      */
-    public static function format(string $code, ?Throwable $exception, array $context = []): string
+    public static function format(string $errorCode, array $errorConfig, array $context = [], ?Throwable $exception = null): string
     {
-        $lines = [];
-        
-        // 1. Riepilogo Principale
-        $summary = "✦ UEM [{$code}]";
+        $logLevel = strtoupper($errorConfig['type'] ?? 'ERROR');
+        $separator = str_repeat('-', 80);
+
+        // 1. Header Principale
+        $header = "✦ UEM [{$errorCode}]";
+
+        // 2. Dettagli Eccezione
+        $exceptionDetails = '';
         if ($exception) {
-            $exceptionClass = get_class($exception);
-            $message = self::truncateMessage($exception->getMessage(), 120);
-            $summary .= " {$exceptionClass}: {$message}";
+            $exceptionDetails .= $exception instanceof \ErrorException
+                ? "{$exception->getMessage()}" // Per errori PHP semplici, il messaggio è sufficiente
+                : get_class($exception) . ":\n" . self::truncateMessage($exception->getMessage(), 250);
         }
-        $lines[] = $summary;
-        
-        // 2. Posizione del File (Intelligente)
+
+        // 3. Posizione del File (Intelligente)
+        $fileLocation = '';
         if ($exception) {
             $appFrame = self::findApplicationFrame($exception);
-            
             $file = $appFrame ? $appFrame['file'] : $exception->getFile();
             $line = $appFrame ? $appFrame['line'] : $exception->getLine();
-            
-            $displayPath = function_exists('base_path') 
+            $displayPath = function_exists('base_path')
                 ? str_replace(base_path() . DIRECTORY_SEPARATOR, '', $file)
                 : basename($file);
-
-            $lines[] = "File: " . $displayPath . ":" . $line;
+            $fileLocation = "File: {$displayPath}:{$line}";
         }
-        
-        // 3. Contesto (Multi-linea, Sanitizzato e Formattato)
-        $formattedContext = self::formatContext($context);
-        $lines[] = "Context:\n" . $formattedContext;
 
-        return implode("\n", $lines);
+        // 4. Contesto Formattato
+        $contextForJson = self::prepareContextForJson($context, $exception);
+        $jsonContext = json_encode($contextForJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        $indentedJson = "  " . implode("\n  ", explode("\n", $jsonContext));
+
+        // 5. Assemblaggio Finale
+        $entry = "\n"; // Inizia con una nuova linea per separare dal timestamp
+        $entry .= $separator . "\n";
+        $entry .= "{$logLevel}: {$header}\n";
+        if ($exceptionDetails) {
+            $entry .= $exceptionDetails . "\n\n";
+        }
+        if ($fileLocation) {
+            $entry .= $fileLocation . "\n";
+        }
+        $entry .= "Context: {\n" . $indentedJson . "\n}\n";
+        $entry .= $separator;
+
+        return $entry;
+    }
+
+    /**
+     * 🧠 Prepara il contesto per il JSON, rimuovendo dati ridondanti.
+     */
+    private static function prepareContextForJson(array $context, ?Throwable $exception): array
+    {
+        // Sanitizza prima di tutto
+        $sanitized = self::sanitizeContextForLog($context);
+
+        // Rimuovi l'oggetto eccezione completo se presente, è già formattato sopra
+        if (isset($sanitized['exception'])) unset($sanitized['exception']);
+        if (isset($sanitized['error']) && $sanitized['error'] instanceof Throwable) {
+             unset($sanitized['error']);
+        }
+       
+        // Aggiungi il messaggio completo dell'eccezione se non già presente e utile
+        if ($exception && !isset($sanitized['error_message'])) {
+             $sanitized['error_message'] = $exception->getMessage();
+        }
+
+        return $sanitized;
     }
 
     /**
