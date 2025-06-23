@@ -97,6 +97,13 @@ final class UltraErrorManagerServiceProvider extends ServiceProvider
         // THIS IS THE ONLY, CORRECT REGISTRATION FOR LOGHANDLER
         $this->app->singleton(LogHandler::class, function (Application $app) use ($configKey) {
             $handlerConfig = $app['config'][$configKey]['log_handler'] ?? [];
+
+            // ==================== PROVA DEFINITIVA ====================
+            // Aggiungi questa riga. Interromperà l'esecuzione e ci mostrerà
+            // esattamente cosa sta succedendo in questo punto.
+            dd('Sto per creare LogHandler con questa configurazione:', $handlerConfig);
+            // ==========================================================
+
             return new LogHandler($handlerConfig);
         });
 
