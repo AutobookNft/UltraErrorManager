@@ -14,6 +14,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Log Handler Configuration
+    |--------------------------------------------------------------------------
+    */
+    'log_handler' => [
+        // Puoi sovrascrivere il percorso del file di log dedicato di UEM.
+        // Se non specificato, il default sarà 'storage/logs/error_manager.log'.
+        'path' => storage_path('logs/uem_errors.log'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Default Handlers
     |--------------------------------------------------------------------------
     | Handlers automatically registered. Order can matter for some logic.

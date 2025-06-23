@@ -36,8 +36,6 @@ use Ultra\ErrorManager\Http\Middleware\EnvironmentMiddleware;
 use Ultra\UltraLogManager\UltraLogManager; 
 use Illuminate\Http\Client\Factory as HttpClientFactory; // Added HttpClientFactory
 
-use Ultra\ErrorManager\Support\UemLineFormatter; // <-- Aggiungi questo use
-use Illuminate\Contracts\Config\Repository as ConfigRepository;
 
 /**
  * 🎯 Service Provider for Ultra Error Manager (UEM) – Oracoded DI Refactored
@@ -85,6 +83,12 @@ final class UltraErrorManagerServiceProvider extends ServiceProvider
         $this->app->alias(TestingConditionsManager::class, 'ultra.testing-conditions');
 
         $this->registerHandlers($configKey);
+
+        $this->app->singleton(LogHandler::class, function (Application $app) use ($configKey) {
+            // Passa solo la sezione di config 'log_handler' al costruttore.
+            $handlerConfig = $app['config'][$configKey]['log_handler'] ?? [];
+            return new LogHandler($handlerConfig);
+        });
 
         $this->app->singleton('ultra.error-manager', function (Application $app) use ($configKey) {
             $ulmLogger = $app->make(UltraLogManager::class);
@@ -216,8 +220,6 @@ final class UltraErrorManagerServiceProvider extends ServiceProvider
     public function boot(): void
     {
         
-        $this->configureUemLogger();
-        
         $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
         $this->loadRoutesFrom(__DIR__.'/../../routes/api.php');
         $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
@@ -252,27 +254,4 @@ final class UltraErrorManagerServiceProvider extends ServiceProvider
         // $this->publishes([__DIR__.'/../../config/logging.php' => $this->app->configPath('uem-logging.php')], 'error-manager-logging');
     }
 
-    /**
-     * 🧠 Configura programmaticamente il canale di log di UEM per usare il formatter custom.
-     * Questo evita all'utente di dover modificare il file config/logging.php.
-     */
-    protected function configureUemLogger(): void
-    {
-        /** @var ConfigRepository $config */
-        $config = $this->app->make(ConfigRepository::class);
-        $channelName = 'error_manager'; // Il nome del nostro canale di log
-
-        // Prendi la configurazione del canale esistente
-        $channelConfig = $config->get("logging.channels.{$channelName}");
-
-        if ($channelConfig && $channelConfig['driver'] === 'stack') {
-            // Se è uno stack, configura ogni canale al suo interno
-            foreach ($channelConfig['channels'] as $subChannelName) {
-                $config->set("logging.channels.{$subChannelName}.formatter", UemLineFormatter::class);
-            }
-        } elseif ($channelConfig) {
-            // Altrimenti, configura il canale singolo
-            $config->set("logging.channels.{$channelName}.formatter", UemLineFormatter::class);
-        }
-    }
 }
