@@ -35,15 +35,14 @@ final class LogHandler implements ErrorHandlerInterface
      */
     public function handle(string $errorCode, array $errorConfig, array $context = [], ?Throwable $exception = null): void
     {
-        // 1. Determina il livello di log (es. 'error', 'warning')
         $logLevelMethod = $this->getLogLevelMethod($errorConfig['type'] ?? 'error');
-
-        // 2. Chiede a UemLogFormatter di costruire l'intera voce di log
-        $logEntry = UemLogFormatter::format($errorCode, $errorConfig, $context, $exception);
-
-        // 3. Passa la stringa completa al logger con un contesto VUOTO
-        //    per prevenire l'aggiunta automatica del JSON da parte di Monolog.
-        $this->ulmLogger->{$logLevelMethod}($logEntry, []);
+        
+        // UemLogFormatter crea il corpo del messaggio
+        $messageBody = UemLogFormatter::format($errorCode, $errorConfig, $context, $exception);
+        
+        // Passiamo il corpo come messaggio e il contesto originale.
+        // Il nostro UemLineFormatter si occuperà della formattazione finale.
+        $this->ulmLogger->{$logLevelMethod}($messageBody, $context);
     }
 
     /**

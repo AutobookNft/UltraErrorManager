@@ -15,57 +15,42 @@ use Throwable;
  */
 final class UemLogFormatter
 {
-    /**
-     * 🎨 Formatta i dati di errore in una voce di log multi-linea completa.
-     */
     public static function format(string $errorCode, array $errorConfig, array $context = [], ?Throwable $exception = null): string
     {
-        $logLevel = strtoupper($errorConfig['type'] ?? 'ERROR');
         $separator = str_repeat('-', 80);
-
-        // 1. Header Principale
         $header = "✦ UEM [{$errorCode}]";
 
-        // 2. Dettagli Eccezione
         $exceptionDetails = '';
         if ($exception) {
-            $exceptionDetails .= $exception instanceof \ErrorException
-                ? "{$exception->getMessage()}" // Per errori PHP semplici, il messaggio è sufficiente
-                : get_class($exception) . ":\n" . self::truncateMessage($exception->getMessage(), 250);
+            $exceptionDetails = get_class($exception) . ":\n" . $exception->getMessage();
         }
 
-        // 3. Posizione del File (Intelligente)
         $fileLocation = '';
         if ($exception) {
             $appFrame = self::findApplicationFrame($exception);
-            $file = $appFrame ? $appFrame['file'] : $exception->getFile();
-            $line = $appFrame ? $appFrame['line'] : $exception->getLine();
+            $file = $appFrame['file'] ?? $exception->getFile();
+            $line = $appFrame['line'] ?? $exception->getLine();
             $displayPath = function_exists('base_path')
                 ? str_replace(base_path() . DIRECTORY_SEPARATOR, '', $file)
                 : basename($file);
             $fileLocation = "File: {$displayPath}:{$line}";
         }
-
-        // 4. Contesto Formattato
+        
         $contextForJson = self::prepareContextForJson($context, $exception);
         $jsonContext = json_encode($contextForJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
         $indentedJson = "  " . implode("\n  ", explode("\n", $jsonContext));
 
-        // 5. Assemblaggio Finale
-        $entry = "\n"; // Inizia con una nuova linea per separare dal timestamp
-        $entry .= $separator . "\n";
-        $entry .= "{$logLevel}: {$header}\n";
-        if ($exceptionDetails) {
-            $entry .= $exceptionDetails . "\n\n";
-        }
-        if ($fileLocation) {
-            $entry .= $fileLocation . "\n";
-        }
-        $entry .= "Context: {\n" . $indentedJson . "\n}\n";
+        // Assembla solo il corpo del messaggio
+        $entry  = $separator . "\n";
+        $entry .= "{$header}\n";
+        $entry .= $exceptionDetails . "\n\n";
+        $entry .= $fileLocation . "\n";
+        $entry .= "Context {\n" . $indentedJson . "\n}\n";
         $entry .= $separator;
 
         return $entry;
     }
+    
 
     /**
      * 🧠 Prepara il contesto per il JSON, rimuovendo dati ridondanti.
