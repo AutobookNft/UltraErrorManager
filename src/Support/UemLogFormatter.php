@@ -7,58 +7,24 @@ namespace Ultra\ErrorManager\Support;
 use Throwable;
 
 /**
- * 🎯 UemLogFormatter – Multi-line Log Presentation Engine for UEM
+ * 🎯 UemLogFormatter – Motore di Presentazione Log per UEM (Sintesi Finale)
  *
- * Transforms verbose UEM error data into readable, multi-line log entries
- * optimized for debugging and operational monitoring.
- *
- * 🧱 Structure:
- * - Static utility class with single formatting responsibility.
- * - Produces multi-line, emoji-enhanced log entries for better readability.
- * - Extracts essential context (IP, keys) without overwhelming detail.
- * - Compatible with all log viewers and aggregation tools.
- *
- * 📡 Use Case:
- * - Primary formatting engine for LogHandler in UEM error processing.
- * - Transforms exception stack traces into readable multi-line format.
- * - Optimizes log readability while preserving diagnostic information.
- *
- * 🧪 Testable:
- * - Pure static function with deterministic output based on input.
- * - No external dependencies or side effects.
- * - Handles null exception cases gracefully.
- *
- * 🛡️ GDPR Considerations:
- * - Reduces context exposure in logs through key-only enumeration.
- * - IP address display configurable via context inclusion/exclusion.
- * - No sensitive data expansion - maintains privacy by design.
+ * Trasforma i dati di errore UEM in voci di log multi-linea leggibili.
+ * - Trova intelligentemente l'origine dell'errore nel codice applicativo.
+ * - Formatta il contesto come un blocco JSON multi-linea e sanitizzato.
  */
 final class UemLogFormatter
 {
     /**
-     * 🎨 Format UEM error data into readable, multi-line log entry.
-     * 📥 @data-input (Via $context - IP address and contextual keys)
-     * 📤 @data-output (Multi-line formatted log string)
-     * 🔒 @privacy-aware (Shows context keys only, not values)
-     *
-     * Produces structured multi-line format:
-     * ```
-     * ✦ UEM [ERROR_CODE] ExceptionClass: Exception message
-     * File: filename.php:123
-     * IP: 127.0.0.1
-     * Context: [key1, key2, key3]
-     * ```
-     *
-     * @param string $code UEM error code identifier
-     * @param Throwable|null $exception Original exception if available
-     * @param array $context Request/error context data
-     * @return string Multi-line formatted log entry
+     * 🎨 Formatta i dati di errore UEM in una voce di log multi-linea e leggibile.
+     * 🧠 @enhanced (Trova la posizione a livello di applicazione)
+     * 💅 @enhanced (Formatta il contesto come JSON multi-linea)
      */
     public static function format(string $code, ?Throwable $exception, array $context = []): string
     {
         $lines = [];
         
-        // Build core error summary with exception details
+        // 1. Riepilogo Principale
         $summary = "✦ UEM [{$code}]";
         if ($exception) {
             $exceptionClass = get_class($exception);
@@ -67,37 +33,117 @@ final class UemLogFormatter
         }
         $lines[] = $summary;
         
-        // Extract file location for quick navigation
+        // 2. Posizione del File (Intelligente)
         if ($exception) {
-            $lines[] = "File: " . basename($exception->getFile()) . ":" . $exception->getLine();
+            $appFrame = self::findApplicationFrame($exception);
+            
+            $file = $appFrame ? $appFrame['file'] : $exception->getFile();
+            $line = $appFrame ? $appFrame['line'] : $exception->getLine();
+            
+            $displayPath = function_exists('base_path') 
+                ? str_replace(base_path() . DIRECTORY_SEPARATOR, '', $file)
+                : basename($file);
+
+            $lines[] = "File: " . $displayPath . ":" . $line;
         }
         
-        // Essential context summary (GDPR-safe: keys only, not values)
-        $ip = $context['ip_address'] ?? 'N/A';
-        $lines[] = "IP: {$ip}";
-        
-        $contextKeys = array_keys($context);
-        $keysStr = $contextKeys ? implode(', ', $contextKeys) : 'none';
-        $lines[] = "Context: [{$keysStr}]";
+        // 3. Contesto (Multi-linea, Sanitizzato e Formattato)
+        $formattedContext = self::formatContext($context);
+        $lines[] = "Context:\n" . $formattedContext;
 
-        // Join with newlines for multi-line output
         return implode("\n", $lines);
     }
 
     /**
-     * 🎨 Truncate long exception messages to keep log entries readable.
-     * 
-     * @param string $message Original exception message
-     * @param int $maxLength Maximum length before truncation
-     * @return string Truncated message with ellipsis if needed
+     * 🔎 Trova il primo frame rilevante dello stack trace nell'applicazione.
+     */
+    private static function findApplicationFrame(Throwable $exception): ?array
+    {
+        $traces = [$exception->getTrace()];
+        $previous = $exception->getPrevious();
+        while ($previous) {
+            $traces[] = $previous->getTrace();
+            $previous = $previous->getPrevious();
+        }
+
+        foreach ($traces as $trace) {
+            foreach ($trace as $frame) {
+                if (isset($frame['file']) && !str_contains($frame['file'], DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR)) {
+                    return [
+                        'file' => $frame['file'],
+                        'line' => $frame['line'] ?? null,
+                    ];
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 💅 Formatta e sanitizza il contesto per una visualizzazione chiara e sicura.
+     * @param array $context
+     * @return string
+     */
+    private static function formatContext(array $context): string
+    {
+        if (empty($context)) {
+            return '  (empty)';
+        }
+
+        // Rimuoviamo l'IP dal contesto principale se presente, lo mostriamo separatamente
+        if (isset($context['ip_address'])) {
+             unset($context['ip_address']);
+        }
+        
+        $sanitizedContext = self::sanitizeContextForLog($context);
+
+        $json = json_encode($sanitizedContext, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+        // Indentiamo il JSON per allinearlo sotto la label "Context:"
+        $indentedJson = "  " . implode("\n  ", explode("\n", $json));
+
+        return $indentedJson;
+    }
+
+    /**
+     * 🔐 Sanitizza il contesto per i log, redigendo chiavi sensibili.
+     * @param array $context
+     * @return array
+     */
+    private static function sanitizeContextForLog(array $context): array
+    {
+        $sensitiveKeys = ['password', 'secret', 'token', 'auth', 'key', 'credentials', 'authorization', 'php_auth_pw', 'api_key'];
+        
+        $sanitized = [];
+        foreach ($context as $key => $value) {
+            if (in_array(strtolower((string)$key), $sensitiveKeys, true)) {
+                $sanitized[$key] = '[REDACTED]';
+                continue;
+            }
+
+            if (is_string($value)) {
+                $sanitized[$key] = mb_strimwidth($value, 0, 250, '...'); // Tronca stringhe lunghe
+            } elseif (is_array($value)) {
+                $sanitized[$key] = '[Array:' . count($value) . ' items]'; // Non espandere array annidati nel log
+            } elseif (is_object($value)) {
+                $sanitized[$key] = '[Object:' . get_class($value) . ']';
+            } else {
+                $sanitized[$key] = $value;
+            }
+        }
+        return $sanitized;
+    }
+    
+    /**
+     * 🎨 Tronca i messaggi di eccezione lunghi.
      */
     private static function truncateMessage(string $message, int $maxLength = 120): string
     {
+        // ... (logica invariata) ...
         if (strlen($message) <= $maxLength) {
             return $message;
         }
         
-        // For SQL errors, try to extract just the essential part
         if (preg_match('/Column not found:.*Unknown column \'([^\']+)\'/', $message, $matches)) {
             return "Column not found: Unknown column '{$matches[1]}'";
         }
@@ -106,7 +152,6 @@ final class UemLogFormatter
             return "Table '{$matches[1]}' doesn't exist";
         }
         
-        // Generic truncation for other long messages
         return substr($message, 0, $maxLength - 3) . '...';
     }
 }
