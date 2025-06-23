@@ -66,22 +66,43 @@ final class LogHandler implements ErrorHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * 🧠 @enhanced Now correctly maps UEM types to PSR-3 log levels.
      */
     public function handle(string $errorCode, array $errorConfig, array $context = [], ?Throwable $exception = null): void
     {
-        $logLevelName = strtolower($errorConfig['type'] ?? 'error');
+        // Get the UEM-specific error type from config.
+        $uemType = $errorConfig['type'] ?? 'error';
 
-        // Prepara il contesto che il nostro UemLineFormatter si aspetta
+        // Translate the UEM type into a valid PSR-3 log level.
+        $logLevel = $this->mapUemTypeToPsrLevel($uemType);
+
         $logContext = [
             'errorCode'   => $errorCode,
             'exception'   => $exception,
             'userContext' => $context,
         ];
 
-        // Usa il logger privato per scrivere il log.
-        // Il messaggio primario è breve, il grosso del lavoro lo fa il formatter
-        // con i dati che riceve dal contesto.
-        $this->logger->log($logLevelName, "UEM Handled Error: {$errorCode}", $logContext);
+        // Use the private logger with the correctly translated log level.
+        $this->logger->log($logLevel, "UEM Handled Error: {$errorCode}", $logContext);
+    }
+    /**
+     * 🗺️ Translates a UEM-specific error type into a PSR-3 compliant log level.
+     *
+     * This ensures that custom UEM types like 'server_error' are mapped to a
+     * level that Monolog understands, preventing exceptions within the handler.
+     *
+     * @param string $uemType The error type from the UEM configuration.
+     * @return string A valid PSR-3 log level string (e.g., 'error', 'warning').
+     */
+    private function mapUemTypeToPsrLevel(string $uemType): string
+    {
+        return match (strtolower($uemType)) {
+            'critical', 'fatal' => 'critical',
+            'server_error', 'error' => 'error', // 'server_error' is now correctly mapped
+            'warning' => 'warning',
+            'notice' => 'notice',
+            'info' => 'info',
+            default => 'error', // Default to 'error' for any unknown type
+        };
     }
 }
