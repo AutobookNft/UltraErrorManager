@@ -122,10 +122,10 @@ final class DatabaseLogHandler implements ErrorHandlerInterface
 
             $errorLog = ErrorLog::create($data);
 
-            $this->ulmLogger->debug("UEM DatabaseLogHandler: Error persisted.", [
-                'error_log_id' => $errorLog->id,
-                'error_code' => $errorCode
-            ]);
+            // $this->ulmLogger->debug("UEM DatabaseLogHandler: Error persisted.", [
+            //     'error_log_id' => $errorLog->id,
+            //     'error_code' => $errorCode
+            // ]);
 
         } catch (Throwable $e) {
             $this->ulmLogger->error("UEM DatabaseLogHandler: Failed to persist error log.", [

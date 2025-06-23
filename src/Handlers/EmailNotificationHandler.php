@@ -129,9 +129,9 @@ final class EmailNotificationHandler implements ErrorHandlerInterface
                 }
             });
 
-            $this->ulmLogger->info('UEM EmailHandler: Notification email sent.', [
-                'recipient' => $recipient, 'errorCode' => $errorCode
-            ]);
+            // $this->ulmLogger->info('UEM EmailHandler: Notification email sent.', [
+            //     'recipient' => $recipient, 'errorCode' => $errorCode
+            // ]);
 
         } catch (Throwable $e) {
             $this->ulmLogger->error("UEM EmailHandler: Failed to send notification email.", [

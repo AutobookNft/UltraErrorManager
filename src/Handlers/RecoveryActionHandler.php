@@ -112,10 +112,10 @@ final class RecoveryActionHandler implements ErrorHandlerInterface
         $action = $errorConfig['recovery_action']; // Already validated by shouldHandle
 
         // Use injected logger
-        $this->ulmLogger->info("UEM RecoveryHandler: Attempting recovery action.", [
-            'action' => $action,
-            'errorCode' => $errorCode
-        ]);
+        // $this->ulmLogger->info("UEM RecoveryHandler: Attempting recovery action.", [
+        //     'action' => $action,
+        //     'errorCode' => $errorCode
+        // ]);
 
         $success = false; // Assume failure initially
 
