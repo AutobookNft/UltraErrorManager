@@ -132,10 +132,10 @@ final class ErrorManager implements ErrorManagerInterface
     public function defineError(string $errorCode, array $config): self
     {
         $this->customErrors[$errorCode] = $config;
-        $this->logger->debug('Defined runtime error configuration', [
-            'code' => $errorCode,
-            'config_keys' => array_keys($config) // Log keys, not full config potentially
-        ]);
+        // $this->logger->debug('Defined runtime error configuration', [
+        //     'code' => $errorCode,
+        //     'config_keys' => array_keys($config) // Log keys, not full config potentially
+        // ]);
         return $this;
     }
 
