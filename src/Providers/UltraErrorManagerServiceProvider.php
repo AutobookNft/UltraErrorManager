@@ -101,7 +101,7 @@ final class UltraErrorManagerServiceProvider extends ServiceProvider
             // ==================== PROVA DEFINITIVA ====================
             // Aggiungi questa riga. Interromperà l'esecuzione e ci mostrerà
             // esattamente cosa sta succedendo in questo punto.
-            dd('Sto per creare LogHandler con questa configurazione:', $handlerConfig);
+            // dd('Sto per creare LogHandler con questa configurazione:', $handlerConfig);
             // ==========================================================
 
             return new LogHandler($handlerConfig);
