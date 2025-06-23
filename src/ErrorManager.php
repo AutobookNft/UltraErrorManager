@@ -201,7 +201,7 @@ final class ErrorManager implements ErrorManagerInterface
 
         // Dispatch to registered handlers
         $this->dispatchHandlers($errorCode, $errorConfig, $context, $exception);
-        $this->logger->debug("UEM Handlers dispatched", ['resolved_code' => $errorCode]);
+        // $this->logger->debug("UEM Handlers dispatched", ['resolved_code' => $errorCode]);
 
         // Decide whether to throw or return a response
         if ($throw) {
@@ -311,7 +311,7 @@ final class ErrorManager implements ErrorManagerInterface
                 }
             }
         }
-        $this->logger->info("UEM Dispatched {$dispatchedCount} handlers for [{$errorCode}].", ['total_registered' => count($this->handlers)]);
+        // $this->logger->info("UEM Dispatched {$dispatchedCount} handlers for [{$errorCode}].", ['total_registered' => count($this->handlers)]);
     }
 
     /**
