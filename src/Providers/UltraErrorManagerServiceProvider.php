@@ -218,7 +218,8 @@ final class UltraErrorManagerServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'error-manager');
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'error-manager');
 
-        $this->mergeConfigFrom(__DIR__ . '/../../config/logging.php', 'logging.channels');
+        // RIMOSSO IL MERGE DI logging.php - Non necessario dato che UEM usa ULM via DI
+        // $this->mergeConfigFrom(__DIR__ . '/../../config/logging.php', 'logging.channels');
 
         /** @var Router $router */
         $router = $this->app['router'];
@@ -240,5 +241,8 @@ final class UltraErrorManagerServiceProvider extends ServiceProvider
         $this->publishes([__DIR__.'/../../resources/views' => $this->app->resourcePath('views/vendor/error-manager')], 'error-manager-views');
         $this->publishes([__DIR__.'/../../resources/lang' => $this->app->langPath('vendor/error-manager')], 'error-manager-language');
         $this->publishes([__DIR__.'/../../database/migrations' => $this->app->databasePath('migrations')], 'error-manager-migrations');
+        
+        // Opzionale: se vuoi ancora pubblicare logging.php per altri usi
+        // $this->publishes([__DIR__.'/../../config/logging.php' => $this->app->configPath('uem-logging.php')], 'error-manager-logging');
     }
 }
