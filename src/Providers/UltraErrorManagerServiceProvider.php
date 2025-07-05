@@ -39,8 +39,9 @@ final class UltraErrorManagerServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $configKey = 'error-manager';
-        $this->mergeConfigFrom(__DIR__.'/../../config/error-manager.php', $configKey);
+        $configKey = 'error-manager'; // All'interno del service container $configKey è il nome del file di configurazione per UEM   
+        
+        $this->mergeConfigFrom(__DIR__.'/../../config/error-manager.php', $configKey);  // Merge the default config file with the app's config
 
         $this->app->singleton(TestingConditionsManager::class, function (Application $app) {
              return new TestingConditionsManager($app);
