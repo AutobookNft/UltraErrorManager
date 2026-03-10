@@ -426,7 +426,7 @@ final class ErrorManager implements ErrorManagerInterface
     protected function buildResponse(array $errorInfo): JsonResponse|RedirectResponse|null
     {
         // Use injected Request object
-        if ($this->request->expectsJson() || $this->request->is('api/*')) {
+        if ($this->request->expectsJson() || $this->request->is('api/*') || $this->request->isXmlHttpRequest()) {
             // $this->logger->info('UEM Returning JSON error response', [
             //     'code' => $errorInfo['error_code'],
             //     'status' => $errorInfo['http_status_code']
